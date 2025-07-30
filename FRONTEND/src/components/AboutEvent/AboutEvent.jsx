@@ -59,18 +59,6 @@ const AboutEvent = () => {
     return () => clearInterval(interval);
   }, [eventData.length]);
 
-  const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + eventData.length) % eventData.length);
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % eventData.length);
-  };
-
-  const handleDotClick = (index) => {
-    setCurrentIndex(index);
-  };
-
   return (
     <section className="about-event-section" id="home">
       <div className="about-event-container">
@@ -84,10 +72,6 @@ const AboutEvent = () => {
           
           {/* Carousel Container */}
           <div className="event-carousel-container">
-            <button onClick={handlePrev} className="carousel-button left" aria-label="Previous slide">
-              &#9665;
-            </button>
-
             <div className="event-carousel">
               <div
                 className="event-carousel-inner"
@@ -101,7 +85,7 @@ const AboutEvent = () => {
                     <div 
                       key={index} 
                       className="event-carousel-item" 
-                      style={{ transform: `rotateY(${angle}deg) translateZ(400px)` }}
+                      style={{ transform: `rotateY(${angle}deg) translateZ(300px)` }}
                     >
                       <div className="event-card">
                         <div className="event-card-image">
@@ -120,32 +104,6 @@ const AboutEvent = () => {
                 })}
               </div>
             </div>
-
-            <button onClick={handleNext} className="carousel-button right" aria-label="Next slide">
-              &#9655;
-            </button>
-          </div>
-
-          {/* Carousel Indicators */}
-          <div className="carousel-indicators">
-            {eventData.map((_, index) => (
-              <button
-                key={index}
-                className={`indicator-dot ${index === currentIndex ? 'active' : ''}`}
-                onClick={() => handleDotClick(index)}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
-          </div>
-
-          {/* Call to Action */}
-          <div className="about-event-cta">
-            <button className="cta-button primary">
-              Register Now
-            </button>
-            <button className="cta-button secondary">
-              Learn More
-            </button>
           </div>
         </div>
       </div>

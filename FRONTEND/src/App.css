@@ -1,5 +1,19 @@
 /* App Component Styles */
 
+/* CSS Reset - Remove default browser margins and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
 /* CSS Custom Properties (inherited from HeroSection.css) */
 :root {
   --color-bg-primary: #1a1a2e;
@@ -43,7 +57,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 120px 24px 80px;
+  padding: 120px 0 80px;
   position: relative;
 }
 
@@ -51,6 +65,7 @@
   max-width: 1200px;
   width: 100%;
   text-align: center;
+  padding: 0 24px;
 }
 
 .section__title {
@@ -81,7 +96,11 @@
   }
   
   .section {
-    padding: 100px 16px 60px;
+    padding: 100px 0 60px;
+  }
+  
+  .section__container {
+    padding: 0 16px;
   }
   
   .section__title {
@@ -91,10 +110,11 @@
 
 @media (max-width: 480px) {
   .section {
-    padding: 80px 12px 40px;
+    padding: 80px 0 40px;
   }
   
   .section__container {
+    padding: 0 12px;
     text-align: left;
   }
 }
