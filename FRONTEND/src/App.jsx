@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import HeroSection from './components/HeroSection/HeroSection'
-import AboutEvent from './components/AboutEvent/AboutEvent'
+import Carousel from './components/AboutEvent/Carousel'
+import TimeLine from './components/TimeLine/TimeLine'
 import './App.css'
 
 function App() {
@@ -12,17 +13,10 @@ function App() {
       {/* Main Content Sections */}
       <main className="main-content">
         {/* Hero Carousel Section */}
-        <AboutEvent />
+        <Carousel />
 
         {/* Timeline Section */}
-        <section id="timeline" className="section">
-          <div className="section__container">
-            <h2 className="section__title">Timeline</h2>
-            <p className="section__description">
-              Important dates and milestones for the hackathon.
-            </p>
-          </div>
-        </section>
+        <TimeLine />
 
         {/* Prizes Section */}
         <section id="prizes" className="section">
