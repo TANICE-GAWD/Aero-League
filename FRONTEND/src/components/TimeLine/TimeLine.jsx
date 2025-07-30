@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import './TimeLine.css';
 
 // Timeline data for Aero-League hackathon
@@ -36,6 +36,40 @@ const timelineSteps = [
 ];
 
 const TimeLine = () => {
+  const timelineRef = useRef(null);
+  const cardRefs = useRef([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate');
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
+    // Observe all timeline cards
+    cardRefs.current.forEach((card) => {
+      if (card) {
+        observer.observe(card);
+      }
+    });
+
+    return () => {
+      cardRefs.current.forEach((card) => {
+        if (card) {
+          observer.unobserve(card);
+        }
+      });
+    };
+  }, []);
+
   return (
     <section className="timeline-section" id="timeline">
       <div className="timeline-container">
@@ -50,7 +84,7 @@ const TimeLine = () => {
           </p>
         </div>
         
-        <div className="timeline-wrapper">
+        <div className="timeline-wrapper" ref={timelineRef}>
           {/* Timeline line */}
           <div className="timeline-line"></div>
           
@@ -59,7 +93,10 @@ const TimeLine = () => {
               <div key={index} className="timeline-step">
                 {/* For even items, swap order on desktop */}
                 <div className={`timeline-content ${index % 2 === 1 ? 'timeline-content-right' : 'timeline-content-left'}`}>
-                  <div className="timeline-card">
+                  <div 
+                    className="timeline-card"
+                    ref={(el) => (cardRefs.current[index] = el)}
+                  >
                     <div className="timeline-icon-mobile">
                       <span className="timeline-icon-text">{step.icon}</span>
                     </div>
