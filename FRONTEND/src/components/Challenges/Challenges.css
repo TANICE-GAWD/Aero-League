@@ -295,7 +295,7 @@
   transition: all 0.3s ease;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  background: linear-gradient(to right, #00bfff, #7cfc00, #ff6f61);
+  background: linear-gradient();
 }
 
 .cta-button:hover {
