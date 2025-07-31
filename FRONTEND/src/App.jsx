@@ -5,6 +5,7 @@ import TimeLine from './components/TimeLine/TimeLine'
 import './App.css'
 import RewardsSection from './components/Prize/Prize'
 import Rules from './components/Rules/Rules'
+import Challenges from './components/Challenges/Challenges'
 
 function App() {
   return (
@@ -16,6 +17,11 @@ function App() {
       <main className="main-content">
         {/* Hero Carousel Section */}
         <Carousel />
+
+        {/* Challenges Section */}
+        <section id="challenges" className="section">
+          <Challenges />
+        </section>
 
         {/* Timeline Section */}
         <TimeLine />
