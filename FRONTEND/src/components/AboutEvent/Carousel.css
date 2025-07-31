@@ -1,230 +1,221 @@
-.contributors-section {
-  padding: 80px 0;
-  background: transparent;
-  color: #fff;
-  text-align: center;
-  position: relative;
+/* --- Root Variables & Theme Setup --- */
+:root {
+  /* Theme Colors */
+  --bg-color: #0f1419;
+  --primary-glow: #00bfff;
+  --card-bg: rgba(22, 33, 62, 0.85);
+  --card-border: rgba(0, 191, 255, 0.4);
+  --text-primary: #f0f0f0;
+  --text-secondary: rgba(240, 240, 240, 0.7);
+
+  /* Carousel Logic (Must match the number of items in your data) */
+  --item-count: 8; 
 }
 
-.contributors-container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.contributors-title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 200px;
-  color: #fff;
-}
-
-.carousel-container {
+/* --- Section & Thematic Background --- */
+.team-section {
+  width: 100%;
+  padding: 6rem 0;
+  background-color: var(--bg-color);
+  background-image:
+    radial-gradient(var(--card-border) 1px, transparent 1px),
+    radial-gradient(var(--card-border) 1px, var(--bg-color) 1px);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.team-container {
+  width: 100%;
+  max-width: 1400px;
+  text-align: center;
+}
+
+.team-title {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  color: var(--text-primary);
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 15px var(--primary-glow);
+  margin-bottom: 4rem;
+}
+
+/* --- Carousel & HUD Styling --- */
+.carousel-wrapper {
   position: relative;
+  width: 100%;
+  height: 500px; /* Defines the 3D space height */
+  display: grid;
+  place-items: center;
+  perspective: 2000px;
 }
 
-.carousel-button {
-  background: var(--accent-gradient);
-  border: none;
-  padding: 10px;
-  font-size: 2rem;
-  cursor: pointer;
+.hud-frame {
   position: absolute;
-  z-index: 10;
-  color: #fff;
-  border-radius: 8px;
-  transition: background 0.2s;
-}
-
-.carousel-button:hover {
-  background: var(--accent);
-}
-
-.carousel-button.left {
-  margin-top: 400px;
-  left: 88px;
-}
-
-.carousel-button.right {
-  margin-top: 400px;
-  right: 20px;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border: 2px solid var(--card-border);
+  border-radius: 30px;
+  box-shadow: 0 0 30px var(--primary-glow) inset;
+  opacity: 0.3;
+  pointer-events: none;
 }
 
 .carousel {
-  width: 100%;
+  width: 300px;
   height: 400px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  perspective: 1200px;
   position: relative;
+  transform-style: preserve-3d;
 }
 
 .carousel-inner {
   width: 100%;
   height: 100%;
-  position: relative;
+  position: absolute;
   transform-style: preserve-3d;
-  transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
-  transform-origin: center center;
+  --angle: calc(360deg / var(--item-count));
+  --rotation: calc(var(--current-index) * -1 * var(--angle));
+  transform: rotateY(var(--rotation));
+  transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
+/* --- Hexagonal Card Styling --- */
 .carousel-item {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform-origin: center center;
-  transform: translate(-50%, -50%);
-}
-
-/* Mobile styles for linear slider */
-@media (max-width: 768px) {
-  .carousel {
-    height: auto;
-    perspective: none;
-    overflow: hidden;
-  }
-
-  .carousel-inner {
-    display: flex;
-    transform-style: flat;
-    transition: transform 0.5s ease;
-    width: max-content;
-    height: auto;
-  }
-
-  .carousel-item {
-    position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
-    margin: 0 10px;
-    flex-shrink: 0;
-  }
-
-  .member-card {
-    width: 200px;
-    margin: 0;
-  }
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  --item-angle: calc(var(--item-index) * var(--angle));
+  --radius: 450px; /* Controls the carousel's radius */
+  transform: rotateY(var(--item-angle)) translateZ(var(--radius));
 }
 
 .member-card {
-  width: 250px;
-  background: var(--card-bg);
+  width: 100%;
+  height: 100%;
+  background-color: var(--card-bg);
   backdrop-filter: blur(10px);
-  padding: 10px 0px 20px;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-  border: 1.5px solid var(--border-color);
+  color: var(--text-primary);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  border: 2px solid var(--card-border);
+  box-shadow: 0 0 20px rgba(0, 191, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.5rem;
+  transition: all 0.3s ease;
 }
 
-.member-image {
+.member-image-wrapper {
   width: 120px;
   height: 120px;
-  margin: 0 auto;
-  overflow: hidden;
-  border-radius: 50%;
-  border: 2px solid var(--accent);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  margin-bottom: 1.5rem;
 }
-
-.member-image img {
+.member-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.member-name {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-top: 10px;
-  color: #fff;
+.member-info { text-align: center; }
+.member-name { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.member-role { font-size: 1rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
+
+.member-socials a {
+  color: var(--text-secondary);
+  font-size: 1.5rem;
+  margin: 0 0.5rem;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+.member-socials a:hover {
+  color: var(--primary-glow);
+  text-shadow: 0 0 10px var(--primary-glow);
 }
 
-.member-role {
-  font-size: 1rem;
-  color: #b3b3e6;
+/* --- Controls & Indicators --- */
+.carousel-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-primary);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  transition: all 0.3s ease;
+}
+.carousel-control:hover {
+  background-color: var(--primary-glow);
+  color: var(--bg-color);
+  box-shadow: 0 0 15px var(--primary-glow);
+}
+.carousel-control.prev { left: 1rem; }
+.carousel-control.next { right: 1rem; }
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--card-border);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.dot.active {
+  background-color: var(--primary-glow);
+  box-shadow: 0 0 10px var(--primary-glow);
 }
 
-
-/* Responsive Styles */
-@media (max-width: 1024px) {
-  .about-container {
-    padding: 40px 20px;
-    max-width: 95vw;
-  }
-  .contributors-title {
-    margin-bottom: 80px;
-    font-size: 2rem;
+/* --- Responsive 2D Slider for Mobile --- */
+@media (max-width: 900px) {
+  .carousel-wrapper {
+    perspective: none;
+    height: auto;
   }
   .carousel {
-    height: 220px;
+    transform-style: flat;
+    width: 100%;
+    height: auto;
+  }
+  .carousel-inner {
+    position: static;
+    display: flex;
+    transform: translateX(calc(var(--current-index) * -100%));
+    transition: transform 0.5s ease-in-out;
+  }
+  .carousel-item {
+    position: static;
+    transform: none;
+    width: 100%;
+    flex-shrink: 0;
+    padding: 0 1rem;
   }
   .member-card {
-    width: 180px;
-    padding: 10px 0 16px;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
   }
-  .member-image {
-    width: 80px;
-    height: 80px;
-  }
-}
-
-@media (max-width: 768px) {
-  .about-title {
-    font-size: 2rem;
-  }
-  .about-container {
-    padding: 24px 8px;
-    max-width: 100vw;
-  }
-  .contributors-title {
-    font-size: 1.5rem;
-    margin-bottom: 40px;
-  }
-  .carousel {
-    height: 150px;
-  }
-  .member-card {
-    width: 120px;
-    padding: 8px 0 10px;
-  }
-  .member-image {
-    width: 48px;
-    height: 48px;
-  }
-  .about-text {
-    font-size: 1rem;
+  .carousel-control { 
+    display: none; 
   }
 }
-
-@media (max-width: 480px) {
-  .about-title {
-    font-size: 1.2rem;
-  }
-  .about-container {
-    padding: 10px 2px;
-    border-radius: 8px;
-  }
-  .contributors-title {
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-  }
-  .carousel {
-    height: 90px;
-  }
-  .member-card {
-    width: 80px;
-    padding: 4px 0 6px;
-  }
-  .member-image {
-    width: 32px;
-    height: 32px;
-  }
-  .about-text {
-    font-size: 0.9rem;
-  }
-}
-  

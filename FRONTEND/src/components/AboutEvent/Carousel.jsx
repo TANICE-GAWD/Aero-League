@@ -1,89 +1,93 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { FaLinkedin, FaTwitter, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import './Carousel.css';
 
-export default function Carousel() {
-  const [executives, setExecutives] = useState([]);
+// Data is now a constant outside the component and includes more details
+const teamData = [
+  { name: "member 1", role: "Role 1", image: "/assets/member1.png", linkedin: "#", twitter: "#" },
+  { name: "member 2", role: "Role 2", image: "/assets/member2.png", linkedin: "#", twitter: "#" },
+  { name: "member 3", role: "Role 3", image: "/assets/member3.png", linkedin: "#", twitter: "#" },
+  { name: "member 4", role: "Role 4", image: "/assets/member4.png", linkedin: "#", twitter: "#" },
+  { name: "member 5", role: "Role 5", image: "/assets/member5.png", linkedin: "#", twitter: "#" },
+  { name: "member 6", role: "Role 6", image: "/assets/member6.png", linkedin: "#", twitter: "#" },
+  { name: "member 7", role: "Role 7", image: "/assets/member7.png", linkedin: "#", twitter: "#" },
+  { name: "member 8", role: "Role 8", image: "/assets/member8.png", linkedin: "#", twitter: "#" },
+];
+
+export default function TeamCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const totalItems = teamData.length;
 
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % totalItems);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + totalItems) % totalItems);
+  };
+
+  // Auto-rotation effect that respects the pause state
   useEffect(() => {
-    const Data = [
-      { "name": "Member 1", "role": "Role", "image": "/images.png" },
-      { "name": "Member 2", "role": "Role", "image": "/images.jpg" },
-      { "name": "Member 3", "role": "MEMBER", "image": "/images.jpg" },
-      { "name": "Member 4", "role": "MEMBER", "image": "/images.jpg" },
-      { "name": "Member 5", "role": "MEMBER", "image": "/images.jpg" },
-      { "name": "Member 6", "role": "MEMBER", "image": "/images.jpg" },
-      { "name": "Member 7", "role": "MEMBER", "image": "/images.jpg" },
-      { "name": "Member 8", "role": "MEMBER", "image": "/images.jpg" },
-      { "name": "Member 9", "role": "MEMBER", "image": "/images.jpg" },
-      { "name": "Member 10", "role": "MEMBER", "image": "/images.jpg" },
-      { "name": "Member 11", "role": "MEMBER", "image": "/images.jpg" },
-      { "name": "Member 12", "role": "MEMBER", "image": "/images.jpg" }
-    ];
-    setExecutives(Data);
-  }, []);
-
-  // Check if device is mobile
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  // Auto-rotate carousel
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => prevIndex + 1);
-    }, 3000); // Rotate every 3 seconds
-
+    if (isPaused) return;
+    const interval = setInterval(handleNext, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isPaused, totalItems]); // Added totalItems as a dependency
 
   return (
-    <section className="contributors-section">
-      <div className="contributors-container">
-        <h2 className="contributors-title">AERO LEAGUE</h2>
-        <div className="carousel-container">
+    <section className="team-section">
+      <div className="team-container">
+        <h2 className="team-title">MEET THE PILOTS</h2>
+        <div
+          className="carousel-wrapper"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {/* Decorative HUD Frame */}
+          <div className="hud-frame"></div>
+          
           <div className="carousel">
             <div
               className="carousel-inner"
-              style={{
-                transform: isMobile 
-                  ? `translateX(-${currentIndex * 220}px)` 
-                  : `rotateY(${currentIndex * -(360 / executives.length)}deg)`,
-              }}
+              style={{ "--current-index": currentIndex }}
             >
-              {executives.map((executive, index) => {
-                const angle = index * (360 / executives.length);
-                return (
-                  <div 
-                    key={index} 
-                    className="carousel-item" 
-                    style={{ 
-                      transform: isMobile 
-                        ? 'none' 
-                        : `translate(-50%, -50%) rotateY(${angle}deg) translateZ(480px)` 
-                    }}
-                  >
-                    <div className="member-card">
-                      <div className="member-image">
-                        <img src={executive.image} alt={executive.name} />
-                      </div>
-                      <h3 className="member-name">{executive.name}</h3>
-                      <p className="member-role">{executive.role}</p>
+              {teamData.map((member, index) => (
+                <div
+                  className="carousel-item"
+                  key={index}
+                  style={{ "--item-index": index }}
+                >
+                  <div className="member-card">
+                    <div className="member-image-wrapper">
+                      <img src={member.image} alt={member.name} className="member-image" />
+                    </div>
+                    <div className="member-info">
+                      <h3 className="member-name">{member.name}</h3>
+                      <p className="member-role">{member.role}</p>
+                      
                     </div>
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
           </div>
+          
+          {/* Navigation Controls */}
+          <button className="carousel-control prev" onClick={handlePrev} aria-label="Previous pilot"><FaChevronLeft /></button>
+          <button className="carousel-control next" onClick={handleNext} aria-label="Next pilot"><FaChevronRight /></button>
+        </div>
+
+        {/* Dot Indicators */}
+        <div className="carousel-dots">
+          {teamData.map((_, index) => (
+            <button
+              key={index}
+              className={`dot ${currentIndex === index ? 'active' : ''}`}
+              onClick={() => setCurrentIndex(index)}
+              aria-label={`Go to pilot ${index + 1}`}
+            />
+          ))}
         </div>
       </div>
     </section>
