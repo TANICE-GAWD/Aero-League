@@ -44,7 +44,7 @@
   position: relative;
 }
 
-/* Timeline line */
+/* Timeline line with scroll-based color change */
 .timeline-line {
   position: absolute;
   left: 50%;
@@ -53,12 +53,24 @@
   width: 3px;
   background: linear-gradient(180deg, #ffd700 0%, #ffed4e 100%);
   display: none;
+  overflow: hidden;
 }
 
 @media (min-width: 768px) {
   .timeline-line {
     display: block;
   }
+}
+
+/* Timeline line progress indicator */
+.timeline-line-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(180deg, #4facfe 0%, #05537c 100%);
+  transition: height 0.3s ease-out;
+  box-shadow: 0 0 10px rgba(79, 172, 254, 0.5);
 }
 
 .timeline-steps {
@@ -136,6 +148,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.6s ease-out;
+}
+
+.timeline-card.animate .timeline-icon-text {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .timeline-step-title {
@@ -192,7 +212,8 @@
   transition: all 0.3s ease;
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) scale(0);
+  opacity: 0;
 }
 
 @media (min-width: 768px) {
@@ -201,14 +222,28 @@
   }
 }
 
+.timeline-node.animate {
+  transform: translateX(-50%) scale(1);
+  opacity: 1;
+}
+
 .timeline-node:hover {
-  transform: scale(1.1);
+  transform: translateX(-50%) scale(1.1);
   box-shadow: 0 6px 25px rgba(255, 215, 0, 0.4);
 }
 
 .timeline-node-icon {
   font-size: 1.25rem;
   color: #ffffff;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.6s ease-out;
+  transition-delay: 0.3s;
+}
+
+.timeline-node.animate .timeline-node-icon {
+  opacity: 1;
+  transform: scale(1);
 }
 
 /* Empty div for layout on odd items */
@@ -231,7 +266,7 @@
   }
 }
 
-/* Animation for timeline cards */
+/* Enhanced animation for timeline cards */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -240,6 +275,17 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
@@ -254,11 +300,19 @@
   transform: translateY(0);
 }
 
+/* Staggered animation delays for cards */
 .timeline-card.animate:nth-child(1) { transition-delay: 0.1s; }
 .timeline-card.animate:nth-child(2) { transition-delay: 0.2s; }
 .timeline-card.animate:nth-child(3) { transition-delay: 0.3s; }
 .timeline-card.animate:nth-child(4) { transition-delay: 0.4s; }
 .timeline-card.animate:nth-child(5) { transition-delay: 0.5s; }
+
+/* Staggered animation delays for nodes */
+.timeline-node.animate:nth-child(1) { transition-delay: 0.1s; }
+.timeline-node.animate:nth-child(2) { transition-delay: 0.2s; }
+.timeline-node.animate:nth-child(3) { transition-delay: 0.3s; }
+.timeline-node.animate:nth-child(4) { transition-delay: 0.4s; }
+.timeline-node.animate:nth-child(5) { transition-delay: 0.5s; }
 
 /* Responsive adjustments */
 @media (max-width: 767px) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './TimeLine.css';
 
 // Timeline data for Aero-League hackathon
@@ -38,6 +38,8 @@ const timelineSteps = [
 const TimeLine = () => {
   const timelineRef = useRef(null);
   const cardRefs = useRef([]);
+  const nodeRefs = useRef([]);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -54,10 +56,16 @@ const TimeLine = () => {
       }
     );
 
-    // Observe all timeline cards
+    // Observe all timeline cards and nodes
     cardRefs.current.forEach((card) => {
       if (card) {
         observer.observe(card);
+      }
+    });
+
+    nodeRefs.current.forEach((node) => {
+      if (node) {
+        observer.observe(node);
       }
     });
 
@@ -67,6 +75,37 @@ const TimeLine = () => {
           observer.unobserve(card);
         }
       });
+      nodeRefs.current.forEach((node) => {
+        if (node) {
+          observer.unobserve(node);
+        }
+      });
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!timelineRef.current) return;
+
+      const timelineElement = timelineRef.current;
+      const rect = timelineElement.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      
+      // Calculate scroll progress within the timeline section
+      const timelineTop = rect.top;
+      const timelineHeight = rect.height;
+      
+      if (timelineTop < windowHeight && timelineTop + timelineHeight > 0) {
+        const progress = Math.max(0, Math.min(1, (windowHeight - timelineTop) / (windowHeight + timelineHeight)));
+        setScrollProgress(progress);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial call
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -85,8 +124,13 @@ const TimeLine = () => {
         </div>
         
         <div className="timeline-wrapper" ref={timelineRef}>
-          {/* Timeline line */}
-          <div className="timeline-line"></div>
+          {/* Timeline line with scroll-based color change */}
+          <div className="timeline-line">
+            <div 
+              className="timeline-line-progress"
+              style={{ height: `${scrollProgress * 100}%` }}
+            ></div>
+          </div>
           
           <div className="timeline-steps">
             {timelineSteps.map((step, index) => (
@@ -107,7 +151,10 @@ const TimeLine = () => {
                 </div>
                 
                 {/* Timeline node - visible only on desktop */}
-                <div className="timeline-node">
+                <div 
+                  className="timeline-node"
+                  ref={(el) => (nodeRefs.current[index] = el)}
+                >
                   <span className="timeline-node-icon">{step.icon}</span>
                 </div>
                 

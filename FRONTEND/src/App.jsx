@@ -3,6 +3,7 @@ import HeroSection from './components/HeroSection/HeroSection'
 import Carousel from './components/AboutEvent/Carousel'
 import TimeLine from './components/TimeLine/TimeLine'
 import './App.css'
+import RewardsSection from './components/Prize/Prize'
 
 function App() {
   return (
@@ -20,12 +21,7 @@ function App() {
 
         {/* Prizes Section */}
         <section id="prizes" className="section">
-          <div className="section__container">
-            <h2 className="section__title">Prizes</h2>
-            <p className="section__description">
-              Amazing rewards await the winners.
-            </p>
-          </div>
+          <RewardsSection />
         </section>
 
         {/* Rules Section */}
