@@ -9,6 +9,7 @@ const HeroSection = () => {
   // Navigation items
   const navItems = [
     { id: 'home', label: 'Home', href: '#home' },
+    { id: 'challenge', label: 'Challenges', href: '#challenges' },
     { id: 'timeline', label: 'Timeline', href: '#timeline' },
     { id: 'prizes', label: 'Prizes', href: '#prizes' },
     { id: 'rules', label: 'Rules', href: '#rules' },

@@ -19,9 +19,9 @@ function App() {
         <Carousel />
 
         {/* Challenges Section */}
-        <section id="challenges" className="section">
-          <Challenges />
-        </section>
+        
+        <Challenges />
+
 
         {/* Timeline Section */}
         <TimeLine />
