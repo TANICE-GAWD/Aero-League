@@ -7,62 +7,62 @@ const Rules = () => {
   const rulesData = [
     {
       id: 'eligibility',
-      title: 'Eligibility',
-      icon: '👥',
+      title: 'Who Can Participate',
+      icon: '🎓',
       content: [
-        'Participants must be enrolled students at recognized educational institutions',
-        'Teams can consist of 2-4 members',
-        'All team members must be 18 years or older',
-        'Participants must have valid student identification',
-        'Previous winners may participate but are not eligible for the same prize category'
+        'Must be currently enrolled in a college/university (undergrad or grad)',
+        'Team size: 2-4 people (no solo entries, sorry!)',
+        'Everyone needs to be 18+ by the event start date',
+        'Valid student ID required for verification',
+        'Previous winners welcome but can\'t win the same category twice'
       ]
     },
     {
       id: 'team-formation',
-      title: 'Team Formation',
-      icon: '🤝',
+      title: 'Team Setup',
+      icon: '👥',
       content: [
-        'Teams must be formed before the registration deadline',
-        'Each team must have a designated team leader',
-        'Team members cannot be changed after registration',
-        'Cross-institution teams are allowed',
-        'All team members must be present during the competition'
+        'Lock in your team before registration closes (no last-minute changes)',
+        'Pick a team captain - they\'ll be our main contact',
+        'No swapping team members after you register',
+        'Mix students from different schools? Totally cool!',
+        'All teammates must show up for the actual event'
       ]
     },
     {
       id: 'submission-guidelines',
-      title: 'Submission Guidelines',
-      icon: '📝',
+      title: 'What to Submit',
+      icon: '💻',
       content: [
-        'All submissions must be original work created during the competition',
-        'Code must be well-documented and commented',
-        'Projects must be submitted through the designated platform',
-        'Include a comprehensive README file with setup instructions',
-        'All external libraries and resources must be properly attributed'
+        'Build something awesome during the hackathon (no pre-built stuff)',
+        'Write clean, readable code with good comments',
+        'Upload everything through our submission portal',
+        'Include a solid README that explains how to run your project',
+        'Credit any libraries, APIs, or resources you used'
       ]
     },
     {
       id: 'judging-criteria',
-      title: 'Judging Criteria',
-      icon: '⚖️',
+      title: 'How We Judge',
+      icon: '🏆',
       content: [
-        'Innovation and creativity (30%)',
-        'Technical implementation and code quality (25%)',
-        'User experience and design (20%)',
-        'Problem-solving approach (15%)',
-        'Documentation and presentation (10%)'
+        'How creative and innovative is your solution? (30%)',
+        'Is your code well-written and technically sound? (25%)',
+        'How good is the user experience and design? (20%)',
+        'Did you solve the problem effectively? (15%)',
+        'How well did you present and document your work? (10%)'
       ]
     },
     {
       id: 'code-of-conduct',
-      title: 'Code of Conduct',
-      icon: '📋',
+      title: 'Be Cool',
+      icon: '🤝',
       content: [
-        'Respect all participants, organizers, and mentors',
-        'No harassment, discrimination, or inappropriate behavior',
-        'Maintain professional and ethical conduct throughout',
-        'Follow all competition rules and guidelines',
-        'Report any violations to organizers immediately'
+        'Treat everyone with respect - organizers, mentors, other participants',
+        'Zero tolerance for harassment, discrimination, or sketchy behavior',
+        'Keep it professional and ethical throughout the event',
+        'Follow all the rules we\'ve laid out here',
+        'If you see something, say something - report issues to organizers'
       ]
     }
   ];
@@ -74,9 +74,9 @@ const Rules = () => {
   return (
     <div className="rules-container">
       <div className="rules-header">
-        <h2 className="rules-title">Rules & Regulations</h2>
+        <h2 className="rules-title">The Rules</h2>
         <p className="rules-subtitle">
-          Comprehensive guidelines to ensure a fair and successful competition
+          Everything you need to know to have a great hackathon experience
         </p>
       </div>
       
