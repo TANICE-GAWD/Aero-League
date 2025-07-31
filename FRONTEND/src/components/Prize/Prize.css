@@ -24,20 +24,7 @@
   background-clip: text;
   letter-spacing: -0.02em;
   line-height: 1.1;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  position: relative;
-}
-
-.rewards-title::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
-  border-radius: 2px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .rewards-grid {
@@ -48,6 +35,7 @@
   gap: 3rem;
   max-width: 1400px;
   margin: 0 auto;
+  perspective: 1000px;
 }
 
 .reward-card-group {
@@ -65,23 +53,7 @@
   transition: var(--transition-smooth);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-subtle);
-  overflow: hidden;
-}
-
-.reward-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  transition: left 0.6s ease;
-  z-index: 1;
-}
-
-.reward-card:hover::before {
-  left: 100%;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
 }
 
 .reward-card-group:hover .reward-card {
@@ -90,7 +62,7 @@
 }
 
 .reward-card-group:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px) scale(1.02);
   transition: var(--transition-smooth);
 }
 
@@ -113,30 +85,10 @@
   background-color: var(--color-card);
   border: 1px solid var(--color-border);
   transition: var(--transition-fast);
-  position: relative;
 }
 
 .reward-card-group:hover .card-front {
   border-color: var(--color-accent);
-  box-shadow: 0 0 20px rgba(100, 181, 246, 0.2);
-}
-
-.card-front::after {
-  content: '';
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 20px;
-  height: 20px;
-  background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
-  opacity: 0.3;
-  border-radius: 50%;
-  transition: var(--transition-fast);
-}
-
-.reward-card-group:hover .card-front::after {
-  opacity: 0.6;
-  transform: scale(1.2);
 }
 
 .card-back {
@@ -155,13 +107,11 @@
   height: 100%;
   object-fit: cover;
   border-radius: var(--border-radius);
-  transition: var(--transition-smooth);
-  filter: brightness(0.9) contrast(1.1);
+  transition: var(--transition-fast);
 }
 
 .reward-card-group:hover .reward-image {
-  filter: brightness(1) contrast(1.2);
-  transform: scale(1.02);
+  filter: brightness(1.1) contrast(1.05);
 }
 
 .reward-place {
@@ -176,6 +126,8 @@
   font-weight: bold;
   color: var(--color-text-primary);
   margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .reward-details {
