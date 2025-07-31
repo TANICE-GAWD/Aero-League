@@ -2,15 +2,15 @@ import './Prize.css'
 
 export default function RewardsSection() {
   const rewards = [
-    { place: "3rd", image: "/assets/THIRD.png", details: "Bronze Medal + Swag Pack" },
-    { place: "1st", image: "/assets/FIRST.png", details: "Gold Trophy + Cash Prize" },
-    { place: "2nd", image: "/assets/SECOND.png", details: "Silver Medal + Tech Gear" },
+    { place: "3rd", image: "/assets/THIRD.png", details: "Bronze Medal" },
+    { place: "1st", image: "/assets/FIRST.png", details: "Gold Trophy" },
+    { place: "2nd", image: "/assets/SECOND.png", details: "Silver Medal" },
   ];
 
   return (
     <section className="rewards-section">
       <div className="rewards-container">
-        <h2 className="rewards-title">What You Can Win</h2>
+        <h2 className="rewards-title">REWARDS</h2>
         <div className="rewards-grid">
           {rewards.map((reward, index) => (
             <div key={index} className="reward-card-group">
@@ -23,7 +23,7 @@ export default function RewardsSection() {
                   />
                 </div>
                 <div className="card-back">
-                  <p className="reward-details-title">What You Get</p>
+                  <p className="reward-details-title">Reward Details</p>
                   <p className="reward-details">{reward.details}</p>
                 </div>
               </div>

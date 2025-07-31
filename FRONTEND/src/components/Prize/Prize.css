@@ -24,7 +24,6 @@
   background-clip: text;
   letter-spacing: -0.02em;
   line-height: 1.1;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .rewards-grid {
@@ -35,7 +34,6 @@
   gap: 3rem;
   max-width: 1400px;
   margin: 0 auto;
-  perspective: 1000px;
 }
 
 .reward-card-group {
@@ -53,7 +51,6 @@
   transition: var(--transition-smooth);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-subtle);
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
 }
 
 .reward-card-group:hover .reward-card {
@@ -62,7 +59,7 @@
 }
 
 .reward-card-group:hover {
-  transform: translateY(-6px) scale(1.02);
+  transform: translateY(-4px);
   transition: var(--transition-smooth);
 }
 
@@ -92,7 +89,7 @@
 }
 
 .card-back {
-  background-color: var(--color-card);
+  background-color: white;
   border: 1px solid var(--color-border);
   transform: rotateY(180deg);
   transition: var(--transition-fast);
@@ -107,11 +104,6 @@
   height: 100%;
   object-fit: cover;
   border-radius: var(--border-radius);
-  transition: var(--transition-fast);
-}
-
-.reward-card-group:hover .reward-image {
-  filter: brightness(1.1) contrast(1.05);
 }
 
 .reward-place {
@@ -124,14 +116,12 @@
 .reward-details-title {
   font-size: 1.125rem;
   font-weight: bold;
-  color: var(--color-text-primary);
+  color: black;
   margin-bottom: 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
 .reward-details {
-  color: var(--color-text-secondary);
+  color: black;
   margin-top: 1rem;
   font-size: 1rem;
   line-height: 1.4;
