@@ -4,6 +4,7 @@ import Carousel from './components/AboutEvent/Carousel'
 import TimeLine from './components/TimeLine/TimeLine'
 import './App.css'
 import RewardsSection from './components/Prize/Prize'
+import Rules from './components/Rules/Rules'
 
 function App() {
   return (
@@ -26,12 +27,7 @@ function App() {
 
         {/* Rules Section */}
         <section id="rules" className="section">
-          <div className="section__container">
-            <h2 className="section__title">Rules & Regulations</h2>
-            <p className="section__description">
-              Guidelines and requirements for participants.
-            </p>
-          </div>
+          <Rules />
         </section>
 
         {/* Contact Section */}

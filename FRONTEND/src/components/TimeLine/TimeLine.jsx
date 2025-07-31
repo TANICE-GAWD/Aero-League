@@ -91,21 +91,40 @@ const TimeLine = () => {
       const rect = timelineElement.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       
-      // Calculate scroll progress within the timeline section
+      // Calculate scroll progress within the timeline section with smoother interpolation
       const timelineTop = rect.top;
       const timelineHeight = rect.height;
       
       if (timelineTop < windowHeight && timelineTop + timelineHeight > 0) {
-        const progress = Math.max(0, Math.min(1, (windowHeight - timelineTop) / (windowHeight + timelineHeight)));
-        setScrollProgress(progress);
+        // Enhanced progress calculation with easing
+        const rawProgress = (windowHeight - timelineTop) / (windowHeight + timelineHeight);
+        const easedProgress = Math.pow(rawProgress, 0.8); // Smooth easing
+        const clampedProgress = Math.max(0, Math.min(1, easedProgress));
+        
+        // Add a small delay for smoother animation
+        requestAnimationFrame(() => {
+          setScrollProgress(clampedProgress);
+        });
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    // Throttle scroll events for better performance
+    let ticking = false;
+    const throttledHandleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
     handleScroll(); // Initial call
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', throttledHandleScroll);
     };
   }, []);
 
