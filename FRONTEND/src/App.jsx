@@ -6,6 +6,7 @@ import './App.css'
 import RewardsSection from './components/Prize/Prize'
 import Rules from './components/Rules/Rules'
 import Challenges from './components/Challenges/Challenges'
+import Contact from './components/Contact/Contact';
 
 function App() {
   return (
@@ -33,14 +34,7 @@ function App() {
         <Rules />
 
         {/* Contact Section */}
-        <section id="contact" className="section">
-          <div className="section__container">
-            <h2 className="section__title">Contact</h2>
-            <p className="section__description">
-              Get in touch with us for more information.
-            </p>
-          </div>
-        </section>
+        <Contact />
       </main>
     </div>
   )
