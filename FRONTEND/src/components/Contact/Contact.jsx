@@ -7,7 +7,7 @@ import './Contact.css';
 const contactsData = [
   {
     name: 'Dir. Ishaan Jindal',
-    title: 'title_1',
+    title: 'Organizer',
     description: 'desc_1',
     image: 'https://placehold.co/150x150/EFEFEF/1A1A2E?text=',
     contactLink: 'mailto:hsingh@example.com',
@@ -15,18 +15,17 @@ const contactsData = [
   },
   {
     name: 'Advitya Dua',
-    title: 'title_2',
+    title: 'Organizer',
     description: 'desc_2',
-    image: 'https://placehold.co/150x150/EFEFEF/1A1A2E?text=',
-    contactLink: 'mailto:okadvil@example.com',
-    linkedinLink: '#',
+    image: '/assets/Advitya_Dua.jpg',
+    contactLink: 'mailto:adua60_be24@thapar.edu',
+    linkedinLink: 'https://www.linkedin.com/in/advitya-dua',
   },
   {
     name: 'Prince Sharma',
-    spoc: 'SPOC - Global',
-    title: 'title_3',
-    description: 'desc_3',
-    image: 'https://placehold.co/150x150/EFEFEF/1A1A2E?text=',
+    title: 'Developer',
+    description: 'Sophomore at Thapar University, India',
+    image: '/assets/Prince_Sharma.jpg',
     contactLink: 'mailto:placeholder@example.com',
     linkedinLink: '#',
   }

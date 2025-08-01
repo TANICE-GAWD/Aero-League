@@ -6,10 +6,10 @@ const HeroSection = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Navigation items
+  // Navigation items - Corrected 'challenge' to 'challenges' for consistency
   const navItems = [
     { id: 'home', label: 'Home', href: '#home' },
-    { id: 'challenge', label: 'Challenges', href: '#challenges' },
+    { id: 'challenges', label: 'Challenges', href: '#challenges' },
     { id: 'timeline', label: 'Timeline', href: '#timeline' },
     { id: 'prizes', label: 'Prizes', href: '#prizes' },
     { id: 'rules', label: 'Rules', href: '#rules' },
@@ -23,27 +23,27 @@ const HeroSection = () => {
       setIsScrolled(scrollTop > 50);
 
       // Update active section based on scroll position
-      const sections = navItems.map(item => item.id);
-      const currentSection = sections.find(sectionId => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
-        }
-        return false;
-      });
-      
-      if (currentSection) {
-        setActiveSection(currentSection);
+      let currentSectionId = 'home';
+      for (const item of navItems) {
+          const element = document.getElementById(item.id);
+          if (element) {
+              const rect = element.getBoundingClientRect();
+              if (rect.top <= 100 && rect.bottom >= 100) {
+                  currentSectionId = item.id;
+                  break;
+              }
+          }
       }
+      setActiveSection(currentSectionId);
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [navItems]);
 
   // Smooth scroll to section
   const scrollToSection = (href) => {
+    // The href includes the '#', so we need to select the element with that
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({
@@ -51,10 +51,11 @@ const HeroSection = () => {
         block: 'start'
       });
     }
+    // Close mobile menu after clicking a link
     setIsMenuOpen(false);
   };
 
-  // Handle keyboard navigation
+  // Handle keyboard navigation for accessibility
   const handleKeyDown = (event, href) => {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
