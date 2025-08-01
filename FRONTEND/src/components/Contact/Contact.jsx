@@ -27,7 +27,7 @@ const contactsData = [
     description: 'Sophomore at Thapar University, India',
     image: '/assets/Prince_Sharma.jpg',
     contactLink: 'mailto:placeholder@example.com',
-    linkedinLink: '#',
+    linkedinLink: 'https://www.linkedin.com/in/prince-tanice',
   }
 ];
 
@@ -38,7 +38,7 @@ const ContactPoints = () => {
         <div className="contact-points-header">
           <h2 className="contact-points-title">Dedicated Contacts</h2>
           <p className="contact-points-subtitle">
-            Your seamless coordination between India and Israel.
+            Need Assistance? Ping our team.
           </p>
         </div>
 
@@ -71,10 +71,6 @@ const ContactPoints = () => {
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="assistance-footer">
-          <p>Need Assistance?</p>
         </div>
       </div>
     </section>
