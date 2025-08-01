@@ -2,11 +2,17 @@ import "./Prize.css";
 import { GiDeliveryDrone } from "react-icons/gi";
 
 
+// 1st place 25000
+// 2nd 12000
+// consolation 5000
+// backup 5000
+
+
 export default function PrizesSection() {
   const rewardsData = [
-    { place: "3rd", image: "/assets/THIRD.png", details: "Bronze Medal + Drone Kit", tier: "bronze" },
-    { place: "1st", image: "/assets/FIRST.png", details: "Gold Trophy + $5,000", tier: "gold" },
-    { place: "2nd", image: "/assets/SECOND.png", details: "Silver Medal + Pro Drone", tier: "silver" },
+    { place: "3rd", image: "/assets/THIRD.png", details: "INR 5,000", tier: "bronze" },
+    { place: "1st", image: "/assets/FIRST.png", details: "INR 25,000", tier: "gold" },
+    { place: "2nd", image: "/assets/SECOND.png", details: "INR 12,000", tier: "silver" },
   ];
 
   // Sort rewards to ensure a 1st, 2nd, 3rd podium layout

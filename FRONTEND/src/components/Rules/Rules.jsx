@@ -1,132 +1,122 @@
+"use client";
 import { useState } from 'react';
+import { FaUserGraduate, FaUsers, FaLaptopCode, FaTrophy, FaHandsHelping, FaChevronDown } from 'react-icons/fa';
 import './Rules.css';
 
-const Rules = () => {
-  const [activeAccordion, setActiveAccordion] = useState(null);
+// Data is updated with high-quality icons and clearer titles
+const rulesData = [
+  {
+    id: 'eligibility',
+    title: 'Eligibility Criteria',
+    Icon: FaUserGraduate,
+    content: [
+      'Participants must be currently enrolled in a college or university.',
+      'Team size must be between 2 to 4 members. No solo entries.',
+      'All participants must be 18 years or older by the event start date.',
+      'A valid student ID is required for verification during check-in.',
+      'Previous winners are welcome but cannot win the same category twice.'
+    ]
+  },
+  {
+    id: 'team-formation',
+    title: 'Team Formation',
+    Icon: FaUsers,
+    content: [
+      'Teams must be finalized before the registration deadline.',
+      'Designate a team captain for all official communications.',
+      'No changes to team members are permitted after registration closes.',
+      'Inter-college teams are highly encouraged.',
+      'All team members must be present for the final project presentation.'
+    ]
+  },
+  {
+    id: 'submission-guidelines',
+    title: 'Submission Guidelines',
+    Icon: FaLaptopCode,
+    content: [
+      'All code must be written during the 48-hour hackathon period.',
+      'Submissions must be made through the official event portal.',
+      'Include a detailed README file explaining your project and setup.',
+      'Properly credit any third-party libraries, APIs, or assets used.',
+      'A live, functional demo is required for judging.'
+    ]
+  },
+  {
+    id: 'judging-criteria',
+    title: 'Judging Criteria',
+    Icon: FaTrophy,
+    content: [
+      'Innovation & Creativity (30%)',
+      'Technical Complexity & Execution (25%)',
+      'Design & User Experience (20%)',
+      'Problem Solving & Impact (15%)',
+      'Presentation & Documentation (10%)'
+    ]
+  },
+  {
+    id: 'code-of-conduct',
+    title: 'Code of Conduct',
+    Icon: FaHandsHelping,
+    content: [
+      'Treat all participants, mentors, and organizers with respect.',
+      'Harassment, discrimination, or any form of abuse will not be tolerated.',
+      'Maintain a professional and collaborative environment at all times.',
+      'Adhere to all rules and guidelines provided by the organizers.',
+      'Report any violations to event staff immediately.'
+    ]
+  }
+];
 
-  const rulesData = [
-    {
-      id: 'eligibility',
-      title: 'Who Can Participate',
-      icon: '🎓',
-      content: [
-        'Must be currently enrolled in a college/university (undergrad or grad)',
-        'Team size: 2-4 people (no solo entries, sorry!)',
-        'Everyone needs to be 18+ by the event start date',
-        'Valid student ID required for verification',
-        'Previous winners welcome but can\'t win the same category twice'
-      ]
-    },
-    {
-      id: 'team-formation',
-      title: 'Team Setup',
-      icon: '👥',
-      content: [
-        'Lock in your team before registration closes (no last-minute changes)',
-        'Pick a team captain - they\'ll be our main contact',
-        'No swapping team members after you register',
-        'Mix students from different schools? Totally cool!',
-        'All teammates must show up for the actual event'
-      ]
-    },
-    {
-      id: 'submission-guidelines',
-      title: 'What to Submit',
-      icon: '💻',
-      content: [
-        'Build something awesome during the hackathon (no pre-built stuff)',
-        'Write clean, readable code with good comments',
-        'Upload everything through our submission portal',
-        'Include a solid README that explains how to run your project',
-        'Credit any libraries, APIs, or resources you used'
-      ]
-    },
-    {
-      id: 'judging-criteria',
-      title: 'How We Judge',
-      icon: '🏆',
-      content: [
-        'How creative and innovative is your solution? (30%)',
-        'Is your code well-written and technically sound? (25%)',
-        'How good is the user experience and design? (20%)',
-        'Did you solve the problem effectively? (15%)',
-        'How well did you present and document your work? (10%)'
-      ]
-    },
-    {
-      id: 'code-of-conduct',
-      title: 'Be Cool',
-      icon: '🤝',
-      content: [
-        'Treat everyone with respect - organizers, mentors, other participants',
-        'Zero tolerance for harassment, discrimination, or sketchy behavior',
-        'Keep it professional and ethical throughout the event',
-        'Follow all the rules we\'ve laid out here',
-        'If you see something, say something - report issues to organizers'
-      ]
-    }
-  ];
+const RulesBriefing = () => {
+  const [activeAccordion, setActiveAccordion] = useState(null);
 
   const toggleAccordion = (id) => {
     setActiveAccordion(activeAccordion === id ? null : id);
   };
 
   return (
-    <div className="rules-container">
-      <div className="rules-header">
-        <h2 className="rules-title">The Rules</h2>
-        <p className="rules-subtitle">
-          Everything you need to know to have a great hackathon experience
-        </p>
-      </div>
-      
-      <div className="accordion-container">
-        {rulesData.map((rule) => (
-          <div 
-            key={rule.id} 
-            className={`accordion-item ${activeAccordion === rule.id ? 'active' : ''}`}
-          >
-            <button
-              className="accordion-header"
-              onClick={() => toggleAccordion(rule.id)}
-              aria-expanded={activeAccordion === rule.id}
+    <section className="team-section">
+      <div className="rules-container">
+        <div className="rules-header-content">
+          <h2 className="rules-main-title">MISSION BRIEFING</h2>
+          <p className="rules-main-subtitle">
+            Key regulations and guidelines for a fair and competitive event.
+          </p>
+        </div>
+        
+        <div className="accordion-wrapper">
+          {rulesData.map((rule) => (
+            <div 
+              key={rule.id} 
+              className={`accordion-item ${activeAccordion === rule.id ? 'active' : ''}`}
             >
-              <div className="accordion-icon">
-                <span className="icon">{rule.icon}</span>
-              </div>
-              <h3 className="accordion-title">{rule.title}</h3>
-              <div className="accordion-arrow">
-                <svg 
-                  width="20" 
-                  height="20" 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="2" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round"
-                >
-                  <polyline points="6,9 12,15 18,9"></polyline>
-                </svg>
-              </div>
-            </button>
-            
-            <div className="accordion-content">
-              <div className="accordion-content-inner">
-                <ul className="rules-list">
-                  {rule.content.map((item, index) => (
-                    <li key={index} className="rules-list-item">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+              <button
+                className="accordion-button"
+                onClick={() => toggleAccordion(rule.id)}
+                aria-expanded={activeAccordion === rule.id}
+              >
+                <rule.Icon className="accordion-icon-main" />
+                <h3 className="accordion-button-title">{rule.title}</h3>
+                <FaChevronDown className="accordion-chevron" />
+              </button>
+              
+              <div className="accordion-content-panel">
+                <div className="accordion-content-inner">
+                  <ul className="rules-details-list">
+                    {rule.content.map((item, index) => (
+                      <li key={index} className="rules-list-item-detail">
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
-export default Rules;
+export default RulesBriefing;

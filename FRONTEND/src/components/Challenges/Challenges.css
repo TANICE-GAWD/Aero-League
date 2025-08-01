@@ -28,7 +28,10 @@ body {
 
 .challenges-section {
   position: relative;
-  background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-mid) 50%, var(--bg-gradient-end) 100%);
+  background-color: var(--bg-color);
+  background-image:
+    radial-gradient(var(--card-border) 1px, transparent 1px),
+    radial-gradient(var(--card-border) 1px, var(--bg-color) 1px);
   overflow-x: hidden;
 }
 
@@ -36,7 +39,11 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: linear-gradient(180deg, var(--bg-gradient-start) 70%, transparent 100%);
+  background-color: var(--bg-color);
+  background-image:
+    radial-gradient(var(--card-border) 1px, transparent 1px),
+    radial-gradient(var(--card-border) 1px, var(--bg-color) 1px);
+  overflow-x: hidden;
   padding: 2rem 0 1rem;
   text-align: center;
 }
@@ -258,4 +265,19 @@ body {
   .card-title {
     font-size: 1.8rem;
   }
+}
+
+.team-section {
+  width: 100%;
+  padding: 6rem 0;
+  background-color: var(--bg-color);
+  background-image:
+    radial-gradient(var(--card-border) 1px, transparent 1px),
+    radial-gradient(var(--card-border) 1px, var(--bg-color) 1px);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }

@@ -118,27 +118,25 @@ const Challenges = () => {
   }, []);
 
   return (
-    <section className="challenges-section" ref={sectionRef}>
-      <header className="sticky-header">
-        <h1 className="section-title">CHALLENGES</h1>
-        {/* --- UX Improvement: Scroll Progress Bar --- */}
-        <div className="progress-indicator">
-            <div className="progress-bar" style={{ transform: `scaleX(${scrollProgress})` }}/>
-        </div>
-      </header>
+    <section className="team-section">
+      <section className="challenges-section" ref={sectionRef}>
+        <header className="sticky-header">
+          <h1 className="section-title">CHALLENGES</h1>
+        </header>
 
-      <div className="challenges-container">
-        {challengesData.map((challenge, index) => (
-          <div
-            key={challenge.id}
-            ref={(el) => (cardRefs.current[index] = el)}
-            data-index={index}
-            className="challenge-wrapper"
-          >
-            <ChallengeCard challenge={challenge} isVisible={visibleCards.includes(index)} />
-          </div>
-        ))}
-      </div>
+        <div className="challenges-container">
+          {challengesData.map((challenge, index) => (
+            <div
+              key={challenge.id}
+              ref={(el) => (cardRefs.current[index] = el)}
+              data-index={index}
+              className="challenge-wrapper"
+            >
+              <ChallengeCard challenge={challenge} isVisible={visibleCards.includes(index)} />
+            </div>
+          ))}
+        </div>
+      </section>
     </section>
   );
 };

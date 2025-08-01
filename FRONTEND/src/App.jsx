@@ -27,14 +27,10 @@ function App() {
         <TimeLine />
 
         {/* Prizes Section */}
-        <section id="prizes" className="section">
-          <RewardsSection />
-        </section>
+        <RewardsSection />
 
         {/* Rules Section */}
-        <section id="rules" className="section">
-          <Rules />
-        </section>
+        <Rules />
 
         {/* Contact Section */}
         <section id="contact" className="section">
