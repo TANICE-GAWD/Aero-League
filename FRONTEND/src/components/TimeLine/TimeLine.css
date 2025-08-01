@@ -1,468 +1,187 @@
-/* Timeline Section Styles */
+/* --- Root Variables & Theme Setup --- */
+:root {
+  --bg-color: #0f1419;
+  --primary-glow: #00bfff;
+  --secondary-glow: #7cfc00;
+  --card-bg: rgba(22, 33, 62, 0.8);
+  --card-border: rgba(0, 191, 255, 0.3);
+  --text-primary: #f0f0f0;
+  --text-secondary: rgba(240, 240, 240, 0.7);
+}
+
+/* --- Section Layout --- */
 .timeline-section {
-  padding: 5rem 1rem;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f1419 100%);
+  padding: 6rem 1rem;
+  background-color: var(--bg-color);
   min-height: 100vh;
-  display: flex;
-  align-items: center;
 }
 
 .timeline-container {
-  max-width: 1200px;
+  max-width: 900px;
   margin: 0 auto;
   width: 100%;
 }
 
 .timeline-header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 5rem;
 }
 
 .timeline-title {
-  font-size: 3rem;
-  font-weight: bold;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  color: var(--text-primary);
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 15px var(--primary-glow);
   margin-bottom: 1rem;
-  color: #ffffff;
 }
 
-.timeline-title-gradient {
-  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.timeline-description {
+.timeline-subtitle {
   font-size: 1.125rem;
-  color: #a0a0a0;
+  color: var(--text-secondary);
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
 }
 
+/* --- Flight Path & Progress Trail --- */
 .timeline-wrapper {
   position: relative;
 }
 
-/* Timeline line with scroll-based color change */
-.timeline-line {
+.timeline-flight-path {
   position: absolute;
   left: 50%;
+  top: 0;
+  bottom: 0;
   transform: translateX(-50%);
-  height: 100%;
-  width: 3px;
-  background: linear-gradient(180deg, #ffd700 0%, #ffed4e 50%, #ffb347 100%);
-  display: none;
-  overflow: hidden;
+  width: 4px;
+  background-color: rgba(0, 191, 255, 0.15);
   border-radius: 2px;
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
-  position: relative;
 }
 
-.timeline-line::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(180deg, 
-    rgba(255, 215, 0, 0.1) 0%, 
-    rgba(255, 215, 0, 0.05) 50%, 
-    transparent 100%);
-  pointer-events: none;
-}
-
-@media (min-width: 768px) {
-  .timeline-line {
-    display: block;
-  }
-}
-
-/* Timeline line progress indicator with enhanced golden to blue transition */
-.timeline-line-progress {
-  position: absolute;
-  bottom: 0;
-  left: 0;
+.timeline-progress-trail {
   width: 100%;
-  background: linear-gradient(180deg, 
-    #4facfe 0%, 
-    #05537c 25%, 
-    #1e3c72 50%, 
-    #2c3e50 75%, 
-    #34495e 100%);
-  transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 
-    0 0 15px rgba(79, 172, 254, 0.6),
-    0 0 30px rgba(79, 172, 254, 0.3),
-    inset 0 0 5px rgba(255, 255, 255, 0.1);
+  height: 0; /* Controlled by JS */
+  background: linear-gradient(to top, var(--primary-glow), var(--secondary-glow));
+  box-shadow: 0 0 10px var(--primary-glow), 0 0 20px var(--secondary-glow);
   border-radius: 2px;
-  position: relative;
+  transition: height 0.3s linear;
 }
 
-/* Add a shimmer effect to the progress line */
-.timeline-line-progress::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    rgba(255, 255, 255, 0.2) 50%, 
-    transparent 100%);
-  animation: shimmer 2s ease-in-out infinite;
-  pointer-events: none;
-}
-
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  50% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-.timeline-steps {
+/* --- Steps & Waypoints --- */
+.timeline-steps-container {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 4rem;
 }
 
 .timeline-step {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
   position: relative;
-}
-
-@media (min-width: 768px) {
-  .timeline-step {
-    flex-direction: row;
-    align-items: center;
-    min-height: 120px;
-  }
-}
-
-.timeline-content {
-  width: 100%;
-  max-width: 500px;
-}
-
-@media (min-width: 768px) {
-  .timeline-content {
-    width: 50%;
-  }
-  
-  .timeline-content-left {
-    order: 1;
-  }
-  
-  .timeline-content-right {
-    order: 3;
-  }
-}
-
-.timeline-card {
-  background: rgba(45, 45, 74, 0.8);
-  backdrop-filter: blur(10px);
-  border-radius: 1rem;
-  border: 1px solid rgba(61, 61, 90, 0.5);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  padding: 1.5rem;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.timeline-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, 
-    rgba(255, 215, 0, 0.05) 0%, 
-    rgba(79, 172, 254, 0.05) 100%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-}
-
-.timeline-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 
-    0 15px 50px rgba(0, 0, 0, 0.4),
-    0 0 20px rgba(79, 172, 254, 0.2);
-  border-color: rgba(79, 172, 254, 0.4);
-}
-
-.timeline-card:hover::before {
-  opacity: 1;
-}
-
-.timeline-card.animate {
-  animation: cardGlow 3s ease-in-out infinite alternate;
-}
-
-@keyframes cardGlow {
-  0% {
-    box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.3),
-      0 0 10px rgba(255, 215, 0, 0.1);
-  }
-  100% {
-    box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.3),
-      0 0 20px rgba(79, 172, 254, 0.2);
-  }
-}
-
-.timeline-icon-mobile {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1rem;
-}
-
-@media (min-width: 768px) {
-  .timeline-icon-mobile {
-    display: none;
-  }
-}
-
-.timeline-icon-text {
-  font-size: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transform: scale(0.5);
-  transition: all 0.6s ease-out;
-}
-
-.timeline-card.animate .timeline-icon-text {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.timeline-step-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: #ffffff;
-  text-align: center;
-}
-
-@media (min-width: 768px) {
-  .timeline-step-title {
-    text-align: left;
-  }
-}
-
-.timeline-step-description {
-  color: #b0b0b0;
-  line-height: 1.6;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-@media (min-width: 768px) {
-  .timeline-step-description {
-    text-align: left;
-  }
-}
-
-.timeline-date {
-  color: #ffd700;
-  font-weight: 500;
-  font-size: 0.875rem;
-  text-align: center;
-}
-
-@media (min-width: 768px) {
-  .timeline-date {
-    text-align: left;
-  }
-}
-
-/* Enhanced timeline node with better golden to blue transition */
-.timeline-node {
-  display: none;
-  height: 3rem;
-  width: 3rem;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffb347 100%);
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  box-shadow: 
-    0 4px 20px rgba(255, 215, 0, 0.4),
-    0 0 15px rgba(255, 215, 0, 0.2);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%) scale(0);
-  opacity: 0;
-  border: 2px solid rgba(255, 215, 0, 0.3);
-}
-
-@media (min-width: 768px) {
-  .timeline-node {
-    display: flex;
-  }
-}
-
-.timeline-node.animate {
-  transform: translateX(-50%) scale(1);
-  opacity: 1;
-  background: linear-gradient(135deg, #4facfe 0%, #05537c 50%, #1e3c72 100%);
-  box-shadow: 
-    0 4px 20px rgba(79, 172, 254, 0.4),
-    0 0 15px rgba(79, 172, 254, 0.2);
-  border-color: rgba(79, 172, 254, 0.5);
-}
-
-.timeline-node:hover {
-  transform: translateX(-50%) scale(1.15);
-  box-shadow: 
-    0 6px 25px rgba(79, 172, 254, 0.6),
-    0 0 20px rgba(79, 172, 254, 0.4);
-}
-
-/* Add a pulsing effect to animated nodes */
-.timeline-node.animate::after {
-  content: '';
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  right: -5px;
-  bottom: -5px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, rgba(79, 172, 254, 0.3), rgba(5, 83, 124, 0.3));
-  animation: pulse 2s ease-in-out infinite;
-  z-index: -1;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-    opacity: 0.7;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 0.3;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 0.7;
-  }
-}
-
-.timeline-node-icon {
-  font-size: 1.25rem;
-  color: #ffffff;
-  opacity: 0;
-  transform: scale(0.5);
-  transition: all 0.6s ease-out;
-  transition-delay: 0.3s;
-}
-
-.timeline-node.animate .timeline-node-icon {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* Empty div for layout on odd items */
-.timeline-spacer {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .timeline-spacer {
-    display: block;
-    width: 50%;
-  }
-  
-  .timeline-spacer-left {
-    order: 1;
-  }
-  
-  .timeline-spacer-right {
-    order: 3;
-  }
-}
-
-/* Enhanced animation for timeline cards */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.timeline-card {
+  width: 50%;
   opacity: 0;
   transform: translateY(50px);
-  transition: all 0.8s ease-out;
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
-.timeline-card.animate {
+.timeline-step.in-view {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Staggered animation delays for cards */
-.timeline-card.animate:nth-child(1) { transition-delay: 0.1s; }
-.timeline-card.animate:nth-child(2) { transition-delay: 0.2s; }
-.timeline-card.animate:nth-child(3) { transition-delay: 0.3s; }
-.timeline-card.animate:nth-child(4) { transition-delay: 0.4s; }
-.timeline-card.animate:nth-child(5) { transition-delay: 0.5s; }
+/* Alternating sides */
+.timeline-step:nth-child(odd) {
+  align-self: flex-start;
+  padding-right: 3rem;
+  justify-content: flex-end;
+}
+.timeline-step:nth-child(even) {
+  align-self: flex-end;
+  padding-left: 3rem;
+}
 
-/* Staggered animation delays for nodes */
-.timeline-node.animate:nth-child(1) { transition-delay: 0.1s; }
-.timeline-node.animate:nth-child(2) { transition-delay: 0.2s; }
-.timeline-node.animate:nth-child(3) { transition-delay: 0.3s; }
-.timeline-node.animate:nth-child(4) { transition-delay: 0.4s; }
-.timeline-node.animate:nth-child(5) { transition-delay: 0.5s; }
+/* Waypoint (Node) Styling */
+.timeline-waypoint {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--bg-color);
+  border: 3px solid var(--card-border);
+  display: grid;
+  place-items: center;
+  font-size: 1.5rem;
+  color: var(--card-border);
+  transition: all 0.5s ease;
+  z-index: 10;
+}
 
-/* Responsive adjustments */
-@media (max-width: 767px) {
-  .timeline-section {
-    padding: 3rem 1rem;
-  }
+.timeline-step:nth-child(odd) .timeline-waypoint { right: -25px; }
+.timeline-step:nth-child(even) .timeline-waypoint { left: -25px; }
+
+.timeline-step.in-view .timeline-waypoint {
+  border-color: var(--primary-glow);
+  color: var(--primary-glow);
+  box-shadow: 0 0 20px var(--primary-glow);
+}
+
+/* --- Card Styling --- */
+.timeline-card {
+  width: 100%;
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  border: 1px solid var(--card-border);
+  padding: 1.5rem 2rem;
+  position: relative;
+  transition: all 0.4s ease;
+}
+
+.timeline-step.in-view .timeline-card {
+  border-color: var(--primary-glow);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.timeline-card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.timeline-card-description {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.timeline-card-date {
+  color: var(--secondary-glow);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* --- Responsive Design for Mobile --- */
+@media (max-width: 768px) {
+  .timeline-flight-path { left: 25px; }
   
-  .timeline-title {
-    font-size: 2rem;
+  .timeline-step,
+  .timeline-step:nth-child(odd),
+  .timeline-step:nth-child(even) {
+    width: 100%;
+    align-self: flex-end;
+    padding-left: 4rem;
+    padding-right: 0;
   }
-  
-  .timeline-steps {
-    gap: 2rem;
-  }
-  
-  .timeline-card {
-    padding: 1.25rem;
+
+  .timeline-waypoint,
+  .timeline-step:nth-child(odd) .timeline-waypoint,
+  .timeline-step:nth-child(even) .timeline-waypoint {
+    left: 0;
   }
 }

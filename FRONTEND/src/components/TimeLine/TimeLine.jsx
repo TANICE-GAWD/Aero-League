@@ -1,184 +1,104 @@
-import React, { useEffect, useRef, useState } from 'react';
-import './TimeLine.css';
+"use client";
+import React, { useEffect, useRef } from 'react';
+import { FaCalendarAlt, FaRocket, FaLaptopCode, FaFileUpload, FaTrophy } from 'react-icons/fa';
+import './Timeline.css';
 
-// Timeline data for Aero-League hackathon
-const timelineSteps = [
+// Data is updated with high-quality icons
+const timelineData = [
   {
-    icon: "📅",
+    Icon: FaCalendarAlt,
     title: "Registration Opens",
-    description: "Early registration begins for all participants. Secure your spot in the competition.",
-    date: "January 15, 2024"
+    description: "Secure your spot. Early registration begins for all teams and pilots.",
+    date: "August 15, 2025"
   },
   {
-    icon: "🚀",
+    Icon: FaRocket,
     title: "Hackathon Kickoff",
-    description: "Opening ceremony and team formation. Get ready for an exciting journey of innovation.",
-    date: "February 1, 2024"
+    description: "Opening ceremony and team formation. The race begins now.",
+    date: "September 1, 2025"
   },
   {
-    icon: "💻",
-    title: "Coding Phase",
-    description: "48 hours of intense coding, collaboration, and building amazing projects.",
-    date: "February 1-3, 2024"
+    Icon: FaLaptopCode,
+    title: "Development Phase",
+    description: "48 hours of intense coding, building, and innovation.",
+    date: "September 1-3, 2025"
   },
   {
-    icon: "🎯",
+    Icon: FaFileUpload,
     title: "Project Submission",
-    description: "Finalize your project and submit your work for evaluation by our expert judges.",
-    date: "February 3, 2024"
+    description: "Finalize your project and submit your work for evaluation by our judges.",
+    date: "September 3, 2025"
   },
   {
-    icon: "🏆",
+    Icon: FaTrophy,
     title: "Awards Ceremony",
-    description: "Winners announced and prizes awarded. Celebrate the achievements of all participants.",
-    date: "February 4, 2024"
+    description: "Winners are announced and prizes awarded. Celebrate your achievements.",
+    date: "September 4, 2025"
   }
 ];
 
-const TimeLine = () => {
+const FlightpathTimeline = () => {
   const timelineRef = useRef(null);
-  const cardRefs = useRef([]);
-  const nodeRefs = useRef([]);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const progressRef = useRef(null);
 
+  // Simplified Intersection Observer to animate elements on view
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('animate');
+            entry.target.classList.add('in-view');
           }
         });
       },
-      {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-      }
+      { threshold: 0.5 }
     );
 
-    // Observe all timeline cards and nodes
-    cardRefs.current.forEach((card) => {
-      if (card) {
-        observer.observe(card);
-      }
-    });
+    const elements = timelineRef.current.querySelectorAll('.timeline-step');
+    elements.forEach(el => observer.observe(el));
 
-    nodeRefs.current.forEach((node) => {
-      if (node) {
-        observer.observe(node);
-      }
-    });
-
-    return () => {
-      cardRefs.current.forEach((card) => {
-        if (card) {
-          observer.unobserve(card);
-        }
-      });
-      nodeRefs.current.forEach((node) => {
-        if (node) {
-          observer.unobserve(node);
-        }
-      });
-    };
+    return () => elements.forEach(el => observer.unobserve(el));
   }, []);
 
+  // Scroll progress for the timeline's energy trail
   useEffect(() => {
     const handleScroll = () => {
-      if (!timelineRef.current) return;
-
-      const timelineElement = timelineRef.current;
-      const rect = timelineElement.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      
-      // Calculate scroll progress within the timeline section with smoother interpolation
-      const timelineTop = rect.top;
-      const timelineHeight = rect.height;
-      
-      if (timelineTop < windowHeight && timelineTop + timelineHeight > 0) {
-        // Enhanced progress calculation with easing
-        const rawProgress = (windowHeight - timelineTop) / (windowHeight + timelineHeight);
-        const easedProgress = Math.pow(rawProgress, 0.8); // Smooth easing
-        const clampedProgress = Math.max(0, Math.min(1, easedProgress));
-        
-        // Add a small delay for smoother animation
-        requestAnimationFrame(() => {
-          setScrollProgress(clampedProgress);
-        });
-      }
+      if (!timelineRef.current || !progressRef.current) return;
+      const rect = timelineRef.current.getBoundingClientRect();
+      const progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (rect.height + window.innerHeight / 2)));
+      progressRef.current.style.height = `${progress * 100}%`;
     };
 
-    // Throttle scroll events for better performance
-    let ticking = false;
-    const throttledHandleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial check
 
-    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
-    handleScroll(); // Initial call
-
-    return () => {
-      window.removeEventListener('scroll', throttledHandleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <section className="timeline-section" id="timeline">
+    <section className="timeline-section">
       <div className="timeline-container">
         <div className="timeline-header">
-          <h2 className="timeline-title">
-            <span className="timeline-title-gradient">
-              Event Timeline
-            </span>
-          </h2>
-          <p className="timeline-description">
-            Important dates and milestones for the Aero-League hackathon.
-          </p>
+          <h2 className="timeline-title">MISSION TIMELINE</h2>
+          <p className="timeline-subtitle">Key dates and milestones for the Aero-League competition.</p>
         </div>
         
         <div className="timeline-wrapper" ref={timelineRef}>
-          {/* Timeline line with scroll-based color change */}
-          <div className="timeline-line">
-            <div 
-              className="timeline-line-progress"
-              style={{ height: `${scrollProgress * 100}%` }}
-            ></div>
+          <div className="timeline-flight-path">
+            <div className="timeline-progress-trail" ref={progressRef}></div>
           </div>
           
-          <div className="timeline-steps">
-            {timelineSteps.map((step, index) => (
+          <div className="timeline-steps-container">
+            {timelineData.map((step, index) => (
               <div key={index} className="timeline-step">
-                {/* For even items, swap order on desktop */}
-                <div className={`timeline-content ${index % 2 === 1 ? 'timeline-content-right' : 'timeline-content-left'}`}>
-                  <div 
-                    className="timeline-card"
-                    ref={(el) => (cardRefs.current[index] = el)}
-                  >
-                    <div className="timeline-icon-mobile">
-                      <span className="timeline-icon-text">{step.icon}</span>
-                    </div>
-                    <h3 className="timeline-step-title">{step.title}</h3>
-                    <p className="timeline-step-description">{step.description}</p>
-                    <div className="timeline-date">{step.date}</div>
-                  </div>
+                <div className="timeline-waypoint">
+                  <step.Icon />
                 </div>
-                
-                {/* Timeline node - visible only on desktop */}
-                <div 
-                  className="timeline-node"
-                  ref={(el) => (nodeRefs.current[index] = el)}
-                >
-                  <span className="timeline-node-icon">{step.icon}</span>
+                <div className="timeline-card">
+                  <h3 className="timeline-card-title">{step.title}</h3>
+                  <p className="timeline-card-description">{step.description}</p>
+                  <div className="timeline-card-date">{step.date}</div>
                 </div>
-                
-                {/* Empty div for layout on odd items */}
-                <div className={`timeline-spacer ${index % 2 === 1 ? 'timeline-spacer-left' : 'timeline-spacer-right'}`}></div>
               </div>
             ))}
           </div>
@@ -188,4 +108,4 @@ const TimeLine = () => {
   );
 };
 
-export default TimeLine;
+export default FlightpathTimeline;
