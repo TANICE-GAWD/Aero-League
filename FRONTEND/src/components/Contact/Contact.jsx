@@ -1,8 +1,9 @@
 import React from 'react';
-import { FaEnvelope, FaLinkedin } from 'react-icons/fa';
+import { FaEnvelope, FaLinkedin } from 'react-icons/fa'; // Import FaDrone
+import { GiDeliveryDrone } from "react-icons/gi";
 import './Contact.css';
 
-// Data for the contact points, now including a third placeholder
+// Data for the contact points
 const contactsData = [
   {
     name: 'Dir. Ishaan Jindal',
@@ -33,18 +34,21 @@ const contactsData = [
 
 const ContactPoints = () => {
   return (
-    <section className="team-section">
+    <section className="contact-points-section">
       <div className="contact-points-container">
         <div className="contact-points-header">
           <h2 className="contact-points-title">Dedicated Contacts</h2>
           <p className="contact-points-subtitle">
-            Need Assistance?
+            Your seamless coordination between India and Israel.
           </p>
         </div>
 
         <div className="contact-cards-wrapper">
           {contactsData.map((contact, index) => (
             <div key={index} className="contact-card">
+              {/* Drone Icon for animation */}
+              <GiDeliveryDrone className="card-drone-icon" />
+
               <div className="contact-card-header">
                 <div className="profile-image-container">
                   <img src={contact.image} alt={contact.name} className="profile-image" />
@@ -70,6 +74,9 @@ const ContactPoints = () => {
           ))}
         </div>
 
+        <div className="assistance-footer">
+          <p>Need Assistance?</p>
+        </div>
       </div>
     </section>
   );
