@@ -1,61 +1,78 @@
 import React from 'react';
-import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaEnvelope, FaLinkedin } from 'react-icons/fa';
 import './Contact.css';
 
-const Contact = () => {
+// Data for the contact points, now including a third placeholder
+const contactsData = [
+  {
+    name: 'Dir. Ishaan Jindal',
+    title: 'title_1',
+    description: 'desc_1',
+    image: 'https://placehold.co/150x150/EFEFEF/1A1A2E?text=',
+    contactLink: 'mailto:hsingh@example.com',
+    linkedinLink: '#',
+  },
+  {
+    name: 'Advitya Dua',
+    title: 'title_2',
+    description: 'desc_2',
+    image: 'https://placehold.co/150x150/EFEFEF/1A1A2E?text=',
+    contactLink: 'mailto:okadvil@example.com',
+    linkedinLink: '#',
+  },
+  {
+    name: 'Prince Sharma',
+    spoc: 'SPOC - Global',
+    title: 'title_3',
+    description: 'desc_3',
+    image: 'https://placehold.co/150x150/EFEFEF/1A1A2E?text=',
+    contactLink: 'mailto:placeholder@example.com',
+    linkedinLink: '#',
+  }
+];
+
+const ContactPoints = () => {
   return (
-    <section className="contact-section">
-      <div className="contact-container">
-        <div className="contact-header">
-          <p className="contact-pre-title">We're here to help!</p>
-          <h2 className="contact-main-title">CONTACT US</h2>
-          <p className="contact-subtitle">
-            Have questions about the Aero-League? Reach out and we'll get back to you soon.
+    <section className="team-section">
+      <div className="contact-points-container">
+        <div className="contact-points-header">
+          <h2 className="contact-points-title">Dedicated Contacts</h2>
+          <p className="contact-points-subtitle">
+            Need Assistance?
           </p>
         </div>
 
-        <div className="contact-info-wrapper">
-          <div className="contact-info-card">
-            <div className="contact-icon-wrapper">
-              <FaEnvelope />
+        <div className="contact-cards-wrapper">
+          {contactsData.map((contact, index) => (
+            <div key={index} className="contact-card">
+              <div className="contact-card-header">
+                <div className="profile-image-container">
+                  <img src={contact.image} alt={contact.name} className="profile-image" />
+                </div>
+              </div>
+              <div className="contact-card-body">
+                <h3 className="contact-name">{contact.name}</h3>
+                <p className="contact-spoc">{contact.spoc}</p>
+                <p className="contact-title-secondary">{contact.title}</p>
+                <p className="contact-description">{contact.description}</p>
+              </div>
+              <div className="contact-card-footer">
+                <a href={contact.contactLink} className="contact-button primary">
+                  <FaEnvelope />
+                  <span>Contact</span>
+                </a>
+                <a href={contact.linkedinLink} target="_blank" rel="noopener noreferrer" className="contact-button secondary">
+                  <FaLinkedin />
+                  <span>LinkedIn</span>
+                </a>
+              </div>
             </div>
-            <div className="contact-details">
-              <h3 className="contact-card-title">Email Us</h3>
-              <a href="mailto:contact@israeli-indian-hackathon.org" className="contact-link">
-                contact@aero-league.com
-              </a>
-            </div>
-          </div>
-
-          <div className="contact-info-card">
-            <div className="contact-icon-wrapper">
-              <FaPhoneAlt />
-            </div>
-            <div className="contact-details">
-              <h3 className="contact-card-title">Call Us</h3>
-              <a href="tel:+91-9313889932" className="contact-link">
-                +91-93138 89932
-              </a>
-            </div>
-          </div>
-
-          <div className="contact-info-card">
-            <div className="contact-icon-wrapper">
-              <FaMapMarkerAlt />
-            </div>
-            <div className="contact-details">
-              <h3 className="contact-card-title">Location</h3>
-              <p className="contact-text">Virtual & Physical</p>
-            </div>
-          </div>
+          ))}
         </div>
-        
-        <div className="contact-notice">
-          <p>All prizes and certificates released within 7 days after event completion.</p>
-        </div>
+
       </div>
     </section>
   );
 };
 
-export default Contact;
+export default ContactPoints;
