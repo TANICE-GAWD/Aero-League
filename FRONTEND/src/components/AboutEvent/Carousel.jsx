@@ -5,14 +5,14 @@ import './Carousel.css';
 
 // Data is now a constant outside the component and includes more details
 const teamData = [
-  { name: "member 1", role: "Role 1", image: "/assets/member1.png", linkedin: "#", twitter: "#" },
-  { name: "member 2", role: "Role 2", image: "/assets/member2.png", linkedin: "#", twitter: "#" },
-  { name: "member 3", role: "Role 3", image: "/assets/member3.png", linkedin: "#", twitter: "#" },
-  { name: "member 4", role: "Role 4", image: "/assets/member4.png", linkedin: "#", twitter: "#" },
-  { name: "member 5", role: "Role 5", image: "/assets/member5.png", linkedin: "#", twitter: "#" },
-  { name: "member 6", role: "Role 6", image: "/assets/member6.png", linkedin: "#", twitter: "#" },
-  { name: "member 7", role: "Role 7", image: "/assets/member7.png", linkedin: "#", twitter: "#" },
-  { name: "member 8", role: "Role 8", image: "/assets/member8.png", linkedin: "#", twitter: "#" },
+  { name: "member 1", role: "Role 1", image: "/assets/member1.png" },
+  { name: "member 2", role: "Role 2", image: "/assets/member2.png" },
+  { name: "member 3", role: "Role 3", image: "/assets/member3.png" },
+  { name: "member 4", role: "Role 4", image: "/assets/member4.png" },
+  { name: "member 5", role: "Role 5", image: "/assets/member5.png" },
+  { name: "member 6", role: "Role 6", image: "/assets/member6.png" },
+  { name: "member 7", role: "Role 7", image: "/assets/member7.png" },
+  { name: "member 8", role: "Role 8", image: "/assets/member8.png" },
 ];
 
 export default function TeamCarousel() {
