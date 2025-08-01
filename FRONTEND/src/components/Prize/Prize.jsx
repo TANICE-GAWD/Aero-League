@@ -22,7 +22,7 @@ export default function PrizesSection() {
   });
 
   return (
-    <section className="prizes-section">
+    <section className="team-section">
       <div className="prizes-container">
         <h2 className="prizes-title">CHAMPION'S REWARDS</h2>
         <div className="prizes-grid">

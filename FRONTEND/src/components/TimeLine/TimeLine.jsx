@@ -76,7 +76,7 @@ const FlightpathTimeline = () => {
   }, []);
 
   return (
-    <section className="timeline-section">
+    <section className="team-section">
       <div className="timeline-container">
         <div className="timeline-header">
           <h2 className="timeline-title">MISSION TIMELINE</h2>
