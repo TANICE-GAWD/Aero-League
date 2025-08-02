@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { FaBullhorn, FaCrosshairs, FaParachuteBox, FaArchway, FaBolt } from "react-icons/fa";
+import { FaBullhorn, FaCrosshairs, FaParachuteBox, FaArchway, FaBalanceScale } from "react-icons/fa";
 import "./Challenges.css";
 
 const challengesData = [
@@ -48,14 +48,14 @@ const challengesData = [
   },
   {
     id: 5,
-    title: "RACE TO THE FINISH",
-    description: "Compete in a high-speed race to the finish line.",
-    objective: "Be the first to cross the finish line",
-    accentColor: "#FF5733",
-    accentColorRgb: "255, 87, 51",
-    Icon: FaBolt,
-    direction: "left",
-  }
+    title: "STRATEGIC DASH",
+    description: "This isn't just about speed, it's about strategy. Decide on the fly which checkpoints to hit and which to skip, but be warned: every missed checkpoint comes at a cost.",
+    objective: "Strategically navigate multiple checkpoints; skipping any checkpoint will result in a significant time penalty.",
+    accentColor: "#FFD700",
+    accentColorRgb: "255, 215, 0",
+    Icon: FaBalanceScale,
+    direction: "right", 
+}
 ];
 
 
