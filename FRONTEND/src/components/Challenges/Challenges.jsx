@@ -1,51 +1,62 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { FaHelicopter, FaBullseye, FaBolt, FaMagic } from "react-icons/fa";
+import { FaBullhorn, FaCrosshairs, FaParachuteBox, FaMagic, FaBolt } from "react-icons/fa";
 import "./Challenges.css";
 
 // --- Data is enhanced for better maintainability ---
 const challengesData = [
+  
   {
     id: 1,
-    title: "OBSTACLE SPRINT",
-    description: "Navigate a complex maze of obstacles with maximum speed and precision.",
-    objective: "Navigate 5 checkpoints in 60 seconds",
-    accentColor: "#00BFFF",
-    accentColorRgb: "0, 191, 255", // Explicit RGB for easier use in CSS
-    Icon: FaHelicopter,
-    direction: "left", // For alternating animations
-  },
-  {
-    id: 2,
-    title: "PRECISION LANDING",
-    description: "Test your piloting skills with pinpoint accuracy in challenging landing scenarios.",
-    objective: "Land within 10cm of target zone",
-    accentColor: "#7CFC00",
-    accentColorRgb: "124, 252, 0",
-    Icon: FaBullseye,
+    title: "LOW-LEVEL FLIGHT",
+    description: "Showcase your piloting skills by performing acrobatic loops and navigating obstacles, all while maintaining a challenging low altitude.",
+    objective: "Loops and obstacle flying at 1 meter of height",
+    accentColor: "#32CD32",
+    accentColorRgb: "50, 205, 50", 
+    Icon: FaCrosshairs,
     direction: "right",
   },
   {
+    id: 2,
+    title: "EVENING RECON",
+    description: "Scan the twilight landscape for signal flashes and use the announcement system to report your findings accurately and swiftly.",
+    objective: "Flash spotting at evening with announcement system",
+    accentColor: "#8A2BE2",
+    accentColorRgb: "138, 43, 226", 
+    Icon: FaBullhorn,
+    direction: "left", 
+},
+  {
     id: 3,
-    title: "SPEED CIRCUIT",
-    description: "Push your drone to its limits in high-speed racing through dynamic course layouts.",
-    objective: "Complete 3 laps under 90 seconds",
-    accentColor: "#FF6F61",
-    accentColorRgb: "255, 111, 97",
-    Icon: FaBolt,
-    direction: "left",
+    title: "TURBULENT DELIVERY",
+    description: "Navigate through heavy air turbulence and evade enemy threats to deliver your critical 250 gm payload to a precise landing zone.",
+    objective: "Air turbulence based landing on a fixed spot with payload 250 gm escaping from enemies",
+    accentColor: "#FF4500",
+    accentColorRgb: "255, 69, 0", 
+    Icon: FaParachuteBox,
+    direction: "right", 
   },
   {
     id: 4,
     title: "FREESTYLE BATTLE",
     description: "Showcase creativity and technical prowess in open-format aerial performance.",
     objective: "Score 85+ points from judges",
-    accentColor: "#9B59B6", // Added a new color for variety
+    accentColor: "#9B59B6",
     accentColorRgb: "155, 89, 182",
     Icon: FaMagic,
     direction: "right",
   },
+  {
+    id:5,
+    title: "RACE TO THE FINISH",
+    description: "Compete in a high-speed race to the finish line.",
+    objective: "Be the first to cross the finish line",
+    accentColor: "#FF5733",
+    accentColorRgb: "255, 87, 51",
+    Icon: FaBolt,
+    direction: "left",
+  }
 ];
 
 // --- Card Component: Simplified state, uses robust icons ---
