@@ -1,6 +1,6 @@
-/* App Component Styles */
 
-/* CSS Reset - Remove default browser margins and padding */
+
+
 * {
   margin: 0;
   padding: 0;
@@ -14,7 +14,7 @@ html, body {
   height: 100%;
 }
 
-/* CSS Custom Properties (inherited from HeroSection.css) */
+
 :root {
   --color-bg-primary: #1a1a2e;
   --color-bg-secondary: #16213e;
@@ -36,7 +36,7 @@ html, body {
   --shadow-strong: 0 8px 32px rgba(0, 0, 0, 0.25);
 }
 
-/* App Container */
+
 .app {
   min-height: 100vh;
   background: linear-gradient(135deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 50%, var(--color-bg-tertiary) 100%);
@@ -46,12 +46,12 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Main Content */
+
 .main-content {
   padding-top: var(--header-height);
 }
 
-/* Section Styles */
+
 .section {
   min-height: 100vh;
   display: flex;
@@ -89,7 +89,7 @@ html, body {
   font-weight: 400;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
   .main-content {
     padding-top: var(--header-height-mobile);
@@ -119,12 +119,12 @@ html, body {
   }
 }
 
-/* Smooth scrolling for the entire page */
+
 html {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar */
+
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -142,7 +142,7 @@ html {
   background: var(--color-accent);
 }
 
-/* High contrast mode support */
+
 @media (prefers-contrast: high) {
   .section__title {
     -webkit-text-fill-color: var(--color-text-primary);
@@ -150,7 +150,7 @@ html {
   }
 }
 
-/* Reduced motion support */
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

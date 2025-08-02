@@ -1,17 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Open+Sans:wght@400;600&display=swap");
 
 :root {
-  /* --- Color Palette --- */
+ 
   --bg-gradient-start: #1a1a2e;
   --bg-gradient-mid: #16213e;
   --bg-gradient-end: #0f1419;
-  --card-bg: rgba(45, 45, 74, 0.8); /* Added transparency for depth */
+  --card-bg: rgba(45, 45, 74, 0.8);
   --card-border: rgba(61, 61, 90, 0.7);
   --text-primary: #f0f0f0;
   --text-secondary: rgba(240, 240, 240, 0.7);
   --shadow-color: rgba(0, 0, 0, 0.3);
 
-  /* --- Reusable Variables --- */
+ 
   --transition-fast: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   --transition-smooth: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
@@ -57,7 +57,7 @@ body {
   text-shadow: 0 4px 15px var(--shadow-color);
 }
 
-/* --- ✨ NEW: Scroll Progress Indicator --- */
+
 .progress-indicator {
     width: 80%;
     max-width: 400px;
@@ -84,7 +84,7 @@ body {
 }
 
 .challenge-wrapper {
-  min-height: 80vh; /* Reduced slightly for better pacing */
+  min-height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -106,7 +106,7 @@ body {
   overflow: hidden;
 }
 
-/* --- ✨ IMPROVED: Alternating enter animations --- */
+
 .challenge-card.left {
   transform: translateX(-100px) scale(0.95);
 }
@@ -118,7 +118,7 @@ body {
   transform: translateX(0) scale(1);
 }
 
-/* --- ✨ IMPROVED: Smoother hover effect --- */
+
 .challenge-card:hover {
   transform: scale(1.03);
   box-shadow: 0 20px 40px var(--shadow-color), 0 0 40px var(--accent-color);
@@ -132,7 +132,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  /* --- ✅ DX IMPROVEMENT: Uses the provided RGB variable directly --- */
+ 
   background: radial-gradient(circle at center, rgba(var(--accent-color-rgb), 0.15) 0%, transparent 70%);
   opacity: 0;
   transition: var(--transition-fast);
@@ -144,8 +144,8 @@ body {
 
 .card-content {
   display: flex;
-  gap: 2.5rem; /* Increased gap for better spacing */
-  align-items: center; /* Centered for better balance */
+  gap: 2.5rem;
+  align-items: center;
 }
 
 .card-visual {
@@ -154,7 +154,7 @@ body {
   height: 120px;
   background-color: var(--accent-color);
   border-radius: 20px;
-  display: grid; /* Switched to grid for easy centering */
+  display: grid;
   place-items: center;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   transition: var(--transition-fast);
@@ -165,8 +165,8 @@ body {
 }
 
 .visual-icon {
-  font-size: 3.5rem; /* Larger icon */
-  color: #1a1a2e; /* Icon color matches dark bg for contrast */
+  font-size: 3.5rem;
+  color: #1a1a2e;
 }
 
 .card-text {
@@ -190,7 +190,7 @@ body {
 }
 
 .objective-box {
-  background: rgba(var(--accent-color-rgb), 0.15); /* More subtle background */
+  background: rgba(var(--accent-color-rgb), 0.15);
   color: var(--text-primary);
   padding: 1rem 1.5rem;
   border-radius: 12px;
@@ -201,7 +201,7 @@ body {
   font-family: "Montserrat", sans-serif;
   font-weight: 600;
   font-size: 1rem;
-  color: var(--accent-color); /* Text uses accent color */
+  color: var(--accent-color);
 }
 
 .cta-button {
@@ -211,7 +211,7 @@ body {
   padding: 1rem 2rem;
   border-radius: 50px;
   font-family: "Montserrat", sans-serif;
-  font-weight: 700; /* Bolder text */
+  font-weight: 700;
   font-size: 1rem;
   cursor: pointer;
   transition: var(--transition-fast);
@@ -230,7 +230,7 @@ body {
   outline-offset: 3px;
 }
 
-/* --- Responsive Design --- */
+
 @media (max-width: 768px) {
   .challenge-wrapper {
     min-height: auto;
@@ -238,7 +238,7 @@ body {
   }
   .challenge-card {
     padding: 2rem 1.5rem;
-    transform: translateY(50px) scale(0.95); /* Unified mobile animation */
+    transform: translateY(50px) scale(0.95);
   }
   .challenge-card.left,
   .challenge-card.right {
@@ -248,7 +248,7 @@ body {
     transform: translateY(0) scale(1);
   }
   .challenge-card:hover {
-    transform: scale(1.02); /* Subtle hover for touch-capable devices */
+    transform: scale(1.02);
   }
   .card-content {
     flex-direction: column;

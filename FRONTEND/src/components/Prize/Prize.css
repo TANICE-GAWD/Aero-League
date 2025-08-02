@@ -1,6 +1,6 @@
-/* --- Root Variables & Theme Setup --- */
+
 :root {
-  /* Tier-specific color variables */
+ 
   --gold: #ffd700;
   --gold-gradient: linear-gradient(135deg, #ffeb3b, #c8a415);
   --gold-glow: 0 0 45px rgba(255, 215, 0, 0.6);
@@ -11,18 +11,18 @@
   --bronze-gradient: linear-gradient(135deg, #d48c42, #8c581e);
   --bronze-glow: 0 0 25px rgba(205, 127, 50, 0.5);
 
-  /* Generic Variables */
+ 
   --bg-gradient-start: #1a1a2e;
   --card-bg: #1e1e3f;
   --card-border: #3d3d5a;
   --shadow-color: rgba(0, 0, 0, 0.3);
 
-  /* Transitions */
+ 
   --transition-smooth: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-fast: all 0.3s ease;
 }
 
-/* --- Section Layout --- */
+
 .prizes-section {
   width: 100%;
   padding: 6rem 0;
@@ -30,9 +30,9 @@
   justify-content: center;
   align-items: center;
   background-color: transparent;
-  /* CRITICAL: These two properties contain the animation within this component */
+ 
   position: relative;
-  overflow: hidden; /* Hides the drone when it flies outside the section, but DOES NOT affect page scroll */
+  overflow: hidden;
 }
 
 .prizes-container {
@@ -41,7 +41,7 @@
   padding: 0 1rem;
   text-align: center;
   position: relative;
-  z-index: 5; /* Ensure content is above the background but below the drone */
+  z-index: 5;
 }
 
 .prizes-title {
@@ -52,16 +52,16 @@
   letter-spacing: 0.05em;
 }
 
-/* --- Podium Grid Layout --- */
+
 .prizes-grid {
   display: flex;
   justify-content: center;
-  align-items: flex-end; /* Aligns cards to the bottom for podium effect */
+  align-items: flex-end;
   flex-wrap: wrap;
   gap: 2rem;
 }
 
-/* --- Card Structure & Flip Mechanics --- */
+
 .prize-card-group {
   width: clamp(16rem, 25vw, 20rem);
   height: clamp(16rem, 25vw, 20rem);
@@ -88,7 +88,7 @@
   transform: translateY(-10px) scale(1.05);
 }
 
-/* --- Card Faces (Front & Back) --- */
+
 .card-front,
 .card-back {
   position: absolute;
@@ -116,7 +116,7 @@
   padding: 1.5rem;
 }
 
-/* --- Tier-Specific Styling --- */
+
 .prize-card-group--gold {
   width: clamp(18rem, 28vw, 22rem);
   height: clamp(18rem, 28vw, 22rem);
@@ -124,7 +124,7 @@
 }
 
 .prize-card-group--silver {
-  order: -1; /* Puts 2nd place on the left */
+  order: -1;
 }
 
 .prize-card-group--gold .card-front, .prize-card-group--gold .card-back {
@@ -144,7 +144,7 @@
 .prize-card-group--silver:hover { box-shadow: var(--silver-glow); }
 .prize-card-group--bronze:hover { box-shadow: var(--bronze-glow); }
 
-/* --- Content Styling --- */
+
 .prize-image {
   grid-area: 1 / 1;
   width: 100%;
@@ -171,27 +171,27 @@
 .prize-details-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; }
 .prize-details { font-size: 1.1rem; }
 
-/* --- Continuous Drone Animation --- */
+
 .drone-icon-wrapper {
-  position: absolute; /* Positioned relative to .prizes-section */
-  z-index: 15; /* Above cards (z-index 10) but below any potential modals */
-  pointer-events: none; /* Prevent mouse interaction */
-  will-change: transform, top, left; /* Performance hint for the browser */
-  transition: opacity 0.5s ease; /* Fade in smoothly */
+  position: absolute;
+  z-index: 15;
+  pointer-events: none;
+  will-change: transform, top, left;
+  transition: opacity 0.5s ease;
 }
 
 .drone-icon {
   color: #fff;
-  text-shadow: 0 0 10px rgba(137, 206, 235, 0.8); /* Added a glow to match the theme */
-  /* The size is now set via inline style, but we can keep the transition */
+  text-shadow: 0 0 10px rgba(137, 206, 235, 0.8);
+ 
   transition: transform 0.1s linear; 
 }
 
 
-/* --- Responsive Design --- */
+
 @media (max-width: 768px) {
   .prizes-grid {
-    align-items: center; /* Stack vertically instead of podium */
+    align-items: center;
     flex-direction: column;
     gap: 3rem;
   }

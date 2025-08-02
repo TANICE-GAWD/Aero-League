@@ -1,4 +1,4 @@
-/* --- Root Variables & Theme Setup --- */
+
 :root {
   --bg-color: #0f1419;
   --primary-glow: #00bfff;
@@ -8,7 +8,7 @@
   --text-secondary: rgba(240, 240, 240, 0.7);
 }
 
-/* --- Section Layout --- */
+
 .contact-points-section {
   padding: 6rem 1rem;
   background-color: var(--bg-color);
@@ -25,7 +25,7 @@
   text-align: center;
 }
 
-/* --- Header Content --- */
+
 .contact-points-header {
   margin-bottom: 4rem;
 }
@@ -46,7 +46,7 @@
   line-height: 1.6;
 }
 
-/* --- Cards Wrapper --- */
+
 .contact-cards-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
@@ -54,7 +54,7 @@
   justify-content: center;
 }
 
-/* --- Individual Contact Card --- */
+
 .contact-card {
   background: var(--card-bg);
   backdrop-filter: blur(10px);
@@ -65,8 +65,8 @@
   flex-direction: column;
   align-items: center;
   transition: all 0.4s ease;
-  position: relative; /* Needed for positioning the drone icon */
-  overflow: hidden; /* Hides the drone when it's outside the card */
+  position: relative;
+  overflow: hidden;
 }
 
 .contact-card:hover {
@@ -75,7 +75,7 @@
   border-color: var(--primary-glow);
 }
 
-/* --- ✨ NEW: Drone Icon Animation --- */
+
 .card-drone-icon {
   position: absolute;
   top: 1.5rem;
@@ -196,14 +196,14 @@
   border-color: var(--text-primary);
 }
 
-/* --- Assistance Footer --- */
+
 .assistance-footer {
   margin-top: 4rem;
   color: var(--text-secondary);
   font-size: 1.1rem;
 }
 
-/* --- Responsive Design --- */
+
 @media (max-width: 1024px) {
   .contact-cards-wrapper {
     grid-template-columns: 1fr 1fr;

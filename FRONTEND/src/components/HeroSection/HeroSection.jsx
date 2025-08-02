@@ -6,7 +6,7 @@ const HeroSection = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Navigation items - Corrected 'challenge' to 'challenges' for consistency
+  
   const navItems = [
     { id: 'home', label: 'Home', href: '#home' },
     { id: 'challenges', label: 'Challenges', href: '#challenges' },
@@ -16,13 +16,13 @@ const HeroSection = () => {
     { id: 'contact', label: 'Contact', href: '#contact' }
   ];
 
-  // Handle scroll events
+  
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       setIsScrolled(scrollTop > 50);
 
-      // Update active section based on scroll position
+      
       let currentSectionId = 'home';
       for (const item of navItems) {
           const element = document.getElementById(item.id);
@@ -41,9 +41,9 @@ const HeroSection = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [navItems]);
 
-  // Smooth scroll to section
+  
   const scrollToSection = (href) => {
-    // The href includes the '#', so we need to select the element with that
+    
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({
@@ -51,11 +51,11 @@ const HeroSection = () => {
         block: 'start'
       });
     }
-    // Close mobile menu after clicking a link
+    
     setIsMenuOpen(false);
   };
 
-  // Handle keyboard navigation for accessibility
+  
   const handleKeyDown = (event, href) => {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();

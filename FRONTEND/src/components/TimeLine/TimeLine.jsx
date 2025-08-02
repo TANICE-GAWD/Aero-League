@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { FaCalendarAlt, FaRocket, FaLaptopCode, FaFileUpload, FaTrophy } from 'react-icons/fa';
 import './Timeline.css';
 
-// Data is updated with high-quality icons
+
 const timelineData = [
   {
     Icon: FaCalendarAlt,
@@ -41,7 +41,7 @@ const FlightpathTimeline = () => {
   const timelineRef = useRef(null);
   const progressRef = useRef(null);
 
-  // Simplified Intersection Observer to animate elements on view
+  
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -60,7 +60,7 @@ const FlightpathTimeline = () => {
     return () => elements.forEach(el => observer.unobserve(el));
   }, []);
 
-  // Scroll progress for the timeline's energy trail
+  
   useEffect(() => {
     const handleScroll = () => {
       if (!timelineRef.current || !progressRef.current) return;
@@ -70,7 +70,7 @@ const FlightpathTimeline = () => {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Initial check
+    handleScroll(); 
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);

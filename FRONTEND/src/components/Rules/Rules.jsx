@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FaUserGraduate, FaUsers, FaLaptopCode, FaTrophy, FaHandsHelping, FaChevronDown } from 'react-icons/fa';
 import './Rules.css';
 
-// Data is updated with high-quality icons and clearer titles
+
 const rulesData = [
   {
     id: 'eligibility',

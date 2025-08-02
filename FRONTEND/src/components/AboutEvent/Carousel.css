@@ -1,10 +1,10 @@
-/* --- Root Variables & Theme Setup --- */
+
 :root {
-  /* Carousel Logic (Must match the number of items in your data) */
+ 
   --item-count: 8;
 }
 
-/* --- Section & Thematic Background --- */
+
 .team-section {
   width: 100%;
   padding: 6rem 0;
@@ -25,16 +25,16 @@
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
   font-size: clamp(2.5rem, 5vw, 3.5rem);
-  /* UPDATED: Dark gray text color */
+ 
   color: #495057;
   letter-spacing: 0.05em;
-  /* UPDATED: Subtle shadow for style, removed glow */
+ 
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
   margin-bottom: 4rem;
   text-transform: uppercase;
 }
 
-/* --- Carousel & HUD Styling --- */
+
 .carousel-wrapper {
   position: relative;
   width: 100%;
@@ -44,7 +44,7 @@
   perspective: 2000px;
 }
 
-/* REMOVED: Sci-fi HUD frame is not needed for the light theme */
+
 .hud-frame {
   display: none;
 }
@@ -67,7 +67,7 @@
   transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
-/* --- Hexagonal Card Styling --- */
+
 .carousel-item {
   position: absolute;
   top: 0;
@@ -82,13 +82,13 @@
 .member-card {
   width: 100%;
   height: 100%;
-  /* UPDATED: Frosted glass effect */
+ 
   background-color: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(8px);
-  /* UPDATED: Dark text color */
+ 
   color: #212529;
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  /* UPDATED: Subtle border and shadow for depth */
+ 
   border: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -122,16 +122,16 @@
   transition: color 0.3s ease;
 }
 .member-socials a:hover {
-  color: #007bff; /* Standard blue for hover accent */
+  color: #007bff;
   text-shadow: none;
 }
 
-/* --- Controls & Indicators --- */
+
 .carousel-control {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  /* UPDATED: White background with subtle shadow */
+ 
   background-color: #ffffff;
   border: 1px solid #dee2e6;
   color: #495057;
@@ -155,12 +155,12 @@
 .carousel-control.prev { left: 2rem; }
 .carousel-control.next { right: 2rem; }
 
-/* REMOVED: Dots are not in the target image */
+
 .carousel-dots {
   display: none;
 }
 
-/* --- Responsive 2D Slider for Mobile --- */
+
 @media (max-width: 900px) {
   .carousel-wrapper {
     perspective: none;
@@ -188,7 +188,7 @@
     width: 100%;
     max-width: 320px;
     margin: 1rem auto;
-    /* Add a bit of vertical margin on mobile */
+   
   }
   .carousel-control {
     display: none;

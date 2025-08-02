@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { FaLinkedin, FaTwitter, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import './Carousel.css';
 
-// Data is now a constant outside the component and includes more details
+
 const teamData = [
   { name: "member 1", role: "Role 1", image: "/assets/member1.png" },
   { name: "member 2", role: "Role 2", image: "/assets/member2.png" },
@@ -28,12 +28,12 @@ export default function TeamCarousel() {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + totalItems) % totalItems);
   };
 
-  // Auto-rotation effect that respects the pause state
+
   useEffect(() => {
     if (isPaused) return;
     const interval = setInterval(handleNext, 3000);
     return () => clearInterval(interval);
-  }, [isPaused, totalItems]); // Added totalItems as a dependency
+  }, [isPaused, totalItems]);
 
   return (
     <section className="team-section">

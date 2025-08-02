@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { FaBullhorn, FaCrosshairs, FaParachuteBox, FaMagic, FaBolt } from "react-icons/fa";
+import { FaBullhorn, FaCrosshairs, FaParachuteBox, FaArchway, FaBolt } from "react-icons/fa";
 import "./Challenges.css";
 
-// --- Data is enhanced for better maintainability ---
 const challengesData = [
   
   {
@@ -39,16 +38,16 @@ const challengesData = [
   },
   {
     id: 4,
-    title: "FREESTYLE BATTLE",
-    description: "Showcase creativity and technical prowess in open-format aerial performance.",
-    objective: "Score 85+ points from judges",
-    accentColor: "#9B59B6",
-    accentColorRgb: "155, 89, 182",
-    Icon: FaMagic,
-    direction: "right",
+    title: "THE GAUNTLET",
+    description: "Rely solely on your instruments to navigate a treacherous, smoke-filled tunnel. Avoid submerged obstacles and the tunnel walls in zero-visibility conditions.",
+    objective: "Navigate a smoky, water-filled tunnel with obstacles using only instruments (no visibility).",
+    accentColor: "#4682B4",
+    accentColorRgb: "70, 130, 180", 
+    Icon: FaArchway,
+    direction: "left", 
   },
   {
-    id:5,
+    id: 5,
     title: "RACE TO THE FINISH",
     description: "Compete in a high-speed race to the finish line.",
     objective: "Be the first to cross the finish line",
@@ -59,7 +58,7 @@ const challengesData = [
   }
 ];
 
-// --- Card Component: Simplified state, uses robust icons ---
+
 const ChallengeCard = ({ challenge, isVisible }) => {
   const { Icon, title, description, objective, accentColor, accentColorRgb, direction } = challenge;
 
@@ -88,7 +87,7 @@ const ChallengeCard = ({ challenge, isVisible }) => {
   );
 };
 
-// --- Main Component: Adds scroll progress logic ---
+
 const Challenges = () => {
   const [visibleCards, setVisibleCards] = useState([]);
   const [scrollProgress, setScrollProgress] = useState(0);

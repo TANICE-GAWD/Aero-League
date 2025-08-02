@@ -1,4 +1,4 @@
-/* --- Root Variables & Theme Setup --- */
+
 :root {
   --bg-color: #0f1419;
   --primary-glow: #00bfff;
@@ -9,7 +9,7 @@
   --text-secondary: rgba(240, 240, 240, 0.7);
 }
 
-/* --- Section Layout --- */
+
 .timeline-section {
   padding: 6rem 1rem;
   background-color: var(--bg-color);
@@ -45,7 +45,7 @@
   line-height: 1.6;
 }
 
-/* --- Flight Path & Progress Trail --- */
+
 .timeline-wrapper {
   position: relative;
 }
@@ -63,14 +63,14 @@
 
 .timeline-progress-trail {
   width: 100%;
-  height: 0; /* Controlled by JS */
+  height: 0;
   background: linear-gradient(to top, var(--primary-glow), var(--secondary-glow));
   box-shadow: 0 0 10px var(--primary-glow), 0 0 20px var(--secondary-glow);
   border-radius: 2px;
   transition: height 0.3s linear;
 }
 
-/* --- Steps & Waypoints --- */
+
 .timeline-steps-container {
   position: relative;
   display: flex;
@@ -92,7 +92,7 @@
   transform: translateY(0);
 }
 
-/* Alternating sides */
+
 .timeline-step:nth-child(odd) {
   align-self: flex-start;
   padding-right: 3rem;
@@ -103,7 +103,7 @@
   padding-left: 3rem;
 }
 
-/* Waypoint (Node) Styling */
+
 .timeline-waypoint {
   position: absolute;
   top: 50%;
@@ -130,7 +130,7 @@
   box-shadow: 0 0 20px var(--primary-glow);
 }
 
-/* --- Card Styling --- */
+
 .timeline-card {
   width: 100%;
   background: var(--card-bg);
@@ -166,7 +166,7 @@
   font-size: 0.9rem;
 }
 
-/* --- Responsive Design for Mobile --- */
+
 @media (max-width: 768px) {
   .timeline-flight-path { left: 25px; }
   
