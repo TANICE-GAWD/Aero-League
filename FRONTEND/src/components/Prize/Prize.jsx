@@ -15,8 +15,8 @@ export default function PrizesSection() {
       
       if (sectionRef.current) {
         
-        const verticalAmplitude = 150; 
-        const speed = 1.5;             
+        const verticalAmplitude = 300; 
+        const speed = 4;             
 
         
         
