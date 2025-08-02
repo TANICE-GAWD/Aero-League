@@ -13,6 +13,7 @@ const HeroSection = () => {
     { id: 'timeline', label: 'Timeline', href: '#timeline' },
     { id: 'prizes', label: 'Prizes', href: '#prizes' },
     { id: 'rules', label: 'Rules', href: '#rules' },
+    { id: 'judges', label: 'Judges', href: '#judges' },
     { id: 'contact', label: 'Contact', href: '#contact' }
   ];
 

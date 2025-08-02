@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaEnvelope, FaLinkedin } from 'react-icons/fa'; // Import FaDrone
 import { GiDeliveryDrone } from "react-icons/gi";
-import './Contact.css';
+import './Judges.css';
 
 // Data for the contact points
 const contactsData = [
@@ -31,7 +31,7 @@ const contactsData = [
   }
 ];
 
-const ContactPoints = () => {
+const Judges = () => {
   return (
     <section className="contact-points-section">
       <div className="contact-points-container">
@@ -77,4 +77,4 @@ const ContactPoints = () => {
   );
 };
 
-export default ContactPoints;
+export default Judges;

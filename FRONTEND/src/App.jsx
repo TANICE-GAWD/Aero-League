@@ -6,6 +6,7 @@ import RewardsSection from './components/Prize/Prize';
 import Rules from './components/Rules/Rules';
 import Challenges from './components/Challenges/Challenges';
 import Contact from './components/Contact/Contact';
+import Judges from './components/Judges/Judges';
 import './App.css';
 
 function App() {
@@ -38,6 +39,10 @@ function App() {
 
         <section id="rules">
           <Rules />
+        </section>
+
+        <section id="judges">
+          <Judges />
         </section>
 
         <section id="contact">
