@@ -6,29 +6,22 @@ import './Judges.css';
 // Data for the contact points
 const contactsData = [
   {
-    name: 'Ishaan Jindal',
-    title: 'Organizer',
+    name: 'j1',
+    title: 'judge',
     description: 'desc_1',
     image: '/assets/Dir._Ishaan_Jindal.jpg',
     contactLink: 'mailto:hsingh@example.com',
     linkedinLink: '#',
   },
   {
-    name: 'Advitya Dua',
-    title: 'Organizer',
+    name: 'j2',
+    title: 'judge',
     description: 'desc_2',
     image: '/assets/Advitya_Dua.jpg',
     contactLink: 'mailto:adua60_be24@thapar.edu',
     linkedinLink: 'https://www.linkedin.com/in/advitya-dua',
   },
-  {
-    name: 'Prince Sharma',
-    title: 'Developer',
-    description: 'Sophomore at Thapar University, India',
-    image: '/assets/Prince_Sharma.jpg',
-    contactLink: 'mailto:placeholder@example.com',
-    linkedinLink: 'https://www.linkedin.com/in/prince-tanice',
-  }
+
 ];
 
 const Judges = () => {
