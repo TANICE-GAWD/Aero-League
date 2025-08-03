@@ -36,7 +36,7 @@ const Judges = () => {
 
         <div className="contact-cards-wrapper">
           {contactsData.map((contact, index) => (
-            <div key={index} className="contact-card">
+            <div key={index} className="contact-cards">
               {/* This div creates the animated gradient border */}
               <div className="card-border"></div>
               {/* This div creates the spotlight effect on hover */}

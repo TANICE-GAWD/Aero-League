@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaEnvelope, FaLinkedin } from 'react-icons/fa';
 import { GiDeliveryDrone } from "react-icons/gi";
 import './Contact.css';
@@ -56,7 +55,7 @@ const ContactCard = ({ contact }) => {
       <GiDeliveryDrone className="card-drone drone-tr" />
 
 
-      <div className="card-content">
+      <div className="contact-card-content">
         <div className="contact-card-header">
           <div className="profile-image-container">
             <img src={contact.image} alt={contact.name} className="profile-image" />

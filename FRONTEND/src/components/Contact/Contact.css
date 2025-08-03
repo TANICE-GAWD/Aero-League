@@ -1,9 +1,9 @@
-
+/* --- Root Variables and Keyframes --- */
 :root {
   --bg-color: #0a0a0a;
-  --card-bg: #111827;
-  --primary-glow: #00bfff;
-  --secondary-glow: #9333ea;
+  --card-bg: #111827; /* Darker, slightly blue-tinted black */
+  --primary-glow: #00bfff; /* DeepSkyBlue */
+  --secondary-glow: #9333ea; /* A nice purple */
   --text-primary: #f9fafb;
   --text-secondary: #9ca3af;
   --card-border-color: rgba(255, 255, 255, 0.1);
@@ -14,7 +14,7 @@
   100% { transform: rotate(360deg); }
 }
 
-
+/* --- Main Section and Container --- */
 .contact-points-section {
   padding: 6rem 1rem;
   background-color: var(--bg-color);
@@ -22,7 +22,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter", sans-serif; /* A clean, modern font */
 }
 
 .contact-points-container {
@@ -51,14 +51,14 @@
   line-height: 1.6;
 }
 
-
+/* --- Card Wrapper --- */
 .contact-cards-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2.5rem;
 }
 
-
+/* --- The Magic: Contact Card Styling --- */
 .contact-card {
   background: var(--card-bg);
   border-radius: 16px;
@@ -68,7 +68,7 @@
   z-index: 1;
 }
 
-
+/* Spotlight Effect */
 .contact-card::before {
   content: "";
   position: absolute;
@@ -87,11 +87,11 @@
   z-index: 2;
 }
 
-
+/* Animated Gradient Border */
 .contact-card::after {
   content: "";
   position: absolute;
-  inset: -2px;
+  inset: -2px; /* Control border thickness */
   background: conic-gradient(
     from 180deg at 50% 50%,
     var(--secondary-glow), 
@@ -100,7 +100,7 @@
   );
   opacity: 0;
   transition: opacity 0.5s;
-  animation: rotate-glow 4s linear infinite paused;
+  animation: rotate-glow 4s linear infinite paused; /* Paused initially */
   z-index: -1;
 }
 
@@ -115,11 +115,11 @@
 
 .contact-card:hover::after {
   opacity: 1;
-  animation-play-state: running;
+  animation-play-state: running; /* Run animation on hover */
 }
 
-
-.card-content {
+/* This div contains the actual card content and clips the pseudo-elements */
+.contact-card-content {
   background: var(--card-bg);
   border-radius: inherit;
   padding: 2.5rem 2rem;
@@ -129,10 +129,10 @@
   width: 100%;
   height: 100%;
   z-index: 3;
-  position: relative;
+  position: relative; /* To be above the pseudo-elements */
 }
 
-
+/* --- Drone Animations --- */
 .card-drone {
   position: absolute;
   font-size: 1.75rem;
@@ -143,13 +143,13 @@
   transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-
+/* Initial off-screen positions */
 .drone-tl { top: -20px; left: -20px; transform: rotate(-45deg); }
 .drone-tr { top: -20px; right: -20px; transform: rotate(45deg); }
 .drone-bl { bottom: -20px; left: -20px; transform: rotate(-135deg); }
 .drone-br { bottom: -20px; right: -20px; transform: rotate(135deg); }
 
-
+/* Final on-screen positions on hover */
 .contact-card:hover .card-drone {
   opacity: 1;
   transform: rotate(0deg);
@@ -160,7 +160,7 @@
 .contact-card:hover .drone-br { bottom: 1rem; right: 1rem; transition-delay: 0.3s; }
 
 
-
+/* --- Inner Card Elements --- */
 .contact-card-header { margin-bottom: 1.5rem; }
 .profile-image-container { width: 120px; height: 120px; }
 
@@ -195,10 +195,10 @@
   color: var(--text-secondary);
   line-height: 1.6;
   margin-bottom: 2rem;
-  min-height: 50px;
+  min-height: 50px; /* Ensures consistent card height */
 }
 
-
+/* --- Footer and Buttons --- */
 .contact-card-footer { display: flex; gap: 1rem; width: 100%; }
 
 .contact-button {
@@ -236,7 +236,7 @@
   border-color: var(--text-primary);
 }
 
-
+/* --- Media Queries --- */
 @media (max-width: 768px) {
   .contact-cards-wrapper {
     grid-template-columns: 1fr;

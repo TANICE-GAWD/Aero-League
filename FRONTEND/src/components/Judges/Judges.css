@@ -62,7 +62,7 @@
 }
 
 
-.contact-card {
+.contact-cards {
   position: relative;
   border-radius: 16px;
   overflow: hidden;
@@ -91,7 +91,7 @@
   100% { transform: rotate(360deg); }
 }
 
-.contact-card .card-border {
+.contact-cards .card-border {
   content: '';
   position: absolute;
   top: 50%;
@@ -110,12 +110,12 @@
   transition: opacity 0.4s ease;
 }
 
-.contact-card:hover .card-border {
+.contact-cards:hover .card-border {
   opacity: 1;
   animation: rotate-glow 4s linear infinite;
 }
 
-.contact-card:hover {
+.contact-cards:hover {
   transform: translateY(-12px) scale(1.02);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
@@ -133,7 +133,7 @@
   z-index: 3;
   pointer-events: none;
 }
-.contact-card:hover .card-spotlight {
+.contact-cards:hover .card-spotlight {
   opacity: 1;
 }
 
