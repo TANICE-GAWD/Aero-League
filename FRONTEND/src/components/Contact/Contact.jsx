@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaEnvelope, FaLinkedin } from 'react-icons/fa'; // Import FaDrone
+import { FaEnvelope, FaLinkedin } from 'react-icons/fa';
 import { GiDeliveryDrone } from "react-icons/gi";
 import './Contact.css';
 
@@ -8,23 +8,31 @@ const contactsData = [
   {
     name: 'Ishaan Jindal',
     title: 'Organizer',
-    description: 'desc_1',
+    description: 'Lead organizer, coordinating all event logistics and planning.',
     image: '/assets/Dir._Ishaan_Jindal.jpg',
     contactLink: 'mailto:hsingh@example.com',
-    linkedinLink: '#',
+    linkedinLink: 'https://www.linkedin.com/in/dir-ishaan-jindal-804596284',
   },
   {
     name: 'Advitya Dua',
     title: 'Organizer',
-    description: 'desc_2',
+    description: 'Manages sponsorships and external relations for the event.',
     image: '/assets/Advitya_Dua.jpg',
     contactLink: 'mailto:adua60_be24@thapar.edu',
     linkedinLink: 'https://www.linkedin.com/in/advitya-dua',
   },
   {
+    name: 'Aadil Sharma',
+    title: 'Organizer',
+    description: 'Handles marketing, promotion, and social media outreach.',
+    image: '/assets/Aadil_Sharma.jpg',
+    contactLink: 'mailto:adua60_be24@thapar.edu',
+    linkedinLink: 'https://www.linkedin.com/in/aadil-sharma-31b005287',
+  },
+  {
     name: 'Prince Sharma',
     title: 'Developer',
-    description: 'Sophomore at Thapar University, India',
+    description: 'Lead developer for the event\'s web presence and technical stack.',
     image: '/assets/Prince_Sharma.jpg',
     contactLink: 'mailto:placeholder@example.com',
     linkedinLink: 'https://www.linkedin.com/in/prince-tanice',
@@ -38,36 +46,45 @@ const ContactPoints = () => {
         <div className="contact-points-header">
           <h2 className="contact-points-title">Dedicated Contacts</h2>
           <p className="contact-points-subtitle">
-            Need Assistance? Ping our team.
+            Need assistance? Our team is ready to help. Reach out to the right person for your query.
           </p>
         </div>
 
         <div className="contact-cards-wrapper">
           {contactsData.map((contact, index) => (
             <div key={index} className="contact-card">
-              {/* Drone Icon for animation */}
-              <GiDeliveryDrone className="card-drone-icon" />
+              {/* This div creates the animated gradient border */}
+              <div className="card-border"></div>
+              {/* This div creates the spotlight effect on hover */}
+              <div className="card-spotlight"></div>
 
-              <div className="contact-card-header">
-                <div className="profile-image-container">
-                  <img src={contact.image} alt={contact.name} className="profile-image" />
+              {/* Drones for each corner */}
+              <GiDeliveryDrone className="card-drone-icon drone-top-left" />
+              <GiDeliveryDrone className="card-drone-icon drone-top-right" />
+              <GiDeliveryDrone className="card-drone-icon drone-bottom-left" />
+              <GiDeliveryDrone className="card-drone-icon drone-bottom-right" />
+
+              <div className="contact-card-content">
+                <div className="contact-card-header">
+                  <div className="profile-image-container">
+                    <img src={contact.image} alt={contact.name} className="profile-image" />
+                  </div>
                 </div>
-              </div>
-              <div className="contact-card-body">
-                <h3 className="contact-name">{contact.name}</h3>
-                <p className="contact-spoc">{contact.spoc}</p>
-                <p className="contact-title-secondary">{contact.title}</p>
-                <p className="contact-description">{contact.description}</p>
-              </div>
-              <div className="contact-card-footer">
-                <a href={contact.contactLink} className="contact-button primary">
-                  <FaEnvelope />
-                  <span>Contact</span>
-                </a>
-                <a href={contact.linkedinLink} target="_blank" rel="noopener noreferrer" className="contact-button secondary">
-                  <FaLinkedin />
-                  <span>LinkedIn</span>
-                </a>
+                <div className="contact-card-body">
+                  <h3 className="contact-name">{contact.name}</h3>
+                  <p className="contact-title-secondary">{contact.title}</p>
+                  <p className="contact-description">{contact.description}</p>
+                </div>
+                <div className="contact-card-footer">
+                  <a href={contact.contactLink} className="contact-button primary">
+                    <FaEnvelope />
+                    <span>Contact</span>
+                  </a>
+                  <a href={contact.linkedinLink} target="_blank" rel="noopener noreferrer" className="contact-button secondary">
+                    <FaLinkedin />
+                    <span>LinkedIn</span>
+                  </a>
+                </div>
               </div>
             </div>
           ))}

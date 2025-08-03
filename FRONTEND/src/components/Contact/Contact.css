@@ -1,14 +1,16 @@
-
+/* --- Root Variables for Theming --- */
 :root {
-  --bg-color: #0f1419;
-  --primary-glow: #00bfff;
-  --card-bg: rgba(22, 33, 62, 0.7);
-  --card-border: rgba(0, 191, 255, 0.3);
-  --text-primary: #f0f0f0;
-  --text-secondary: rgba(240, 240, 240, 0.7);
+  --bg-color: #0a0e14;
+  --primary-glow: #00bfff; /* Deep sky blue */
+  --secondary-glow: #7b68ee; /* Medium slate blue */
+  --card-bg: rgba(22, 33, 62, 0.6);
+  --card-border-color: rgba(0, 191, 255, 0.2);
+  --text-primary: #f0f8ff; /* Alice blue */
+  --text-secondary: rgba(240, 248, 255, 0.7);
+  --font-body: "Montserrat", sans-serif;
 }
 
-
+/* --- Base Section and Container Layout --- */
 .contact-points-section {
   padding: 6rem 1rem;
   background-color: var(--bg-color);
@@ -16,6 +18,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: var(--font-body);
 }
 
 .contact-points-container {
@@ -25,17 +28,21 @@
   text-align: center;
 }
 
-
+/* --- Section Header --- */
 .contact-points-header {
   margin-bottom: 4rem;
 }
 
 .contact-points-title {
-  font-family: "Montserrat", sans-serif;
   font-weight: 800;
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
   color: var(--text-primary);
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  /* Adding a subtle gradient to the text */
+  background: linear-gradient(90deg, var(--primary-glow), var(--text-primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(0, 191, 255, 0.2);
 }
 
 .contact-points-subtitle {
@@ -43,57 +50,121 @@
   color: var(--text-secondary);
   max-width: 600px;
   margin: 0 auto;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
-
+/* --- Card Grid Layout --- */
 .contact-cards-wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2.5rem;
   justify-content: center;
 }
 
-
+/* --- Main Contact Card Styling --- */
 .contact-card {
-  background: var(--card-bg);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--card-border);
+  position: relative;
   border-radius: 16px;
+  overflow: hidden; /* Crucial for border and drone animations */
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  z-index: 1;
+}
+
+/* The content of the card, with its own background and padding */
+.contact-card-content {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 14px; /* Slightly smaller than parent to show border */
   padding: 2.5rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: all 0.4s ease;
+  height: 100%;
+  z-index: 2;
   position: relative;
-  overflow: hidden;
+}
+
+/* --- Animated Gradient Border --- */
+@keyframes rotate-glow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.contact-card .card-border {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%; /* Larger than card to create the glow effect */
+  height: 200%;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+  background: conic-gradient(
+    from 0deg,
+    var(--primary-glow),
+    var(--secondary-glow),
+    var(--primary-glow)
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.contact-card:hover .card-border {
+  opacity: 1;
+  animation: rotate-glow 4s linear infinite;
 }
 
 .contact-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 0 30px rgba(0, 191, 255, 0.2);
-  border-color: var(--primary-glow);
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 
+/* --- Spotlight Effect --- */
+.card-spotlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.1), transparent 40%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 3;
+}
+.contact-card:hover .card-spotlight {
+  opacity: 1;
+}
+/* A small JS snippet would be needed to update --x and --y for true mouse following.
+   This CSS-only version provides a static hover glow from the center. */
+
+
+/* --- Drone Corner Animations --- */
 .card-drone-icon {
   position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
   font-size: 2rem;
   color: var(--primary-glow);
-  opacity: 0;
-  transform: translate(30px, -30px) rotate(45deg);
-  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   text-shadow: 0 0 10px var(--primary-glow);
+  opacity: 0;
+  z-index: 4; /* Above content */
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.contact-card:hover .card-drone-icon {
-  opacity: 1;
-  transform: translate(0, 0) rotate(0deg);
-}
+/* Initial positions (outside the card) */
+.drone-top-left { top: -20px; left: -20px; transform: rotate(-45deg); }
+.drone-top-right { top: -20px; right: -20px; transform: rotate(45deg); }
+.drone-bottom-left { bottom: -20px; left: -20px; transform: rotate(-135deg); }
+.drone-bottom-right { bottom: -20px; right: -20px; transform: rotate(135deg); }
+
+/* Final positions on hover (inside the card) */
+.contact-card:hover .drone-top-left { top: 15px; left: 15px; opacity: 1; transform: rotate(0); transition-delay: 0s; }
+.contact-card:hover .drone-top-right { top: 15px; right: 15px; opacity: 1; transform: rotate(0); transition-delay: 0.1s; }
+.contact-card:hover .drone-bottom-left { bottom: 15px; left: 15px; opacity: 1; transform: rotate(0); transition-delay: 0.2s; }
+.contact-card:hover .drone-bottom-right { bottom: 15px; right: 15px; opacity: 1; transform: rotate(0); transition-delay: 0.3s; }
 
 
+/* --- Card Content Styling --- */
 .contact-card-header {
   margin-bottom: 1.5rem;
 }
@@ -111,55 +182,45 @@
   border: 4px solid var(--primary-glow);
   object-fit: cover;
   box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
+  transition: all 0.4s ease;
 }
-
-.profile-flag {
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
-  font-size: 1.5rem;
-  background-color: rgba(0,0,0,0.5);
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: grid;
-  place-items: center;
-  line-height: 1;
+.contact-card:hover .profile-image {
+  border-color: var(--secondary-glow);
+  box-shadow: 0 0 30px rgba(123, 104, 238, 0.5);
+  transform: scale(1.05);
 }
 
 .contact-card-body {
   flex-grow: 1;
+  width: 100%;
 }
 
 .contact-name {
   font-size: 1.75rem;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 0.25rem;
-}
-
-.contact-spoc {
-  color: var(--primary-glow);
-  font-weight: 600;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .contact-title-secondary {
-  color: var(--text-secondary);
-  font-style: italic;
-  margin-bottom: 1rem;
+  color: var(--primary-glow);
+  font-weight: 600;
+  font-style: normal;
+  margin-bottom: 1.5rem;
 }
 
 .contact-description {
   color: var(--text-secondary);
   line-height: 1.6;
   margin-bottom: 2rem;
+  font-size: 0.95rem;
 }
 
 .contact-card-footer {
   display: flex;
   gap: 1rem;
   width: 100%;
+  margin-top: auto; /* Pushes footer to the bottom */
 }
 
 .contact-button {
@@ -168,50 +229,39 @@
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  padding: 0.75rem 1rem;
+  padding: 0.8rem 1rem;
   border-radius: 8px;
-  font-family: "Montserrat", sans-serif;
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
+  border: 2px solid transparent;
 }
 
 .contact-button.primary {
   background-color: var(--primary-glow);
   color: var(--bg-color);
-  border: 1px solid var(--primary-glow);
 }
 .contact-button.primary:hover {
   background-color: transparent;
   color: var(--primary-glow);
+  border-color: var(--primary-glow);
+  transform: translateY(-2px);
 }
 
 .contact-button.secondary {
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.05);
   color: var(--text-secondary);
-  border: 1px solid var(--card-border);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 .contact-button.secondary:hover {
   color: var(--text-primary);
   border-color: var(--text-primary);
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
 }
 
 
-.assistance-footer {
-  margin-top: 4rem;
-  color: var(--text-secondary);
-  font-size: 1.1rem;
-}
-
-
-@media (max-width: 1024px) {
-  .contact-cards-wrapper {
-    grid-template-columns: 1fr 1fr;
-    max-width: 700px;
-    margin: 0 auto;
-  }
-}
-
+/* --- Responsive Design --- */
 @media (max-width: 768px) {
   .contact-cards-wrapper {
     grid-template-columns: 1fr;
