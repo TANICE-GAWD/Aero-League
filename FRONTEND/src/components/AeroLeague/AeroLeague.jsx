@@ -7,11 +7,16 @@ const Animation = () => {
   const mountRef = useRef(null);
 
   useEffect(() => {
+    // This check is important. If the ref isn't attached, do nothing.
+    if (!mountRef.current) return;
+
+    // *** KEY CHANGE: Store the mount point in a variable ***
+    const mountPoint = mountRef.current;
+
     const vertexShader = `
       attribute float size;
       attribute vec3 customColor;
       varying vec3 vColor;
-
       void main() {
         vColor = customColor;
         vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
@@ -24,7 +29,6 @@ const Animation = () => {
       uniform vec3 color;
       uniform sampler2D pointTexture;
       varying vec3 vColor;
-
       void main() {
         gl_FragColor = vec4( color * vColor, 1.0 );
         gl_FragColor = gl_FragColor * texture2D( pointTexture, gl_PointCoord );
@@ -32,7 +36,8 @@ const Animation = () => {
     `;
 
     class Environment {
-        constructor(font, particle, container) {
+      // ... constructor and other methods are unchanged
+      constructor(font, particle, container) {
             this.font = font;
             this.particle = particle;
             this.container = container;
@@ -53,7 +58,8 @@ const Animation = () => {
                 this.font,
                 this.particle,
                 this.camera,
-                this.renderer
+                this.renderer,
+                this.container // *** KEY CHANGE: Pass the container to CreateParticles
             );
         }
 
@@ -94,7 +100,6 @@ const Animation = () => {
                 this.container.clientWidth,
                 this.container.clientHeight
             );
-            // We need to restart the particle system on resize to adjust text size
             if (this.createParticles) {
                 this.createParticles.destroy();
                 this.setup();
@@ -103,44 +108,41 @@ const Animation = () => {
     }
 
     class CreateParticles {
-        constructor(scene, font, particleImg, camera, renderer) {
-            this.scene = scene;
-            this.font = font;
-            this.particleImg = particleImg;
-            this.camera = camera;
-            this.renderer = renderer;
+      // *** KEY CHANGE: Accept 'container' in the constructor ***
+      constructor(scene, font, particleImg, camera, renderer, container) {
+        this.scene = scene;
+        this.font = font;
+        this.particleImg = particleImg;
+        this.camera = camera;
+        this.renderer = renderer;
+        this.container = container; // Store the container
 
-            this.raycaster = new THREE.Raycaster();
-            this.mouse = new THREE.Vector2(-200, 200);
+        this.raycaster = new THREE.Raycaster();
+        this.mouse = new THREE.Vector2(-200, 200);
+        this.colorChange = new THREE.Color();
+        this.buttom = false;
+        this.touchStartX = 0;
+        this.touchStartY = 0;
+        this.isScrolling = false;
+        this.touchMoveThreshold = 10;
 
-            this.colorChange = new THREE.Color();
+        const isMobile = window.innerWidth < 768;
+        this.data = {
+            text: isMobile ? ' AERO LEAGUE\nBUILD. FLY. DOMINATE.' : '      AERO LEAGUE\nBUILD. FLY. DOMINATE.',
+            amount: isMobile ? 800 : 1500,
+            particleSize: 1,
+            particleColor: 0xffffff,
+            textSize: isMobile ? 3 : 5,
+            area: 250,
+            ease: 0.05,
+        };
 
-            this.buttom = false;
-            
-            // --- GESTURE DETECTION STATE ---
-            this.touchStartX = 0;
-            this.touchStartY = 0;
-            this.isScrolling = false;
-            this.touchMoveThreshold = 10; // Pixels
+        this.setup();
+        this.bindEvents();
+      }
 
-            // --- RESPONSIVE ADJUSTMENTS ---
-            const isMobile = window.innerWidth < 768;
-
-            this.data = {
-                text: isMobile ? ' AERO LEAGUE\nBUILD. FLY. DOMINATE.' : '      AERO LEAGUE\nBUILD. FLY. DOMINATE.',
-                amount: isMobile ? 800 : 1500, // Fewer particles on mobile
-                particleSize: 1,
-                particleColor: 0xffffff,
-                textSize: isMobile ? 3 : 5, // Smaller text on mobile
-                area: 250,
-                ease: 0.05,
-            };
-
-            this.setup();
-            this.bindEvents();
-        }
-        
-        destroy() {
+      // ... destroy and setup methods are unchanged ...
+      destroy() {
             if (this.particles) {
                 this.scene.remove(this.particles);
                 this.particles.geometry.dispose();
@@ -164,21 +166,24 @@ const Animation = () => {
             this.createText();
         }
 
-        bindEvents() {
-            // Mouse events for desktop
-            document.addEventListener('mousedown', this.onMouseDown.bind(this));
-            document.addEventListener('mousemove', this.onMouseMove.bind(this));
-            document.addEventListener('mouseup', this.onMouseUp.bind(this));
-            
-            // Touch events for mobile
-            document.addEventListener('touchstart', this.onTouchStart.bind(this));
-            document.addEventListener('touchmove', this.onTouchMove.bind(this));
-            document.addEventListener('touchend', this.onTouchEnd.bind(this));
-        }
+      bindEvents() {
+        // *** KEY CHANGE: Add listeners to the container, not the document ***
+        this.container.addEventListener('mousedown', this.onMouseDown.bind(this));
+        this.container.addEventListener('mousemove', this.onMouseMove.bind(this));
+        this.container.addEventListener('mouseup', this.onMouseUp.bind(this));
+        this.container.addEventListener('mouseleave', this.onMouseUp.bind(this)); // Good practice
 
-        onMouseDown(event) {
-            this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        this.container.addEventListener('touchstart', this.onTouchStart.bind(this));
+        this.container.addEventListener('touchmove', this.onTouchMove.bind(this));
+        this.container.addEventListener('touchend', this.onTouchEnd.bind(this));
+      }
+
+      // All other methods (onMouseDown, onTouchStart, render, etc.) are unchanged
+      onMouseDown(event) {
+            // We need to adjust coordinates relative to the container, not the window
+            const rect = this.container.getBoundingClientRect();
+            this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
             const vector = new THREE.Vector3(this.mouse.x, this.mouse.y, 0.5);
             vector.unproject(this.camera);
@@ -198,19 +203,17 @@ const Animation = () => {
         }
 
         onMouseMove(event) {
-            this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            const rect = this.container.getBoundingClientRect();
+            this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
         }
 
-        // --- UPDATED TOUCH EVENT HANDLERS ---
         onTouchStart(event) {
             if (event.touches.length > 0) {
                 const touch = event.touches[0];
-                
                 this.touchStartX = touch.clientX;
                 this.touchStartY = touch.clientY;
                 this.isScrolling = false; 
-
                 this.onMouseDown(touch); 
             }
         }
@@ -218,18 +221,14 @@ const Animation = () => {
         onTouchMove(event) {
             if (event.touches.length > 0) {
                 const touch = event.touches[0];
-                
                 if (this.isScrolling) return;
-
                 const deltaX = touch.clientX - this.touchStartX;
                 const deltaY = touch.clientY - this.touchStartY;
-
                 if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > this.touchMoveThreshold) {
                     this.isScrolling = true;
                     this.onMouseUp(); 
                     return;
                 }
-
                 this.onMouseMove(touch);
             }
         }
@@ -240,7 +239,7 @@ const Animation = () => {
         }
 
         render() {
-            if (!this.particles) return; // Guard clause
+            if (!this.particles) return;
             const time = ((0.001 * performance.now()) % 12) / 12;
             const zigzagTime = (1 + Math.sin(time * 2 * Math.PI)) / 6;
 
@@ -268,12 +267,7 @@ const Animation = () => {
                     let pz = pos.getZ(i);
 
                     this.colorChange.setHSL(0.5, 1, 1);
-                    coulors.setXYZ(
-                        i,
-                        this.colorChange.r,
-                        this.colorChange.g,
-                        this.colorChange.b
-                    );
+                    coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
                     coulors.needsUpdate = true;
 
                     size.array[i] = this.data.particleSize;
@@ -293,27 +287,12 @@ const Animation = () => {
                         py -= f * Math.sin(t);
 
                         this.colorChange.setHSL(0.5 + zigzagTime, 1.0, 0.5);
-                        coulors.setXYZ(
-                            i,
-                            this.colorChange.r,
-                            this.colorChange.g,
-                            this.colorChange.b
-                        );
+                        coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
                         coulors.needsUpdate = true;
 
-                        if (
-                            px > initX + 70 ||
-                            px < initX - 70 ||
-                            py > initY + 70 ||
-                            py < initY - 70
-                        ) {
+                        if (px > initX + 70 || px < initX - 70 || py > initY + 70 || py < initY - 70) {
                             this.colorChange.setHSL(0.15, 1.0, 0.5);
-                            coulors.setXYZ(
-                                i,
-                                this.colorChange.r,
-                                this.colorChange.g,
-                                this.colorChange.b
-                            );
+                            coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
                             coulors.needsUpdate = true;
                         }
                     } else {
@@ -322,55 +301,32 @@ const Animation = () => {
                                 const t = Math.atan2(dy, dx);
                                 px -= 0.03 * Math.cos(t);
                                 py -= 0.03 * Math.sin(t);
-
                                 this.colorChange.setHSL(0.15, 1.0, 0.5);
-                                coulors.setXYZ(
-                                    i,
-                                    this.colorChange.r,
-                                    this.colorChange.g,
-                                    this.colorChange.b
-                                );
+                                coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
                                 coulors.needsUpdate = true;
-
                                 size.array[i] = this.data.particleSize / 1.2;
                                 size.needsUpdate = true;
                             } else {
                                 const t = Math.atan2(dy, dx);
                                 px += f * Math.cos(t);
                                 py += f * Math.sin(t);
-
                                 pos.setXYZ(i, px, py, pz);
                                 pos.needsUpdate = true;
-
                                 size.array[i] = this.data.particleSize * 1.3;
                                 size.needsUpdate = true;
                             }
-
-                            if (
-                                px > initX + 10 ||
-                                px < initX - 10 ||
-                                py > initY + 10 ||
-                                py < initY - 10
-                            ) {
+                            if (px > initX + 10 || px < initX - 10 || py > initY + 10 || py < initY - 10) {
                                 this.colorChange.setHSL(0.15, 1.0, 0.5);
-                                coulors.setXYZ(
-                                    i,
-                                    this.colorChange.r,
-                                    this.colorChange.g,
-                                    this.colorChange.b
-                                );
+                                coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
                                 coulors.needsUpdate = true;
-
                                 size.array[i] = this.data.particleSize / 1.8;
                                 size.needsUpdate = true;
                             }
                         }
                     }
-
                     px += (initX - px) * this.data.ease;
                     py += (initY - py) * this.data.ease;
                     pz += (initZ - pz) * this.data.ease;
-
                     pos.setXYZ(i, px, py, pz);
                     pos.needsUpdate = true;
                 }
@@ -379,23 +335,15 @@ const Animation = () => {
 
         createText() {
             let thePoints = [];
-
             let shapes = this.font.generateShapes(this.data.text, this.data.textSize);
             let geometry = new THREE.ShapeGeometry(shapes);
             geometry.computeBoundingBox();
-
-            const xMid =
-                -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
-            const yMid =
-                (geometry.boundingBox.max.y - geometry.boundingBox.min.y) / 2.85;
-
+            const xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
+            const yMid = (geometry.boundingBox.max.y - geometry.boundingBox.min.y) / 2.85;
             geometry.center();
-
             let holeShapes = [];
-
             for (let q = 0; q < shapes.length; q++) {
                 let shape = shapes[q];
-
                 if (shape.holes && shape.holes.length > 0) {
                     for (let j = 0; j < shape.holes.length; j++) {
                         let hole = shape.holes[j];
@@ -404,18 +352,12 @@ const Animation = () => {
                 }
             }
             shapes.push.apply(shapes, holeShapes);
-
             let colors = [];
             let sizes = [];
-
             for (let x = 0; x < shapes.length; x++) {
                 let shape = shapes[x];
-
-                const amountPoints =
-                    shape.type === 'Path' ? this.data.amount / 2 : this.data.amount;
-
+                const amountPoints = shape.type === 'Path' ? this.data.amount / 2 : this.data.amount;
                 let points = shape.getSpacedPoints(amountPoints);
-
                 points.forEach((element, z) => {
                     const a = new THREE.Vector3(element.x, element.y, 0);
                     thePoints.push(a);
@@ -423,19 +365,10 @@ const Animation = () => {
                     sizes.push(1);
                 });
             }
-
             let geoParticles = new THREE.BufferGeometry().setFromPoints(thePoints);
             geoParticles.translate(xMid, yMid, 0);
-
-            geoParticles.setAttribute(
-                'customColor',
-                new THREE.Float32BufferAttribute(colors, 3)
-            );
-            geoParticles.setAttribute(
-                'size',
-                new THREE.Float32BufferAttribute(sizes, 1)
-            );
-
+            geoParticles.setAttribute('customColor', new THREE.Float32BufferAttribute(colors, 3));
+            geoParticles.setAttribute('size', new THREE.Float32BufferAttribute(sizes, 1));
             const material = new THREE.ShaderMaterial({
                 uniforms: {
                     color: { value: new THREE.Color(0xffffff) },
@@ -443,15 +376,12 @@ const Animation = () => {
                 },
                 vertexShader,
                 fragmentShader,
-
                 blending: THREE.AdditiveBlending,
                 depthTest: false,
                 transparent: true,
             });
-
             this.particles = new THREE.Points(geoParticles, material);
             this.scene.add(this.particles);
-
             this.geometryCopy = new THREE.BufferGeometry();
             this.geometryCopy.copy(this.particles.geometry);
         }
@@ -460,9 +390,7 @@ const Animation = () => {
             const cameraOffset = camera.position.z;
             if (depth < cameraOffset) depth -= cameraOffset;
             else depth += cameraOffset;
-
             const vFOV = (camera.fov * Math.PI) / 180;
-
             return 2 * Math.tan(vFOV / 2) * Math.abs(depth);
         }
 
@@ -474,45 +402,38 @@ const Animation = () => {
         distance(x1, y1, x2, y2) {
             return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
         }
+
     }
-    
-    let env; // Keep a reference to the environment
+
+    let env;
     const fontLoader = new FontLoader();
     const textureLoader = new THREE.TextureLoader();
-
-    const particle = textureLoader.load(
-      'https://res.cloudinary.com/dfvtkoboz/image/upload/v1605013866/particle_a64uzf.png'
-    );
+    const particle = textureLoader.load('https://res.cloudinary.com/dfvtkoboz/image/upload/v1605013866/particle_a64uzf.png');
     
     fontLoader.load(
-        'https://res.cloudinary.com/dydre7amr/raw/upload/v1612950355/font_zsd4dr.json',
-        (loadedFont) => {
-            if (mountRef.current) {
-               env = new Environment(loadedFont, particle, mountRef.current);
-            }
-        },
-        (xhr) => {
-            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-        },
-        (err) => {
-            console.log('An error happened');
+      'https://res.cloudinary.com/dydre7amr/raw/upload/v1612950355/font_zsd4dr.json',
+      (loadedFont) => {
+        // Use the stored mountPoint variable
+        if (mountPoint) {
+          env = new Environment(loadedFont, particle, mountPoint);
         }
+      },
+      (xhr) => console.log((xhr.loaded / xhr.total * 100) + '% loaded'),
+      (err) => console.log('An error happened')
     );
 
     return () => {
-      // Cleanup logic
       if (env && env.renderer) {
-          env.renderer.setAnimationLoop(null);
+        env.renderer.setAnimationLoop(null);
       }
-      if (mountRef.current) {
-          while (mountRef.current.firstChild) {
-              mountRef.current.removeChild(mountRef.current.firstChild);
-          }
+      // Use the stored mountPoint variable for cleanup
+      if (mountPoint) {
+        while (mountPoint.firstChild) {
+          mountPoint.removeChild(mountPoint.firstChild);
+        }
       }
-      // You might also want to remove document event listeners here if the component truly unmounts
-      // although React's useEffect cleanup handles this scenario well.
     };
-  }, []);
+  }, []); // The empty dependency array is correct.
 
   return <div id="magic" ref={mountRef}></div>;
 };
