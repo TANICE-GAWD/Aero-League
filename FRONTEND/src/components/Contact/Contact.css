@@ -1,16 +1,16 @@
-/* --- Root Variables for Theming --- */
+
 :root {
   --bg-color: #0a0e14;
-  --primary-glow: #00bfff; /* Deep sky blue */
-  --secondary-glow: #7b68ee; /* Medium slate blue */
+  --primary-glow: #00bfff;
+  --secondary-glow: #7b68ee;
   --card-bg: rgba(22, 33, 62, 0.6);
   --card-border-color: rgba(0, 191, 255, 0.2);
-  --text-primary: #f0f8ff; /* Alice blue */
+  --text-primary: #f0f8ff;
   --text-secondary: rgba(240, 248, 255, 0.7);
   --font-body: "Montserrat", sans-serif;
 }
 
-/* --- Base Section and Container Layout --- */
+
 .contact-points-section {
   padding: 6rem 1rem;
   background-color: var(--bg-color);
@@ -28,7 +28,7 @@
   text-align: center;
 }
 
-/* --- Section Header --- */
+
 .contact-points-header {
   margin-bottom: 4rem;
 }
@@ -38,7 +38,7 @@
   font-size: clamp(2.5rem, 5vw, 3.5rem);
   color: var(--text-primary);
   margin-bottom: 1rem;
-  /* Adding a subtle gradient to the text */
+ 
   background: linear-gradient(90deg, var(--primary-glow), var(--text-primary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -53,7 +53,7 @@
   line-height: 1.7;
 }
 
-/* --- Card Grid Layout --- */
+
 .contact-cards-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -61,21 +61,21 @@
   justify-content: center;
 }
 
-/* --- Main Contact Card Styling --- */
+
 .contact-card {
   position: relative;
   border-radius: 16px;
-  overflow: hidden; /* Crucial for border and drone animations */
+  overflow: hidden;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
   z-index: 1;
 }
 
-/* The content of the card, with its own background and padding */
+
 .contact-card-content {
   background: var(--card-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-radius: 14px; /* Slightly smaller than parent to show border */
+  border-radius: 14px;
   padding: 2.5rem 2rem;
   display: flex;
   flex-direction: column;
@@ -85,7 +85,7 @@
   position: relative;
 }
 
-/* --- Animated Gradient Border --- */
+
 @keyframes rotate-glow {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -96,7 +96,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 200%; /* Larger than card to create the glow effect */
+  width: 200%;
   height: 200%;
   z-index: 0;
   transform: translate(-50%, -50%);
@@ -121,7 +121,6 @@
 }
 
 
-/* --- Spotlight Effect --- */
 .card-spotlight {
   position: absolute;
   top: 0;
@@ -132,39 +131,48 @@
   opacity: 0;
   transition: opacity 0.4s ease;
   z-index: 3;
+  pointer-events: none;
 }
 .contact-card:hover .card-spotlight {
   opacity: 1;
 }
-/* A small JS snippet would be needed to update --x and --y for true mouse following.
-   This CSS-only version provides a static hover glow from the center. */
 
 
-/* --- Drone Corner Animations --- */
+
+
+
 .card-drone-icon {
   position: absolute;
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: var(--primary-glow);
-  text-shadow: 0 0 10px var(--primary-glow);
-  opacity: 0;
-  z-index: 4; /* Above content */
-  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-shadow: 0 0 8px var(--primary-glow);
+  opacity: 0.9;
+  z-index: 4;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Initial positions (outside the card) */
-.drone-top-left { top: -20px; left: -20px; transform: rotate(-45deg); }
-.drone-top-right { top: -20px; right: -20px; transform: rotate(45deg); }
-.drone-bottom-left { bottom: -20px; left: -20px; transform: rotate(-135deg); }
-.drone-bottom-right { bottom: -20px; right: -20px; transform: rotate(135deg); }
 
-/* Final positions on hover (inside the card) */
-.contact-card:hover .drone-top-left { top: 15px; left: 15px; opacity: 1; transform: rotate(0); transition-delay: 0s; }
-.contact-card:hover .drone-top-right { top: 15px; right: 15px; opacity: 1; transform: rotate(0); transition-delay: 0.1s; }
-.contact-card:hover .drone-bottom-left { bottom: 15px; left: 15px; opacity: 1; transform: rotate(0); transition-delay: 0.2s; }
-.contact-card:hover .drone-bottom-right { bottom: 15px; right: 15px; opacity: 1; transform: rotate(0); transition-delay: 0.3s; }
+.drone-top-left { top: 15px; left: 15px; }
+.drone-top-right { top: 15px; right: 15px; }
+.drone-bottom-left { bottom: 15px; left: 15px; }
+.drone-bottom-right { bottom: 15px; right: 15px; }
 
 
-/* --- Card Content Styling --- */
+.contact-card:hover .drone-top-left {
+  transform: scale(1.1) rotate(-10deg);
+}
+.contact-card:hover .drone-top-right {
+  transform: scale(1.1) rotate(10deg);
+}
+.contact-card:hover .drone-bottom-left {
+  transform: scale(1.1) rotate(10deg);
+}
+.contact-card:hover .drone-bottom-right {
+  transform: scale(1.1) rotate(-10deg);
+}
+
+
+
 .contact-card-header {
   margin-bottom: 1.5rem;
 }
@@ -220,7 +228,7 @@
   display: flex;
   gap: 1rem;
   width: 100%;
-  margin-top: auto; /* Pushes footer to the bottom */
+  margin-top: auto;
 }
 
 .contact-button {
@@ -261,7 +269,7 @@
 }
 
 
-/* --- Responsive Design --- */
+
 @media (max-width: 768px) {
   .contact-cards-wrapper {
     grid-template-columns: 1fr;
