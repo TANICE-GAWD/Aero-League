@@ -122,7 +122,7 @@ const Animation = () => {
             const isMobile = window.innerWidth < 768;
 
             this.data = {
-                text: isMobile ? '       AERO LEAGUE\nBUILD. FLY. DOMINATE.' : '        AERO LEAGUE\nBUILD. FLY. DOMINATE.',
+                text: isMobile ? ' AERO LEAGUE\nBUILD. FLY. DOMINATE.' : '     AERO LEAGUE\nBUILD. FLY. DOMINATE.',
                 amount: isMobile ? 800 : 1500, // Fewer particles on mobile
                 particleSize: 1,
                 particleColor: 0xffffff,
@@ -165,9 +165,9 @@ const Animation = () => {
             document.addEventListener('mouseup', this.onMouseUp.bind(this));
             
             // Touch events for mobile
-            document.addEventListener('touchstart', this.onTouchStart.bind(this), { passive: false });
-            document.addEventListener('touchmove', this.onTouchMove.bind(this), { passive: false });
-            document.addEventListener('touchend', this.onTouchEnd.bind(this), { passive: false });
+            document.addEventListener('touchstart', this.onTouchStart.bind(this));
+            document.addEventListener('touchmove', this.onTouchMove.bind(this));
+            document.addEventListener('touchend', this.onTouchEnd.bind(this));
         }
 
         onMouseDown(event) {
@@ -198,7 +198,7 @@ const Animation = () => {
 
         // --- TOUCH EVENT HANDLERS ---
         onTouchStart(event) {
-            event.preventDefault();
+            // event.preventDefault(); // This was blocking scroll
             if (event.touches.length > 0) {
                 const touch = event.touches[0];
                 this.onMouseDown(touch); // Reuse mouse down logic
@@ -206,7 +206,7 @@ const Animation = () => {
         }
 
         onTouchMove(event) {
-            event.preventDefault();
+            // event.preventDefault(); // This was blocking scroll
             if (event.touches.length > 0) {
                 const touch = event.touches[0];
                 this.onMouseMove(touch); // Reuse mouse move logic
@@ -214,7 +214,7 @@ const Animation = () => {
         }
 
         onTouchEnd(event) {
-            event.preventDefault();
+            // event.preventDefault(); // This was blocking scroll
             this.onMouseUp(); // Reuse mouse up logic
         }
 
