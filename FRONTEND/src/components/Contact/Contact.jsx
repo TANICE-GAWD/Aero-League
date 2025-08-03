@@ -50,6 +50,7 @@ const ContactCard = ({ contact }) => {
   };
 
   return (
+    
     <div className="contact-card" onMouseMove={handleMouseMove}>
       {/* Four drone icons for the corner animation */}
       <GiDeliveryDrone className="card-drone drone-tr" />
@@ -84,7 +85,7 @@ const ContactCard = ({ contact }) => {
 // Main Component
 const ContactPoints = () => {
   return (
-    <section className="contact-points-section">
+    <section className="team-section">
       <div className="contact-points-container">
         <div className="contact-points-header">
           <h2 className="contact-points-title">Dedicated Contacts</h2>

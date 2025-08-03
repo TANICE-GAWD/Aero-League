@@ -25,7 +25,7 @@ const contactsData = [
 
 const Judges = () => {
   return (
-    <section className="contact-points-section">
+    <section className="team-section">
       <div className="contact-points-container">
         <div className="contact-points-header">
           <h2 className="contact-points-title">Dedicated Contacts</h2>
