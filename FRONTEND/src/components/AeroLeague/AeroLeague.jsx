@@ -128,7 +128,7 @@ const Animation = () => {
 
         const isMobile = window.innerWidth < 768;
         this.data = {
-            text: isMobile ? ' AERO LEAGUE\nBUILD. FLY. DOMINATE.' : '      AERO LEAGUE\nBUILD. FLY. DOMINATE.',
+            text: isMobile ? '       AERO LEAGUE\nBUILD. FLY. DOMINATE.' : '         AERO LEAGUE\nBUILD. FLY. DOMINATE.',
             amount: isMobile ? 800 : 1500,
             particleSize: 1,
             particleColor: 0xffffff,
