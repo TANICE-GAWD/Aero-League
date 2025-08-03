@@ -1,8 +1,7 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
-import { FaLinkedin, FaTwitter, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import './Carousel.css';
-
 
 const teamData = [
   { name: "member 1", role: "Role 1", image: "/assets/member1.png" },
@@ -18,7 +17,18 @@ const teamData = [
 export default function TeamCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isMobile, setIsMobile] = useState(false); // State to track mobile view
   const totalItems = teamData.length;
+
+  // Effect to check screen size and update the isMobile state
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth <= 900);
+    };
+    checkScreenSize(); // Initial check
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % totalItems);
@@ -28,12 +38,12 @@ export default function TeamCarousel() {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + totalItems) % totalItems);
   };
 
-
+  // Autoplay effect now stops if isPaused or isMobile is true
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || isMobile) return;
     const interval = setInterval(handleNext, 3000);
     return () => clearInterval(interval);
-  }, [isPaused, totalItems]);
+  }, [isPaused, isMobile]); // Dependency array includes isMobile
 
   return (
     <section className="team-section">
@@ -44,7 +54,6 @@ export default function TeamCarousel() {
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          {/* Decorative HUD Frame */}
           <div className="hud-frame"></div>
           
           <div className="carousel">
@@ -65,7 +74,6 @@ export default function TeamCarousel() {
                     <div className="member-info">
                       <h3 className="member-name">{member.name}</h3>
                       <p className="member-role">{member.role}</p>
-                      
                     </div>
                   </div>
                 </div>
@@ -73,9 +81,15 @@ export default function TeamCarousel() {
             </div>
           </div>
           
-          {/* Navigation Controls */}
-          <button className="carousel-control prev" onClick={handlePrev} aria-label="Previous pilot"><FaChevronLeft /></button>
-          <button className="carousel-control next" onClick={handleNext} aria-label="Next pilot"><FaChevronRight /></button>
+          {/* DESKTOP Navigation Controls: Hidden on mobile */}
+          <button className="carousel-control prev desktop-control" onClick={handlePrev} aria-label="Previous pilot"><FaChevronLeft /></button>
+          <button className="carousel-control next desktop-control" onClick={handleNext} aria-label="Next pilot"><FaChevronRight /></button>
+        </div>
+
+        {/* MOBILE Navigation Controls: Appear below carousel, hidden on desktop */}
+        <div className="mobile-controls">
+            <button className="carousel-control prev" onClick={handlePrev} aria-label="Previous pilot"><FaChevronLeft /></button>
+            <button className="carousel-control next" onClick={handleNext} aria-label="Next pilot"><FaChevronRight /></button>
         </div>
 
         {/* Dot Indicators */}
