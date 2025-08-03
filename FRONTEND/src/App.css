@@ -170,25 +170,18 @@ html {
 
 
 
-/* Add these new rules to your App.css */
+
 
 #animation-section {
-  /*
-    Set a specific height for the animation container.
-    '80vh' means 80% of the viewport height. This leaves space
-    at the bottom for the user to initiate a scroll.
-  */
+ 
   height: 70vh;
   width: 100%;
-  position: relative; /* Needed for the canvas to position correctly */
-  touch-action: pan-y; /* A crucial hint to the browser that this area allows vertical scrolling */
+  position: relative;
+  touch-action: pan-y;
 }
 
 #magic {
-  /*
-    This is the div your Three.js canvas is attached to.
-    We make sure it fills its parent container (#animation-section).
-  */
+ 
   width: 100%;
   height: 100%;
   position: absolute;
@@ -196,7 +189,7 @@ html {
   left: 0;
 }
 
-/* --- Keep all your other CSS as it was --- */
+
 
 * {
   margin: 0;
