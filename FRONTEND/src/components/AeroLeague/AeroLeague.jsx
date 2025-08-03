@@ -117,17 +117,16 @@ const Animation = () => {
             this.colorChange = new THREE.Color();
 
             this.buttom = false;
-            this.scrollTimeout = null; // Timeout for scroll effect
 
             // --- RESPONSIVE ADJUSTMENTS ---
             const isMobile = window.innerWidth < 768;
 
             this.data = {
-                text: isMobile ? '      AERO LEAGUE\nBUILD. FLY. DOMINATE.' : '        AERO LEAGUE\nBUILD. FLY. DOMINATE.',
+                text: isMobile ? '       AERO LEAGUE\nBUILD. FLY. DOMINATE.' : '        AERO LEAGUE\nBUILD. FLY. DOMINATE.',
                 amount: isMobile ? 800 : 1500, // Fewer particles on mobile
                 particleSize: 1,
                 particleColor: 0xffffff,
-                textSize: isMobile ? 3 : 10, // Smaller text on mobile
+                textSize: isMobile ? 3 : 5, // Smaller text on mobile
                 area: 250,
                 ease: 0.05,
             };
@@ -169,9 +168,6 @@ const Animation = () => {
             document.addEventListener('touchstart', this.onTouchStart.bind(this), { passive: false });
             document.addEventListener('touchmove', this.onTouchMove.bind(this), { passive: false });
             document.addEventListener('touchend', this.onTouchEnd.bind(this), { passive: false });
-
-            // --- SCROLL EVENT ---
-            document.addEventListener('scroll', this.onScroll.bind(this));
         }
 
         onMouseDown(event) {
@@ -220,29 +216,6 @@ const Animation = () => {
         onTouchEnd(event) {
             event.preventDefault();
             this.onMouseUp(); // Reuse mouse up logic
-        }
-
-        // --- SCROLL EVENT HANDLER ---
-        onScroll() {
-            // Set the interaction point to the center of the screen
-            this.mouse.x = 0;
-            this.mouse.y = 0;
-
-            // Trigger the "button down" state
-            this.buttom = true;
-            this.data.ease = 0.01;
-
-            // Clear any existing timeout to reset the effect on new scroll
-            if (this.scrollTimeout) {
-                clearTimeout(this.scrollTimeout);
-            }
-
-            // Set a timeout to end the effect after a short duration
-            this.scrollTimeout = setTimeout(() => {
-                this.buttom = false;
-                this.data.ease = 0.05; // Revert to the default ease factor
-                this.scrollTimeout = null;
-            }, 200); // Effect lasts for 200ms
         }
 
 
