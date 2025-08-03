@@ -1,7 +1,7 @@
+// Judges.js
 import React from 'react';
-import { FaEnvelope, FaLinkedin } from 'react-icons/fa';
-import { PiDrone } from 'react-icons/pi';
 import './Judges.css';
+import ContactCard from './ContactCard'; // Import the new component
 
 // Data for the contact points
 const contactsData = [
@@ -36,39 +36,7 @@ const Judges = () => {
 
         <div className="contact-cards-wrapper">
           {contactsData.map((contact, index) => (
-            <div key={index} className="contact-cards">
-              {/* This div creates the animated gradient border */}
-              <div className="card-border"></div>
-              {/* This div creates the spotlight effect on hover */}
-              <div className="card-spotlight"></div>
-
-              {/* Drones for each corner */}
-              <PiDrone className="card-drone-icon drone-top-left" />
-
-
-              <div className="contact-card-content">
-                <div className="contact-card-header">
-                  <div className="profile-image-container">
-                    <img src={contact.image} alt={contact.name} className="profile-image" />
-                  </div>
-                </div>
-                <div className="contact-card-body">
-                  <h3 className="contact-name">{contact.name}</h3>
-                  <p className="contact-title-secondary">{contact.title}</p>
-                  <p className="contact-description">{contact.description}</p>
-                </div>
-                <div className="contact-card-footer">
-                  <a href={contact.contactLink} className="contact-button primary">
-                    <FaEnvelope />
-                    <span>Contact</span>
-                  </a>
-                  <a href={contact.linkedinLink} target="_blank" rel="noopener noreferrer" className="contact-button secondary">
-                    <FaLinkedin />
-                    <span>LinkedIn</span>
-                  </a>
-                </div>
-              </div>
-            </div>
+            <ContactCard key={index} contact={contact} />
           ))}
         </div>
       </div>
