@@ -32,7 +32,7 @@
 }
 
 
-@media (max-width: 768px) {
+@media (max-height: 768px) {
   #animation-section {
     height: 70vh;
   }
