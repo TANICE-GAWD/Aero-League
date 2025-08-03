@@ -3,7 +3,6 @@ import './AeroLeague.css';
 import * as THREE from 'three';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 
-
 const Animation = () => {
   const mountRef = useRef(null);
 
@@ -117,12 +116,18 @@ const Animation = () => {
             this.colorChange = new THREE.Color();
 
             this.buttom = false;
+            
+            // --- GESTURE DETECTION STATE ---
+            this.touchStartX = 0;
+            this.touchStartY = 0;
+            this.isScrolling = false;
+            this.touchMoveThreshold = 10; // Pixels
 
             // --- RESPONSIVE ADJUSTMENTS ---
             const isMobile = window.innerWidth < 768;
 
             this.data = {
-                text: isMobile ? ' AERO LEAGUE\nBUILD. FLY. DOMINATE.' : '     AERO LEAGUE\nBUILD. FLY. DOMINATE.',
+                text: isMobile ? ' AERO LEAGUE\nBUILD. FLY. DOMINATE.' : '      AERO LEAGUE\nBUILD. FLY. DOMINATE.',
                 amount: isMobile ? 800 : 1500, // Fewer particles on mobile
                 particleSize: 1,
                 particleColor: 0xffffff,
@@ -136,13 +141,14 @@ const Animation = () => {
         }
         
         destroy() {
-            this.scene.remove(this.particles);
-            this.particles.geometry.dispose();
-            this.particles.material.dispose();
+            if (this.particles) {
+                this.scene.remove(this.particles);
+                this.particles.geometry.dispose();
+                this.particles.material.dispose();
+            }
             this.geometryCopy = null;
             this.particles = null;
         }
-
 
         setup() {
             const geometry = new THREE.PlaneGeometry(
@@ -196,31 +202,45 @@ const Animation = () => {
             this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
         }
 
-        // --- TOUCH EVENT HANDLERS ---
+        // --- UPDATED TOUCH EVENT HANDLERS ---
         onTouchStart(event) {
-            // event.preventDefault(); // This was blocking scroll
             if (event.touches.length > 0) {
                 const touch = event.touches[0];
-                this.onMouseDown(touch); // Reuse mouse down logic
+                
+                this.touchStartX = touch.clientX;
+                this.touchStartY = touch.clientY;
+                this.isScrolling = false; 
+
+                this.onMouseDown(touch); 
             }
         }
 
         onTouchMove(event) {
-            // event.preventDefault(); // This was blocking scroll
             if (event.touches.length > 0) {
                 const touch = event.touches[0];
-                this.onMouseMove(touch); // Reuse mouse move logic
+                
+                if (this.isScrolling) return;
+
+                const deltaX = touch.clientX - this.touchStartX;
+                const deltaY = touch.clientY - this.touchStartY;
+
+                if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > this.touchMoveThreshold) {
+                    this.isScrolling = true;
+                    this.onMouseUp(); 
+                    return;
+                }
+
+                this.onMouseMove(touch);
             }
         }
 
         onTouchEnd(event) {
-            // event.preventDefault(); // This was blocking scroll
-            this.onMouseUp(); // Reuse mouse up logic
+            this.isScrolling = false;
+            this.onMouseUp();
         }
 
-
         render() {
-            if (!this.particles) return; // Guard clause in case particles are destroyed
+            if (!this.particles) return; // Guard clause
             const time = ((0.001 * performance.now()) % 12) / 12;
             const zigzagTime = (1 + Math.sin(time * 2 * Math.PI)) / 6;
 
@@ -298,7 +318,7 @@ const Animation = () => {
                         }
                     } else {
                         if (mouseDistance < this.data.area) {
-                            if (i % 5 == 0) {
+                            if (i % 5 === 0) {
                                 const t = Math.atan2(dy, dx);
                                 px -= 0.03 * Math.cos(t);
                                 py -= 0.03 * Math.sin(t);
@@ -392,7 +412,7 @@ const Animation = () => {
                 let shape = shapes[x];
 
                 const amountPoints =
-                    shape.type == 'Path' ? this.data.amount / 2 : this.data.amount;
+                    shape.type === 'Path' ? this.data.amount / 2 : this.data.amount;
 
                 let points = shape.getSpacedPoints(amountPoints);
 
@@ -480,14 +500,17 @@ const Animation = () => {
     );
 
     return () => {
-        if (env && env.renderer) {
-             env.renderer.setAnimationLoop(null);
-        }
-        if (mountRef.current) {
-            while (mountRef.current.firstChild) {
-                mountRef.current.removeChild(mountRef.current.firstChild);
-            }
-        }
+      // Cleanup logic
+      if (env && env.renderer) {
+          env.renderer.setAnimationLoop(null);
+      }
+      if (mountRef.current) {
+          while (mountRef.current.firstChild) {
+              mountRef.current.removeChild(mountRef.current.firstChild);
+          }
+      }
+      // You might also want to remove document event listeners here if the component truly unmounts
+      // although React's useEffect cleanup handles this scenario well.
     };
   }, []);
 
