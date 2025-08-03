@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from 'react';
-import { FaCalendarAlt, FaRocket, FaLaptopCode, FaFileUpload, FaTrophy } from 'react-icons/fa';
+import { FaCalendarAlt, FaRocket, FaLaptopCode, FaTrophy } from 'react-icons/fa';
 import './Timeline.css';
 
 
@@ -9,31 +9,25 @@ const timelineData = [
     Icon: FaCalendarAlt,
     title: "Registration Opens",
     description: "Secure your spot. Early registration begins for all teams and pilots.",
-    date: "August 15, 2025"
+    date: "August 5, 2025"
   },
   {
     Icon: FaRocket,
     title: "Hackathon Kickoff",
     description: "Opening ceremony and team formation. The race begins now.",
-    date: "September 1, 2025"
+    date: "August 30th, 2025"
   },
   {
     Icon: FaLaptopCode,
     title: "Development Phase",
     description: "48 hours of intense coding, building, and innovation.",
-    date: "September 1-3, 2025"
-  },
-  {
-    Icon: FaFileUpload,
-    title: "Project Submission",
-    description: "Finalize your project and submit your work for evaluation by our judges.",
-    date: "September 3, 2025"
+    date: "August 30-31, 2025"
   },
   {
     Icon: FaTrophy,
     title: "Awards Ceremony",
     description: "Winners are announced and prizes awarded. Celebrate your achievements.",
-    date: "September 4, 2025"
+    date: "August 31st, 2025"
   }
 ];
 

@@ -2,7 +2,7 @@ import { FaEnvelope, FaLinkedin } from 'react-icons/fa';
 import { GiDeliveryDrone } from "react-icons/gi";
 import './Contact.css';
 
-// Data for the contact points (no changes needed here)
+
 const contactsData = [
   {
     name: 'Ishaan Jindal',
