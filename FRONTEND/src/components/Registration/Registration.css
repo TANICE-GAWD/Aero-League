@@ -1,0 +1,130 @@
+.registration-page-section {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6rem 1rem 3rem;
+  background-color: var(--bg-color, #0f1419);
+  background-image:
+    radial-gradient(var(--card-border, rgba(0,191,255,0.3)) 1px, transparent 1px),
+    radial-gradient(var(--card-border, rgba(0,191,255,0.3)) 1px, var(--bg-color, #0f1419) 1px);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
+}
+
+.registration-card {
+  width: 100%;
+  max-width: 600px;
+  background: var(--card-bg, rgba(22, 33, 62, 0.8));
+  backdrop-filter: blur(10px);
+  border-radius: var(--border-radius, 12px);
+  border: 1px solid var(--card-border, rgba(0, 191, 255, 0.3));
+  padding: 2.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+.registration-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.registration-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--text-primary, #f0f0f0);
+}
+
+.registration-subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary, rgba(240, 240, 240, 0.7));
+  margin-top: 0.5rem;
+}
+
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.form-fieldset {
+  border: 1px solid var(--card-border, rgba(0, 191, 255, 0.3));
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-fieldset legend {
+  padding: 0 0.5rem;
+  color: var(--primary-glow, #00bfff);
+  font-weight: 600;
+}
+
+.team-member-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.remove-member-btn, .add-member-btn {
+  background: transparent;
+  border: 1px solid var(--card-border, rgba(0, 191, 255, 0.3));
+  color: var(--text-secondary, rgba(240, 240, 240, 0.7));
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.remove-member-btn {
+  padding: 12px;
+  color: #ff6b6b;
+  border-color: #ff6b6b;
+}
+.remove-member-btn:hover {
+  background-color: rgba(255, 107, 107, 0.1);
+}
+.remove-member-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.add-member-btn {
+  padding: 10px;
+  margin-top: 0.5rem;
+}
+.add-member-btn:hover {
+  border-color: var(--primary-glow, #00bfff);
+  color: var(--primary-glow, #00bfff);
+}
+
+.register-button {
+  padding: 12px;
+  background-color: var(--color-accent, #64b5f6);
+  color: #0f1419;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.register-button:hover:not(:disabled) {
+  background-color: var(--primary-glow, #00bfff);
+  box-shadow: 0 0 20px var(--primary-glow, #00bfff);
+}
+
+.registration-error {
+  color: #ff6b6b;
+  text-align: center;
+  margin-top: -1rem;
+}

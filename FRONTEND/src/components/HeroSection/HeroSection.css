@@ -76,8 +76,7 @@
   border-radius: 50%;
   margin-right: 12px;
   object-fit: cover;
-  border: 2px solid var(--color-accent);
-  background-color: var(--color-card);
+  background-color: transparent;
 }
 
 .header__logo-text {
