@@ -25,9 +25,7 @@ function App() {
           <Animation />
         </section>
 
-        <section id="home">
-          <Carousel />
-        </section>
+
 
         <section id="challenges">
           <Challenges />
