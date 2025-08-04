@@ -1,42 +1,78 @@
-:root {
-  --bg-color: #0a0e14;
-  --card-border-color: rgba(0, 191, 255, 0.2);
-}
-
-#animation-section {
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
+.animation-section {
   position: relative;
-  touch-action: pan-y;
-  
-  background-color: var(--bg-color);
-  background-image:
-    radial-gradient(var(--card-border-color) 1px, transparent 1px),
-    radial-gradient(var(--card-border-color) 1px, var(--bg-color) 1px);
-  background-size: 40px 40px;
-  background-position: 0 0, 20px 20px;
+  width: 100%;
+  min-height: 70vh;
+  overflow: hidden;
+  z-index: 1;
 }
 
-#magic {
+.animation-canvas {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
-  
-  touch-action: none;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  user-select: none;
+  display: block;
+  top: 0;
+  left: 0;
 }
 
 
-@media (max-height: 768px) {
-  #animation-section {
-    height: 70vh;
+@media (max-width: 768px) {
+  .animation-section {
+    min-height: 60vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .animation-section {
+    min-height: 40vh;
   }
 }
 
 
 
+.next-section {
+  position: relative;
+  z-index: 2;
+  background-color: transparent;
+  color: #e0e0e0;
+  padding: 0px 20px;
+  
+ 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.next-section h1 {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+}
+
+.next-section p {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  line-height: 1.6;
+  max-width: 650px;
+  margin: 0;
+}
+
+
+.team-section {
+  width: 100%;
+  padding: 6rem 0;
+  background-color: var(--bg-color);
+  background-image:
+    radial-gradient(var(--card-border) 1px, transparent 1px),
+    radial-gradient(var(--card-border) 1px, var(--bg-color) 1px);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}

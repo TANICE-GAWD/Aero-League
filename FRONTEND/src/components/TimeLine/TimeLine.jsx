@@ -8,7 +8,7 @@ const timelineData = [
   {
     Icon: FaCalendarAlt,
     title: "Registration Opens",
-    description: "Secure your spot. Early registration begins for all teams and pilots.",
+    description: "Secure your spot. Early registration begins for all teams and pilots. (Start built drones)",
     date: "August 5, 2025"
   },
   {

@@ -280,4 +280,11 @@ body {
   justify-content: center;
   align-items: center;
   overflow: hidden;
+
+  position: relative;
+  background-color: var(--bg-color);
+  background-image:
+    radial-gradient(var(--card-border) 1px, transparent 1px),
+    radial-gradient(var(--card-border) 1px, var(--bg-color) 1px);
+  overflow-x: hidden;
 }

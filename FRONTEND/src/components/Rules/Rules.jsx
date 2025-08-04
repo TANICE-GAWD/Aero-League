@@ -1,3 +1,5 @@
+
+
 "use client";
 import { useState } from 'react';
 import { FaUserGraduate, FaUsers, FaLaptopCode, FaTrophy, FaHandsHelping, FaChevronDown } from 'react-icons/fa';
@@ -11,10 +13,10 @@ const rulesData = [
     Icon: FaUserGraduate,
     content: [
       'Participants must be currently enrolled in a college or university.',
-      'Team size must be between 2 to 4 members. No solo entries.',
-      'All participants must be 18 years or older by the event start date.',
-      'A valid student ID is required for verification during check-in.',
-      'Previous winners are welcome but cannot win the same category twice.'
+      'Team size must be between 2 to 5 members. No solo entries.',
+      'Love building and flying drones? Join in.',
+      'A valid ID proof is required for verification during check-in.',
+      'Each team is eligible for only one prize.'
     ]
   },
   {
@@ -25,8 +27,14 @@ const rulesData = [
       'Teams must be finalized before the registration deadline.',
       'Designate a team captain for all official communications.',
       'No changes to team members are permitted after registration closes.',
-      'Inter-college teams are highly encouraged.',
-      'All team members must be present for the final project presentation.'
+      {
+        text: 'The following team composition criteria must be met:',
+        sublist: [
+          'All team members must be from the same college.',
+          'Inter-college teams are not permitted.',
+          'A mix of students from different academic years is encouraged.'
+        ]
+      }
     ]
   },
   {
@@ -34,11 +42,9 @@ const rulesData = [
     title: 'Submission Guidelines',
     Icon: FaLaptopCode,
     content: [
-      'All code must be written during the 48-hour hackathon period.',
-      'Submissions must be made through the official event portal.',
-      'Include a detailed README file explaining your project and setup.',
-      'Properly credit any third-party libraries, APIs, or assets used.',
-      'A live, functional demo is required for judging.'
+      'A demo video of the drone must be submitted before the given deadline.',
+      'The drone must qualify the minimum eligibility criteria.',
+      'All source code must be submitted to the designated repository.',
     ]
   },
   {
@@ -105,7 +111,19 @@ const RulesBriefing = () => {
                   <ul className="rules-details-list">
                     {rule.content.map((item, index) => (
                       <li key={index} className="rules-list-item-detail">
-                        {item}
+                        {/* Render text for both strings and objects */}
+                        {typeof item === 'string' ? item : item.text}
+
+                        {/* If item has a sublist, render it */}
+                        {item.sublist && (
+                          <ul className="rules-sublist">
+                            {item.sublist.map((subItem, subIndex) => (
+                              <li key={subIndex} className="rules-sublist-item-detail">
+                                {subItem}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
                       </li>
                     ))}
                   </ul>
