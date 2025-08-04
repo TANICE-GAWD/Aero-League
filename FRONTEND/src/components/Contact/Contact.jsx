@@ -9,7 +9,7 @@ const contactsData = [
     title: 'Organizer',
     description: 'Leads the organizational efforts for the event.',
     image: '/assets/Dir._Ishaan_Jindal.jpg',
-    contactLink: 'mailto:hsingh@example.com',
+    contactLink: 'mailto:thaparaeroleague@gmail.com',
     linkedinLink: 'https://www.linkedin.com/in/dir-ishaan-jindal-804596284',
   },
   {
@@ -17,7 +17,7 @@ const contactsData = [
     title: 'Organizer',
     description: 'Coordinates logistics and participant relations.',
     image: '/assets/Advitya_Dua.jpg',
-    contactLink: 'mailto:adua60_be24@thapar.edu',
+    contactLink: 'mailto:thaparaeroleague@gmail.com',
     linkedinLink: 'https://www.linkedin.com/in/advitya-dua',
   },
   {
@@ -25,7 +25,7 @@ const contactsData = [
     title: 'Organizer',
     description: 'Manages marketing and community outreach.',
     image: '/assets/Aadil_Sharma.jpg',
-    contactLink: 'mailto:adua60_be24@thapar.edu',
+    contactLink: 'mailto:thaparaeroleague@gmail.com',
     linkedinLink: 'https://www.linkedin.com/in/aadil-sharma-31b005287',
   },
   {
@@ -33,7 +33,7 @@ const contactsData = [
     title: 'Developer',
     description: 'Sophomore at Thapar University, building the future.',
     image: '/assets/Prince_Sharma.jpg',
-    contactLink: 'mailto:placeholder@example.com',
+    contactLink: 'mailto:thaparaeroleague@gmail.com',
     linkedinLink: 'https://www.linkedin.com/in/prince-tanice',
   }
 ];

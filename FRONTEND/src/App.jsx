@@ -17,7 +17,7 @@ function App() {
 
       <HeroSection />
       
-      <main className="main-content">
+
 
         {/* The Animation component is now inside its own section tag */}
         <section id="animation-section">
@@ -46,7 +46,7 @@ function App() {
           <Contact />
         </section>
         
-      </main>
+
     </div>
   );
 }

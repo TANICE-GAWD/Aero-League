@@ -463,11 +463,10 @@ const Animation = () => {
           {/* Three.js canvas will be appended here */}
         </section>
       </section>
-
-      <section className="team-section"><section className="next-section">
+      <section className="next-section">
         <h1>Prepare for Lift-Off</h1>
         <p>Swipe to explore what's ahead</p>
-      </section></section>
+      </section>
     </>
   );
 };
