@@ -32,7 +32,6 @@ const api = {
     if (response.status === 204) return null; 
     if (!response.ok) {
         const errorData = await response.json().catch(() => ({ detail: 'Request failed with status ' + response.status }));
-        // The backend sometimes sends errors in a {"user": ["message"]} format
         const errorMessage = typeof errorData.detail === 'string' ? errorData.detail : JSON.stringify(errorData);
         throw new Error(errorMessage);
     }
@@ -62,16 +61,9 @@ const AdminDashboard = () => {
     }
     setIsLoading(true);
     try {
-      // Fetch teams first, as we might need it to find the admin's ID
       const teamsData = await api.get(`${baseUrl}teams/`, token);
       const notificationsData = await api.get(`${baseUrl}notifications/`, token);
       
-      // The list of "teams" is actually all non-admin users. We need to find the admin user.
-      // For this workaround, we assume the admin user is also in the list of users fetched.
-      // A better long-term solution is for the login endpoint to return the user's ID.
-      // We will fetch ALL users (including admins) to find the current admin's ID.
-      // This assumes there's an endpoint that returns all users or that admins are in the 'teams' list.
-      // Let's pretend the 'teams' endpoint returns all users for this fix.
       setTeams(teamsData);
       setNotifications(notificationsData);
       setError(null);
@@ -108,7 +100,6 @@ const AdminDashboard = () => {
   };
 
   const handleDeleteTeam = async (teamId) => {
-    // Using window.confirm is simple, but custom modals are better for UX
     if (window.confirm('Are you sure you want to delete this team?')) {
       try {
         await api.request('DELETE', `${baseUrl}teams/${teamId}/`, token);
@@ -130,51 +121,58 @@ const AdminDashboard = () => {
     }
   };
 
-  // --- MODIFIED FUNCTION ---
-  // MODIFIED AND CORRECTED FUNCTION in AdminDashboard.js
+  // --- FULLY UPDATED FUNCTION ---
+  const handleSaveNotification = async (notificationData) => {
+  const isNew = !notificationData.id;
 
-const handleSaveNotification = async (notificationData) => {
-    const isNew = !notificationData.id;
-    let payload = { ...notificationData };
-  
-    // For new notifications, get the user ID from localStorage directly.
-    if (isNew) {
-      const userString = localStorage.getItem('admin_user');
-      if (!userString) {
-        alert('Fatal Error: User information not found. Please log in again.');
-        navigate('/login');
-        return;
-      }
-      
-      const loggedInUser = JSON.parse(userString);
-      
-      // --- THE FIX ---
-      // The user object from login already has the ID. No need to search the 'teams' list.
-      if (!loggedInUser || !loggedInUser.id) {
-          alert("Error: Admin user ID not found in localStorage. Please log out and in again.");
-          return;
-      }
-      
-      // Add the found ID to the payload.
-      payload.user = loggedInUser.id;
+  // Base payload with title and message
+  let payload = {
+      title: notificationData.title,
+      message: notificationData.message
+  };
+
+  if (isNew) {
+    const userString = localStorage.getItem('admin_user');
+    if (!userString) {
+      alert('Fatal Error: User information not found. Please log in again.');
+      navigate('/login');
+      return;
     }
-  
-    const method = isNew ? 'POST' : 'PATCH';
-    const url = isNew 
-      ? `${baseUrl}notifications/` 
-      : `${baseUrl}notifications/${notificationData.id}/`;
-  
-    try {
-      console.log("Sending this payload:", payload);
-      await api.request(method, url, token, payload);
-      alert('Notification saved successfully!');
-      closeModal();
-      fetchData(); // Refresh data after saving
-    } catch (err) {
-      alert(`Error saving notification: ${err.message}`);
+    
+    const loggedInUser = JSON.parse(userString);
+    
+    // Check for email instead of id, since your backend uses email as identifier
+    if (!loggedInUser || !loggedInUser.email) {
+      alert("Error: Admin user email not found in localStorage. Please log out and in again.");
+      return;
     }
+    
+    // Use email instead of id (assuming your backend expects user email)
+    payload.user = loggedInUser.email;
+
+    // Add recipient info based on the admin's choice in the modal
+    if (notificationData.recipientType === 'all') {
+        payload.for_all_users = true; 
+    } else if (notificationData.recipientType === 'specific') {
+        payload.mail_id = notificationData.specificEmail; 
+    }
+  }
+
+  const method = isNew ? 'POST' : 'PATCH';
+  const url = isNew 
+    ? `${baseUrl}notifications/` 
+    : `${baseUrl}notifications/${notificationData.id}/`;
+
+  try {
+    console.log("Sending this payload:", payload);
+    await api.request(method, url, token, payload);
+    alert('Notification saved successfully!');
+    closeModal();
+    fetchData(); // Refresh data after saving
+  } catch (err) {
+    alert(`Error saving notification: ${err.message}`);
+  }
 };
-
 
   const renderTeamsContent = () => (
     <div className="table-container">
@@ -288,21 +286,76 @@ const handleSaveNotification = async (notificationData) => {
   );
 };
 
-// --- Notification Modal Component ---
+// --- Notification Modal Component (Updated) ---
 const NotificationModal = ({ item, onClose, onSave }) => {
-    const [title, setTitle] = useState(item.title || '');
-    const [message, setMessage] = useState(item.message || '');
+    const [title, setTitle] = useState(item?.title || '');
+    const [message, setMessage] = useState(item?.message || '');
+    
+    // State to manage recipient choice
+    const [recipientType, setRecipientType] = useState('all'); // 'all' or 'specific'
+    const [specificEmail, setSpecificEmail] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSave({ ...item, title, message });
+        // Pass all data, including recipient info, to the onSave handler
+        onSave({ ...item, title, message, recipientType, specificEmail });
     };
+
+    // We only show the recipient options for new notifications
+    const isNew = !item?.id;
 
     return (
         <div className="modal-backdrop">
             <div className="modal-content">
                 <form onSubmit={handleSubmit}>
-                    <h2>{item && item.id ? 'Edit' : 'Create'} Notification</h2>
+                    <h2>{isNew ? 'Create' : 'Edit'} Notification</h2>
+                    
+                    {/* Show recipient options only when creating a new notification */}
+                    {isNew && (
+                        <>
+                            <div className="form-group">
+                                <label>Recipient:</label>
+                                <div className="radio-group" style={{ display: 'flex', gap: '1rem' }}>
+                                    <label>
+                                        <input 
+                                            type="radio" 
+                                            name="recipient" 
+                                            value="all" 
+                                            checked={recipientType === 'all'} 
+                                            onChange={() => setRecipientType('all')}
+                                        />
+                                        All Users
+                                    </label>
+                                    <label>
+                                        <input 
+                                            type="radio" 
+                                            name="recipient" 
+                                            value="specific"
+                                            checked={recipientType === 'specific'}
+                                            onChange={() => setRecipientType('specific')}
+                                        />
+                                        Specific User
+                                    </label>
+                                </div>
+                            </div>
+
+                            {/* Show email input only if 'Specific User' is selected */}
+                            {recipientType === 'specific' && (
+                                <div className="form-group">
+                                    <label htmlFor="specificEmail">Recipient Email</label>
+                                    <input
+                                        type="email"
+                                        id="specificEmail"
+                                        value={specificEmail}
+                                        onChange={(e) => setSpecificEmail(e.target.value)}
+                                        placeholder="Enter user's email address"
+                                        required 
+                                    />
+                                </div>
+                            )}
+                        </>
+                    )}
+
                     <div className="form-group">
                         <label htmlFor="title">Title</label>
                         <input 
