@@ -2,8 +2,11 @@
 import React, { useEffect, useRef } from 'react';
 import { FaCalendarAlt, FaRocket, FaLaptopCode, FaTrophy } from 'react-icons/fa';
 import './TimeLine.css';
-import { MdFlightTakeoff, AiTwotoneReconciliation, GiDeliveryDrone, LuTrophy, FaFlag } from 'react-icons/md';
-
+import { MdFlightTakeoff} from 'react-icons/md';
+import { AiTwotoneReconciliation } from 'react-icons/ai';
+import { FaFlag } from 'react-icons/fa';
+import { GiDeliveryDrone } from 'react-icons/gi';
+import { LuTrophy } from 'react-icons/lu';
 
 const timelineData = [
   {
