@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import { FaCalendarAlt, FaRocket, FaLaptopCode, FaTrophy } from 'react-icons/fa';
 import './TimeLine.css';
+import { MdFlightTakeoff, AiTwotoneReconciliation, GiDeliveryDrone, LuTrophy, FaFlag } from 'react-icons/md';
 
 
 const timelineData = [
@@ -18,10 +19,34 @@ const timelineData = [
     date: "August 30th, 2025"
   },
   {
-    Icon: FaLaptopCode,
-    title: "Development Phase",
-    description: "48 hours of intense coding, building, and innovation.",
-    date: "August 30-31, 2025"
+    Icon: MdFlightTakeoff,
+    title: "Challenge 1",
+    description: "Low-Level Flight",
+    date: "1200 Hours - August 30-31, 2025"
+  },
+  {
+    Icon: AiTwotoneReconciliation,
+    title: "Challenge 2",
+    description: "Evening Recon",
+    date: "1400 Hours - August 31st, 2025"
+  },
+  {
+    Icon: GiDeliveryDrone,
+    title: "Challenge 3",
+    description: "Turbulent Delivery",
+    date: "1600 Hours - August 31st, 2025"
+  },
+  {
+    Icon: LuTrophy,
+    title: "Challenge 4",
+    description: "The Gauntlet",
+    date: "1800 Hours - August 31st, 2025"
+  },
+  {
+    Icon: FaFlag,
+    title: "Bonus Race",
+    description: "Strategic Dash",
+    date: "2100 Hours - August 31st, 2025"
   },
   {
     Icon: FaTrophy,
