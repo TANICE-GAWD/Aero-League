@@ -115,13 +115,13 @@ const AdminLogin = () => {
           <>
             <div className="login-header">
               <h1 className="login-title">Mission Control</h1>
-              <p className="login-subtitle">Admin Authentication</p>
+              <p className="login-subtitle">User Authentication</p>
             </div>
             {successMessage && <p className="login-success">{successMessage}</p>}
             <form onSubmit={handleLoginSubmit} className="login-form">
               <div className="input-wrapper">
                 <FaUserShield className="input-icon" />
-                <input type="email" name="email" placeholder="Admin Email" className="input-field" value={loginData.email} onChange={handleLoginChange} required disabled={isLoading} />
+                <input type="email" name="email" placeholder="Email" className="input-field" value={loginData.email} onChange={handleLoginChange} required disabled={isLoading} />
               </div>
               <div className="input-wrapper">
                 <FaLock className="input-icon" />
@@ -129,7 +129,7 @@ const AdminLogin = () => {
               </div>
               {error && <p className="login-error">{error}</p>}
               <button type="submit" className="login-button" disabled={isLoading}>
-                {isLoading ? <FaSpinner className="spinner-icon" /> : 'Authorize Access'}
+                {isLoading ? <FaSpinner className="spinner-icon" /> : 'Login'}
               </button>
               <p className="toggle-view-text">
                 Need to create an admin account?{' '}
