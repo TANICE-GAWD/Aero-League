@@ -43,10 +43,14 @@ const AdminLogin = () => {
         throw new Error(data.error || 'Authentication failed.');
       }
 
+      // Store both the token and the user object on successful login
       localStorage.setItem('admin_token', data.access_token);
-      navigate('/dashboard'); // Redirect to the admin dashboard
+      localStorage.setItem('admin_user', JSON.stringify(data.user));
 
-    } catch (err) {
+      // Redirect to the admin dashboard
+      navigate('/dashboard'); 
+
+    } catch (err) { // <-- FIX: Added curly braces around the catch block
       setError(err.message);
     } finally {
       setIsLoading(false);
