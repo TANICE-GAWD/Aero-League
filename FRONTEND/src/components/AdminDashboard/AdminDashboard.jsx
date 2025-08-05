@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
     FaUsers, FaBell, FaSignOutAlt, FaSpinner, FaExclamationTriangle, 
-    FaEdit, FaTrash, FaPlus 
+    FaEdit, FaTrash, FaPlus, FaEye 
 } from 'react-icons/fa';
 // Assuming you have a CSS file for styling
 // import './AdminDashboard.css'; 
@@ -49,6 +49,7 @@ const AdminDashboard = () => {
   
   const [showModal, setShowModal] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
+  const [modalType, setModalType] = useState(''); // 'notification' or 'team'
 
   const navigate = useNavigate();
   const baseUrl = 'https://tal-backend.vercel.app/admin/';
@@ -89,14 +90,20 @@ const AdminDashboard = () => {
     navigate('/login');
   };
 
-  const openModal = (item) => {
+  const openModal = (item, type) => {
     setEditingItem(item);
+    setModalType(type);
     setShowModal(true);
   };
   
   const closeModal = () => {
     setEditingItem(null);
+    setModalType('');
     setShowModal(false);
+  };
+
+  const openTeamDetailsModal = (team) => {
+    openModal(team, 'team');
   };
 
   const handleDeleteTeam = async (teamId) => {
@@ -121,61 +128,67 @@ const AdminDashboard = () => {
     }
   };
 
-  // --- FULLY UPDATED FUNCTION ---
+  // Fixed handleSaveNotification function
   const handleSaveNotification = async (notificationData) => {
-  const isNew = !notificationData.id;
+    const isNew = !notificationData.id;
 
-  // Base payload with title and message
-  let payload = {
-      title: notificationData.title,
-      message: notificationData.message
+    // Base payload with title and message
+    let payload = {
+        title: notificationData.title,
+        message: notificationData.message
+    };
+
+    if (isNew) {
+      const userString = localStorage.getItem('admin_user');
+      if (!userString) {
+        alert('Fatal Error: User information not found. Please log in again.');
+        navigate('/login');
+        return;
+      }
+      
+      const loggedInUser = JSON.parse(userString);
+      
+      // Check for email instead of id, since your backend uses email as identifier
+      if (!loggedInUser || !loggedInUser.email) {
+        alert("Error: Admin user email not found in localStorage. Please log out and in again.");
+        return;
+      }
+      
+      // Use email instead of id (assuming your backend expects user email)
+      payload.user = loggedInUser.email;
+
+      // Add recipient info based on the admin's choice in the modal
+      if (notificationData.recipientType === 'all') {
+          payload.for_all_users = true; 
+      } else if (notificationData.recipientType === 'specific') {
+          payload.mail_id = notificationData.specificEmail; 
+      }
+    }
+
+    const method = isNew ? 'POST' : 'PATCH';
+    const url = isNew 
+      ? `${baseUrl}notifications/` 
+      : `${baseUrl}notifications/${notificationData.id}/`;
+
+    try {
+      console.log("Sending this payload:", payload);
+      await api.request(method, url, token, payload);
+      alert('Notification saved successfully!');
+      closeModal();
+      fetchData(); // Refresh data after saving
+    } catch (err) {
+      alert(`Error saving notification: ${err.message}`);
+    }
   };
 
-  if (isNew) {
-    const userString = localStorage.getItem('admin_user');
-    if (!userString) {
-      alert('Fatal Error: User information not found. Please log in again.');
-      navigate('/login');
-      return;
-    }
-    
-    const loggedInUser = JSON.parse(userString);
-    
-    // Check for email instead of id, since your backend uses email as identifier
-    if (!loggedInUser || !loggedInUser.email) {
-      alert("Error: Admin user email not found in localStorage. Please log out and in again.");
-      return;
-    }
-    
-    // Use email instead of id (assuming your backend expects user email)
-    payload.user = loggedInUser.email;
-
-    // Add recipient info based on the admin's choice in the modal
-    if (notificationData.recipientType === 'all') {
-        payload.for_all_users = true; 
-    } else if (notificationData.recipientType === 'specific') {
-        payload.mail_id = notificationData.specificEmail; 
-    }
-  }
-
-  const method = isNew ? 'POST' : 'PATCH';
-  const url = isNew 
-    ? `${baseUrl}notifications/` 
-    : `${baseUrl}notifications/${notificationData.id}/`;
-
-  try {
-    console.log("Sending this payload:", payload);
-    await api.request(method, url, token, payload);
-    alert('Notification saved successfully!');
-    closeModal();
-    fetchData(); // Refresh data after saving
-  } catch (err) {
-    alert(`Error saving notification: ${err.message}`);
-  }
-};
-
+  // Enhanced renderTeamsContent function
   const renderTeamsContent = () => (
     <div className="table-container">
+      <div className="teams-stats" style={{ marginBottom: '20px', padding: '15px', backgroundColor: '#f8f9fa', borderRadius: '8px' }}>
+        <h3>Teams Overview</h3>
+        <p><strong>Total Teams:</strong> {teams.length}</p>
+      </div>
+      
       <table className="teams-table">
         <thead>
           <tr>
@@ -183,18 +196,62 @@ const AdminDashboard = () => {
             <th>Email</th>
             <th>Phone</th>
             <th>Institute</th>
+            <th>Team Name</th>
+            <th>Problem Statement</th>
+            <th>Team Size</th>
+            <th>Registration Date</th>
+            <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {teams.map((team) => (
             <tr key={team.email}>
-              <td>{team.name}</td>
+              <td>{team.name || 'N/A'}</td>
               <td>{team.email}</td>
-              <td>{team.phone_number}</td>
-              <td>{team.institute_name}</td>
+              <td>{team.phone_number || 'N/A'}</td>
+              <td>{team.institute_name || 'N/A'}</td>
+              <td>{team.team_name || 'N/A'}</td>
+              <td>
+                <div style={{ maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {team.problem_statement ? (
+                    <span title={team.problem_statement}>
+                      {team.problem_statement.length > 50 
+                        ? `${team.problem_statement.substring(0, 50)}...` 
+                        : team.problem_statement
+                      }
+                    </span>
+                  ) : 'N/A'}
+                </div>
+              </td>
+              <td>{team.team_size || 'N/A'}</td>
+              <td>
+                {team.date_joined 
+                  ? new Date(team.date_joined).toLocaleDateString() 
+                  : team.created_at 
+                    ? new Date(team.created_at).toLocaleDateString()
+                    : 'N/A'
+                }
+              </td>
+              <td>
+                <span className={`status-badge ${team.is_active ? 'active' : 'inactive'}`}>
+                  {team.is_active ? 'Active' : 'Inactive'}
+                </span>
+              </td>
               <td className="actions-cell">
-                <button onClick={() => handleDeleteTeam(team.email)} className="icon-button danger" title="Delete Team">
+                <button 
+                  onClick={() => openTeamDetailsModal(team)} 
+                  className="icon-button info" 
+                  title="View Full Details"
+                  style={{ marginRight: '8px' }}
+                >
+                  <FaEye />
+                </button>
+                <button 
+                  onClick={() => handleDeleteTeam(team.email)} 
+                  className="icon-button danger" 
+                  title="Delete Team"
+                >
                   <FaTrash />
                 </button>
               </td>
@@ -208,7 +265,7 @@ const AdminDashboard = () => {
   const renderNotificationsContent = () => (
     <div>
       <div className="toolbar">
-        <button className="button-primary" onClick={() => openModal({ title: '', message: '' })}>
+        <button className="button-primary" onClick={() => openModal({ title: '', message: '' }, 'notification')}>
           <FaPlus /> Create Notification
         </button>
       </div>
@@ -229,7 +286,7 @@ const AdminDashboard = () => {
                 <td>{n.message}</td>
                 <td>{new Date(n.created_at).toLocaleString()}</td>
                 <td className="actions-cell">
-                  <button onClick={() => openModal(n)} className="icon-button" title="Edit Notification">
+                  <button onClick={() => openModal(n, 'notification')} className="icon-button" title="Edit Notification">
                     <FaEdit />
                   </button>
                   <button onClick={() => handleDeleteNotification(n.id)} className="icon-button danger" title="Delete Notification">
@@ -252,6 +309,7 @@ const AdminDashboard = () => {
 
   return (
     <section className="dashboard-section">
+      <style>{additionalStyles}</style>
       <header className="dashboard-header">
         <div className="dashboard-title-container">
           <FaUsers className="dashboard-icon" />
@@ -275,18 +333,25 @@ const AdminDashboard = () => {
         {renderContent()}
       </div>
 
-      {showModal && activeTab === 'notifications' && (
+      {showModal && modalType === 'notification' && (
         <NotificationModal 
             item={editingItem} 
             onClose={closeModal}
             onSave={handleSaveNotification}
         />
       )}
+
+      {showModal && modalType === 'team' && (
+        <TeamDetailsModal 
+            team={editingItem} 
+            onClose={closeModal}
+        />
+      )}
     </section>
   );
 };
 
-// --- Notification Modal Component (Updated) ---
+// --- Notification Modal Component ---
 const NotificationModal = ({ item, onClose, onSave }) => {
     const [title, setTitle] = useState(item?.title || '');
     const [message, setMessage] = useState(item?.message || '');
@@ -385,5 +450,314 @@ const NotificationModal = ({ item, onClose, onSave }) => {
         </div>
     );
 };
+
+// --- Team Details Modal Component ---
+const TeamDetailsModal = ({ team, onClose }) => {
+  if (!team) return null;
+
+  return (
+    <div className="modal-backdrop">
+      <div className="modal-content" style={{ maxWidth: '600px', maxHeight: '80vh', overflowY: 'auto' }}>
+        <div className="modal-header">
+          <h2>Team Details</h2>
+          <button 
+            className="close-button" 
+            onClick={onClose}
+            style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer' }}
+          >
+            ×
+          </button>
+        </div>
+        
+        <div className="team-details-content" style={{ padding: '20px' }}>
+          <div className="detail-section">
+            <h3>Team Lead Information</h3>
+            <div className="detail-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '20px' }}>
+              <div>
+                <strong>Name:</strong> {team.name || 'N/A'}
+              </div>
+              <div>
+                <strong>Email:</strong> {team.email}
+              </div>
+              <div>
+                <strong>Phone:</strong> {team.phone_number || 'N/A'}
+              </div>
+              <div>
+                <strong>Institute:</strong> {team.institute_name || 'N/A'}
+              </div>
+            </div>
+          </div>
+
+          <div className="detail-section">
+            <h3>Team Information</h3>
+            <div className="detail-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '20px' }}>
+              <div>
+                <strong>Team Name:</strong> {team.team_name || 'N/A'}
+              </div>
+              <div>
+                <strong>Team Size:</strong> {team.team_size || 'N/A'}
+              </div>
+              <div>
+                <strong>Registration Date:</strong> {
+                  team.date_joined 
+                    ? new Date(team.date_joined).toLocaleString() 
+                    : team.created_at 
+                      ? new Date(team.created_at).toLocaleString()
+                      : 'N/A'
+                }
+              </div>
+              <div>
+                <strong>Status:</strong> 
+                <span className={`status-badge ${team.is_active ? 'active' : 'inactive'}`} style={{ marginLeft: '8px' }}>
+                  {team.is_active ? 'Active' : 'Inactive'}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {team.problem_statement && (
+            <div className="detail-section">
+              <h3>Problem Statement</h3>
+              <div style={{ 
+                padding: '15px', 
+                backgroundColor: '#f8f9fa', 
+                borderRadius: '8px', 
+                marginBottom: '20px',
+                whiteSpace: 'pre-wrap'
+              }}>
+                {team.problem_statement}
+              </div>
+            </div>
+          )}
+
+          {/* Add more sections for additional team details if available */}
+          {team.team_members && (
+            <div className="detail-section">
+              <h3>Team Members</h3>
+              <div style={{ marginBottom: '20px' }}>
+                {Array.isArray(team.team_members) ? (
+                  <ul style={{ paddingLeft: '20px' }}>
+                    {team.team_members.map((member, index) => (
+                      <li key={index} style={{ marginBottom: '5px' }}>
+                        {typeof member === 'object' ? `${member.name} (${member.email})` : member}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>{team.team_members}</p>
+                )}
+              </div>
+            </div>
+          )}
+
+          {team.technology_stack && (
+            <div className="detail-section">
+              <h3>Technology Stack</h3>
+              <div style={{ 
+                padding: '15px', 
+                backgroundColor: '#f8f9fa', 
+                borderRadius: '8px', 
+                marginBottom: '20px' 
+              }}>
+                {team.technology_stack}
+              </div>
+            </div>
+          )}
+
+          {team.project_description && (
+            <div className="detail-section">
+              <h3>Project Description</h3>
+              <div style={{ 
+                padding: '15px', 
+                backgroundColor: '#f8f9fa', 
+                borderRadius: '8px', 
+                marginBottom: '20px',
+                whiteSpace: 'pre-wrap'
+              }}>
+                {team.project_description}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="modal-actions" style={{ padding: '20px', borderTop: '1px solid #e9ecef' }}>
+          <button type="button" className="button-primary" onClick={onClose}>
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// CSS Styles
+const additionalStyles = `
+  .status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .status-badge.active {
+    background-color: #000000ff;
+    color: #155724;
+  }
+  
+  .status-badge.inactive {
+    background-color: #000000ff;
+    color: #721c24;
+  }
+  
+  .icon-button.info {
+    background-color: #17a2b8;
+    color: white;
+  }
+  
+  .icon-button.info:hover {
+    background-color: #138496;
+  }
+  
+  .detail-section {
+    margin-bottom: 25px;
+  }
+  
+  .detail-section h3 {
+    margin-bottom: 15px;
+    color: #495057;
+    border-bottom: 2px solid #000000ff;
+    padding-bottom: 8px;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px 0 20px;
+  }
+  
+  .teams-table {
+    width: 100%;
+    font-size: 14px;
+  }
+  
+  .teams-table th,
+  .teams-table td {
+    padding: 12px 8px;
+    text-align: left;
+    border-bottom: 1px solid #000000ff;
+  }
+  
+  .teams-table th {
+    background-color: #000000ff;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+  }
+  
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-width: 400px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding: 20px;
+  }
+  
+  .button-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .button-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .icon-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  
+  .icon-button.danger {
+    background-color: #dc3545;
+  }
+  
+  .icon-button:hover {
+    opacity: 0.8;
+  }
+  
+  .toolbar {
+    margin-bottom: 20px;
+  }
+  
+  .loading-state, .error-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    flex-direction: column;
+  }
+  
+  .spinner-icon {
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+`;
 
 export default AdminDashboard;

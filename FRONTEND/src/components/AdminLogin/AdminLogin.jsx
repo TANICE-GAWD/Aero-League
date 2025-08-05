@@ -18,8 +18,9 @@ const AdminLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   
-  // Base URL for the admin-specific API endpoints
-  const baseUrl = 'https://tal-backend.vercel.app/admin/';
+  // Base URLs for API endpoints
+  const adminBaseUrl = 'https://tal-backend.vercel.app/admin/';
+  const userBaseUrl = 'https://tal-backend.vercel.app/users/'; // <-- Added for user login fallback
 
   // --- Handlers for Login Form ---
   const handleLoginChange = (e) => {
@@ -32,25 +33,43 @@ const AdminLogin = () => {
     setError(null);
 
     try {
-      const response = await fetch(`${baseUrl}login/`, {
+      // --- Attempt 1: Log in as an Admin ---
+      const adminResponse = await fetch(`${adminBaseUrl}login/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(loginData),
       });
-      const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Authentication failed.');
+      if (adminResponse.ok) {
+        // SUCCESS: User is an Admin
+        const adminData = await adminResponse.json();
+        localStorage.setItem('admin_token', adminData.access_token);
+        localStorage.setItem('admin_user', JSON.stringify(adminData.user));
+        navigate('/dashboard'); // Navigate to Admin Dashboard
+        return; // Exit function after successful admin login
       }
 
-      // Store both the token and the user object on successful login
-      localStorage.setItem('admin_token', data.access_token);
-      localStorage.setItem('admin_user', JSON.stringify(data.user));
+      // --- Attempt 2: If admin login fails, try as a regular user ---
+      const userResponse = await fetch(`${userBaseUrl}login/`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(loginData),
+      });
+      
+      const userData = await userResponse.json();
 
-      // Redirect to the admin dashboard
-      navigate('/dashboard'); 
+      if (userResponse.ok) {
+          // SUCCESS: User is a regular user
+          localStorage.setItem('access_token', userData.access_token);
+          localStorage.setItem('user', JSON.stringify(userData.user));
+          navigate('/user-dashboard'); // Redirect to User Dashboard
+          return; // Exit function
+      }
+      
+      // --- FAILURE: If both attempts fail, throw final error ---
+      throw new Error(userData.error || 'Invalid credentials.');
 
-    } catch (err) { // <-- FIX: Added curly braces around the catch block
+    } catch (err) {
       setError(err.message);
     } finally {
       setIsLoading(false);
@@ -69,7 +88,7 @@ const AdminLogin = () => {
     setSuccessMessage(null);
 
     try {
-        const response = await fetch(`${baseUrl}register/`, {
+        const response = await fetch(`${adminBaseUrl}register/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(registerData),
@@ -87,7 +106,7 @@ const AdminLogin = () => {
     }
   };
 
-  // --- Render Logic ---
+  // --- Render Logic (No changes needed below) ---
   return (
     <section className="login-page-section">
       <div className="login-card">
