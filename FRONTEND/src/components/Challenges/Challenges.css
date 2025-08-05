@@ -82,11 +82,11 @@ body {
   overflow: hidden;
 }
 
-/* --- MODIFIED CSS FOR THE TAG --- */
 .challenge-tag {
   position: absolute;
   top: 1.5rem;
   right: 1.5rem;
+  justify-content: center;
   background-color: var(--accent-color);
   color: var(--bg-gradient-start);
   padding: 0.4rem 1rem;
@@ -97,12 +97,10 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   z-index: 1;
-  /* Use flexbox for alignment and spacing */
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
 }
-/* --- END OF MODIFIED CSS --- */
 
 .challenge-card.left {
   transform: translateX(-100px) scale(0.95);
@@ -238,13 +236,17 @@ body {
   }
   .challenge-card {
     padding: 2rem 1.5rem;
+    /* This top padding creates space for the centered tag */
     padding-top: 3.5rem;
     transform: translateY(50px) scale(0.95);
   }
   .challenge-tag {
     top: 1rem;
+    /* This centers the tag perfectly */
     left: 50%;
     transform: translateX(-50%);
+    /* We no longer need the right property */
+    right: auto;
   }
   .challenge-card.left,
   .challenge-card.right {
@@ -271,20 +273,4 @@ body {
   .card-title {
     font-size: 1.8rem;
   }
-}
-
-.team-section {
-  width: 100%;
-  padding: 6rem 0;
-  background-color: var(--bg-color);
-  background-image: radial-gradient(var(--card-border) 1px, transparent 1px),
-    radial-gradient(var(--card-border) 1px, var(--bg-color) 1px);
-  background-size: 40px 40px;
-  background-position: 0 0, 20px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-
-  position: relative;
 }
