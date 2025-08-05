@@ -57,7 +57,7 @@ const challengesData = [
     objective: "Strategically navigate multiple checkpoints; skipping any checkpoint will result in a significant time penalty.",
     accentColor: "#FFD700",
     accentColorRgb: "255, 215, 0",
-    Icon: FaBalanceScale,
+    Icon: FaFlagCheckered,
     direction: "right",
     tag: "BONUS RACE",
   },
@@ -77,7 +77,7 @@ const ChallengeCard = ({ challenge, isVisible }) => {
       {/* Conditionally render flags for the bonus tag */}
       <span className="challenge-tag">
         {tag}
-        {tag === "BONUS RACE" && <FaFlagCheckered />}
+        {tag === "BONUS RACE"}
       </span>
       <div className="card-content">
         <div className="card-visual">
