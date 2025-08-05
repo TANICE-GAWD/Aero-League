@@ -172,7 +172,7 @@ const Animation = () => {
 
         const isMobile = window.innerWidth < 768;
         this.data = {
-          text: isMobile ? ' THAPAR AERO LEAGUE\nBUILD. FLY. DOMINATE.' : '           THAPAR AERO LEAGUE\nBUILD. FLY. DOMINATE.',
+          text: isMobile ? ' THAPAR AERO LEAGUE\nBUILD. FLY. DOMINATE.' : '       THAPAR AERO LEAGUE\nBUILD. FLY. DOMINATE.',
           amount: isMobile ? 800 : 1500,
           particleSize: 1,
           particleColor: 0xffffff,
