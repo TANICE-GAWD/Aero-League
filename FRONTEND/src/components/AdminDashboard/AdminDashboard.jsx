@@ -184,7 +184,7 @@ const AdminDashboard = () => {
   // Enhanced renderTeamsContent function
   const renderTeamsContent = () => (
     <div className="table-container">
-      <div className="teams-stats" style={{ marginBottom: '20px', padding: '15px', backgroundColor: '#f8f9fa', borderRadius: '8px' }}>
+      <div className="teams-stats" style={{ marginBottom: '20px', padding: '15px', backgroundColor: '#ffffffff', borderRadius: '8px' }}>
         <h3>Teams Overview</h3>
         <p><strong>Total Teams:</strong> {teams.length}</p>
       </div>
@@ -196,12 +196,6 @@ const AdminDashboard = () => {
             <th>Email</th>
             <th>Phone</th>
             <th>Institute</th>
-            <th>Team Name</th>
-            <th>Problem Statement</th>
-            <th>Team Size</th>
-            <th>Registration Date</th>
-            <th>Status</th>
-            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -211,28 +205,7 @@ const AdminDashboard = () => {
               <td>{team.email}</td>
               <td>{team.phone_number || 'N/A'}</td>
               <td>{team.institute_name || 'N/A'}</td>
-              <td>{team.team_name || 'N/A'}</td>
-              <td>
-                <div style={{ maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  {team.problem_statement ? (
-                    <span title={team.problem_statement}>
-                      {team.problem_statement.length > 50 
-                        ? `${team.problem_statement.substring(0, 50)}...` 
-                        : team.problem_statement
-                      }
-                    </span>
-                  ) : 'N/A'}
-                </div>
-              </td>
-              <td>{team.team_size || 'N/A'}</td>
-              <td>
-                {team.date_joined 
-                  ? new Date(team.date_joined).toLocaleDateString() 
-                  : team.created_at 
-                    ? new Date(team.created_at).toLocaleDateString()
-                    : 'N/A'
-                }
-              </td>
+              
               <td>
                 <span className={`status-badge ${team.is_active ? 'active' : 'inactive'}`}>
                   {team.is_active ? 'Active' : 'Inactive'}
@@ -520,7 +493,7 @@ const TeamDetailsModal = ({ team, onClose }) => {
               <h3>Problem Statement</h3>
               <div style={{ 
                 padding: '15px', 
-                backgroundColor: '#f8f9fa', 
+                backgroundColor: '#ffffffff', 
                 borderRadius: '8px', 
                 marginBottom: '20px',
                 whiteSpace: 'pre-wrap'
@@ -555,7 +528,7 @@ const TeamDetailsModal = ({ team, onClose }) => {
               <h3>Technology Stack</h3>
               <div style={{ 
                 padding: '15px', 
-                backgroundColor: '#f8f9fa', 
+                backgroundColor: '#ffffffff', 
                 borderRadius: '8px', 
                 marginBottom: '20px' 
               }}>
@@ -569,7 +542,7 @@ const TeamDetailsModal = ({ team, onClose }) => {
               <h3>Project Description</h3>
               <div style={{ 
                 padding: '15px', 
-                backgroundColor: '#f8f9fa', 
+                backgroundColor: '#ffffffff', 
                 borderRadius: '8px', 
                 marginBottom: '20px',
                 whiteSpace: 'pre-wrap'
@@ -580,7 +553,7 @@ const TeamDetailsModal = ({ team, onClose }) => {
           )}
         </div>
 
-        <div className="modal-actions" style={{ padding: '20px', borderTop: '1px solid #e9ecef' }}>
+        <div className="modal-actions" style={{ padding: '20px', borderTop: '1px solid #000000ff' }}>
           <button type="button" className="button-primary" onClick={onClose}>
             Close
           </button>
@@ -592,6 +565,10 @@ const TeamDetailsModal = ({ team, onClose }) => {
 
 // CSS Styles
 const additionalStyles = `
+  * {
+    color: black !important;
+  }
+
   .status-badge {
     padding: 4px 8px;
     border-radius: 12px;
@@ -599,63 +576,63 @@ const additionalStyles = `
     font-weight: bold;
     text-transform: uppercase;
   }
-  
+
   .status-badge.active {
-    background-color: #000000ff;
-    color: #155724;
+    background-color: #ffffffff;
+    color: #155724 !important;
   }
-  
+
   .status-badge.inactive {
     background-color: #000000ff;
-    color: #721c24;
+    color: #721c24 !important;
   }
-  
+
   .icon-button.info {
     background-color: #17a2b8;
-    color: white;
+    color: white !important;
   }
-  
+
   .icon-button.info:hover {
     background-color: #138496;
   }
-  
+
   .detail-section {
     margin-bottom: 25px;
   }
-  
+
   .detail-section h3 {
     margin-bottom: 15px;
-    color: #495057;
-    border-bottom: 2px solid #000000ff;
+    color: #ffffffff !important;
+    border-bottom: 2px solid #fafafaff;
     padding-bottom: 8px;
   }
-  
+
   .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 20px 0 20px;
   }
-  
+
   .teams-table {
     width: 100%;
     font-size: 14px;
   }
-  
+
   .teams-table th,
   .teams-table td {
     padding: 12px 8px;
     text-align: left;
     border-bottom: 1px solid #000000ff;
   }
-  
+
   .teams-table th {
-    background-color: #000000ff;
+    background-color: #ffffffff;
     font-weight: 600;
     position: sticky;
     top: 0;
   }
-  
+
   .modal-backdrop {
     position: fixed;
     top: 0;
@@ -668,24 +645,24 @@ const additionalStyles = `
     align-items: center;
     z-index: 1000;
   }
-  
+
   .modal-content {
     background: white;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     min-width: 400px;
   }
-  
+
   .form-group {
     margin-bottom: 20px;
   }
-  
+
   .form-group label {
     display: block;
     margin-bottom: 5px;
     font-weight: 600;
   }
-  
+
   .form-group input,
   .form-group textarea {
     width: 100%;
@@ -694,54 +671,54 @@ const additionalStyles = `
     border-radius: 4px;
     font-size: 14px;
   }
-  
+
   .modal-actions {
     display: flex;
     gap: 10px;
     justify-content: flex-end;
     padding: 20px;
   }
-  
+
   .button-primary {
     background-color: #007bff;
-    color: white;
+    color: white !important;
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
   }
-  
+
   .button-secondary {
-    background-color: #6c757d;
-    color: white;
+    background-color: #000000ff;
+    color: white !important;
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
   }
-  
+
   .icon-button {
     background-color: #28a745;
-    color: white;
+    color: white !important;
     border: none;
     padding: 8px;
     border-radius: 4px;
     cursor: pointer;
     margin-right: 5px;
   }
-  
+
   .icon-button.danger {
     background-color: #dc3545;
   }
-  
+
   .icon-button:hover {
     opacity: 0.8;
   }
-  
+
   .toolbar {
     margin-bottom: 20px;
   }
-  
+
   .loading-state, .error-state {
     display: flex;
     align-items: center;
@@ -749,15 +726,16 @@ const additionalStyles = `
     padding: 40px;
     flex-direction: column;
   }
-  
+
   .spinner-icon {
     animation: spin 1s linear infinite;
   }
-  
+
   @keyframes spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
   }
 `;
+
 
 export default AdminDashboard;

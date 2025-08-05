@@ -84,16 +84,29 @@ const Registration = () => {
     }
   };
   
-  
-  const generateOtp = async () => {
-      
-      await fetch(`${baseUrl}otp/generate/`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: formData.email }),
-      });
-      
-  };
+const generateOtp = async () => {
+    try {
+        const response = await fetch(`${baseUrl}otp/generate/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: formData.email }),
+        });
+        
+        const data = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(data.error || 'Failed to send OTP');
+        }
+        
+        console.log('OTP sent successfully:', data.message);
+        
+    } catch (error) {
+        console.error('Error sending OTP:', error);
+        setError(`Failed to send OTP: ${error.message}`);
+        setRegistrationStep('form'); // Go back to form on error
+        throw error; // Re-throw to be caught by handleFormSubmit
+    }
+};
 
   
   const handleOtpSubmit = async (e) => {
