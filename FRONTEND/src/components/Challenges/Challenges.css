@@ -104,17 +104,17 @@ body {
 .challenge-tag {
   position: absolute;
   top: 1.5rem;
-  left: 1.5rem;
+  right: 1.5rem;
   background-color: var(--accent-color);
   color: var(--bg-gradient-start);
   padding: 0.4rem 0.9rem;
   border-radius: 50px;
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
-  font-size: 0.7rem;
+  font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  z-index: 1; /* Ensure it's above other elements if needed */
+  z-index: 1;
 }
 /* --- END OF NEW CSS --- */
 
