@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { FaBullhorn, FaCrosshairs, FaParachuteBox, FaArchway, FaBalanceScale } from "react-icons/fa";
+// Added FaFlagCheckered to the import
+import { FaBullhorn, FaCrosshairs, FaParachuteBox, FaArchway, FaBalanceScale, FaFlagCheckered } from "react-icons/fa";
 import "./Challenges.css";
 
 const challengesData = [
@@ -14,7 +15,7 @@ const challengesData = [
     accentColorRgb: "50, 205, 50",
     Icon: FaCrosshairs,
     direction: "right",
-    tag: "CHALLENGE 1", // Added tag
+    tag: "CHALLENGE 1",
   },
   {
     id: 2,
@@ -25,7 +26,7 @@ const challengesData = [
     accentColorRgb: "138, 43, 226",
     Icon: FaBullhorn,
     direction: "left",
-    tag: "CHALLENGE 2", // Added tag
+    tag: "CHALLENGE 2",
   },
   {
     id: 3,
@@ -36,7 +37,7 @@ const challengesData = [
     accentColorRgb: "255, 69, 0",
     Icon: FaParachuteBox,
     direction: "right",
-    tag: "CHALLENGE 3", // Added tag
+    tag: "CHALLENGE 3",
   },
   {
     id: 4,
@@ -47,7 +48,7 @@ const challengesData = [
     accentColorRgb: "70, 130, 180",
     Icon: FaArchway,
     direction: "left",
-    tag: "CHALLENGE 4", // Added tag
+    tag: "CHALLENGE 4",
   },
   {
     id: 5,
@@ -58,12 +59,11 @@ const challengesData = [
     accentColorRgb: "255, 215, 0",
     Icon: FaBalanceScale,
     direction: "right",
-    tag: "BONUS", // Added tag
+    tag: "BONUS RACE",
   },
 ];
 
 const ChallengeCard = ({ challenge, isVisible }) => {
-  // Destructure the new 'tag' property
   const { Icon, title, description, objective, accentColor, accentColorRgb, direction, tag } = challenge;
 
   return (
@@ -74,8 +74,11 @@ const ChallengeCard = ({ challenge, isVisible }) => {
         "--accent-color-rgb": accentColorRgb,
       }}
     >
-      {/* Render the tag here */}
-      <span className="challenge-tag">{tag}</span>
+      {/* Conditionally render flags for the bonus tag */}
+      <span className="challenge-tag">
+        {tag}
+        {tag === "BONUS RACE" && <FaFlagCheckered />}
+      </span>
       <div className="card-content">
         <div className="card-visual">
           <Icon className="visual-icon" />
@@ -95,7 +98,6 @@ const ChallengeCard = ({ challenge, isVisible }) => {
 
 const Challenges = () => {
   const [visibleCards, setVisibleCards] = useState([]);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const cardRefs = useRef([]);
   const sectionRef = useRef(null);
 
@@ -112,24 +114,16 @@ const Challenges = () => {
       { rootMargin: "0px 0px -25% 0px" }
     );
 
-    cardRefs.current.forEach((ref) => {
+    const currentRefs = cardRefs.current;
+    currentRefs.forEach((ref) => {
       if (ref) observer.observe(ref);
     });
 
-    return () => observer.disconnect();
-  }, []);
-
-  // Effect for calculating scroll progress
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
-      const { top, height } = sectionRef.current.getBoundingClientRect();
-      const progress = -top / (height - window.innerHeight);
-      setScrollProgress(Math.min(1, Math.max(0, progress)));
+    return () => {
+      currentRefs.forEach((ref) => {
+        if (ref) observer.unobserve(ref);
+      });
     };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
