@@ -5,16 +5,16 @@ import { FaBullhorn, FaCrosshairs, FaParachuteBox, FaArchway, FaBalanceScale } f
 import "./Challenges.css";
 
 const challengesData = [
-  
   {
     id: 1,
     title: "LOW-LEVEL FLIGHT",
     description: "Showcase your piloting skills by performing acrobatic loops and navigating obstacles, all while maintaining a challenging low altitude.",
     objective: "Loops and obstacle flying at 1 meter of height",
     accentColor: "#32CD32",
-    accentColorRgb: "50, 205, 50", 
+    accentColorRgb: "50, 205, 50",
     Icon: FaCrosshairs,
     direction: "right",
+    tag: "CHALLENGE 1", // Added tag
   },
   {
     id: 2,
@@ -22,19 +22,21 @@ const challengesData = [
     description: "Scan the twilight landscape for signal flashes and use the announcement system to report your findings accurately and swiftly.",
     objective: "Flash spotting at evening with announcement system",
     accentColor: "#8A2BE2",
-    accentColorRgb: "138, 43, 226", 
+    accentColorRgb: "138, 43, 226",
     Icon: FaBullhorn,
-    direction: "left", 
-},
+    direction: "left",
+    tag: "CHALLENGE 2", // Added tag
+  },
   {
     id: 3,
     title: "TURBULENT DELIVERY",
     description: "Navigate through heavy air turbulence and evade enemy threats to deliver your critical 250 gm payload to a precise landing zone.",
     objective: "Air turbulence based landing on a fixed spot with payload 250 gm escaping from enemies",
     accentColor: "#FF4500",
-    accentColorRgb: "255, 69, 0", 
+    accentColorRgb: "255, 69, 0",
     Icon: FaParachuteBox,
-    direction: "right", 
+    direction: "right",
+    tag: "CHALLENGE 3", // Added tag
   },
   {
     id: 4,
@@ -42,9 +44,10 @@ const challengesData = [
     description: "Rely solely on your instruments to navigate a treacherous, smoke-filled tunnel. Avoid submerged obstacles and the tunnel walls in zero-visibility conditions.",
     objective: "Navigate a smoky, water-filled tunnel with obstacles using only instruments (no visibility).",
     accentColor: "#4682B4",
-    accentColorRgb: "70, 130, 180", 
+    accentColorRgb: "70, 130, 180",
     Icon: FaArchway,
-    direction: "left", 
+    direction: "left",
+    tag: "CHALLENGE 4", // Added tag
   },
   {
     id: 5,
@@ -54,13 +57,14 @@ const challengesData = [
     accentColor: "#FFD700",
     accentColorRgb: "255, 215, 0",
     Icon: FaBalanceScale,
-    direction: "right", 
-}
+    direction: "right",
+    tag: "BONUS", // Added tag
+  },
 ];
 
-
 const ChallengeCard = ({ challenge, isVisible }) => {
-  const { Icon, title, description, objective, accentColor, accentColorRgb, direction } = challenge;
+  // Destructure the new 'tag' property
+  const { Icon, title, description, objective, accentColor, accentColorRgb, direction, tag } = challenge;
 
   return (
     <div
@@ -70,6 +74,8 @@ const ChallengeCard = ({ challenge, isVisible }) => {
         "--accent-color-rgb": accentColorRgb,
       }}
     >
+      {/* Render the tag here */}
+      <span className="challenge-tag">{tag}</span>
       <div className="card-content">
         <div className="card-visual">
           <Icon className="visual-icon" />
@@ -86,7 +92,6 @@ const ChallengeCard = ({ challenge, isVisible }) => {
     </div>
   );
 };
-
 
 const Challenges = () => {
   const [visibleCards, setVisibleCards] = useState([]);
@@ -113,18 +118,18 @@ const Challenges = () => {
 
     return () => observer.disconnect();
   }, []);
-  
+
   // Effect for calculating scroll progress
   useEffect(() => {
     const handleScroll = () => {
-        if (!sectionRef.current) return;
-        const { top, height } = sectionRef.current.getBoundingClientRect();
-        const progress = -top / (height - window.innerHeight);
-        setScrollProgress(Math.min(1, Math.max(0, progress)));
+      if (!sectionRef.current) return;
+      const { top, height } = sectionRef.current.getBoundingClientRect();
+      const progress = -top / (height - window.innerHeight);
+      setScrollProgress(Math.min(1, Math.max(0, progress)));
     };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (

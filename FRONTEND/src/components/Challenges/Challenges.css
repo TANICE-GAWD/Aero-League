@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Open+Sans:wght@400;600&display=swap");
 
 :root {
- 
   --bg-gradient-start: #1a1a2e;
   --bg-gradient-mid: #16213e;
   --bg-gradient-end: #0f1419;
@@ -11,7 +10,6 @@
   --text-secondary: rgba(240, 240, 240, 0.7);
   --shadow-color: rgba(0, 0, 0, 0.3);
 
- 
   --transition-fast: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   --transition-smooth: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
@@ -29,8 +27,7 @@ body {
 .challenges-section {
   position: relative;
   background-color: var(--bg-color);
-  background-image:
-    radial-gradient(var(--card-border) 1px, transparent 1px),
+  background-image: radial-gradient(var(--card-border) 1px, transparent 1px),
     radial-gradient(var(--card-border) 1px, var(--bg-color) 1px);
   overflow-x: hidden;
 }
@@ -40,8 +37,7 @@ body {
   top: 0;
   z-index: 100;
   background-color: var(--bg-color);
-  background-image:
-    radial-gradient(var(--card-border) 1px, transparent 1px),
+  background-image: radial-gradient(var(--card-border) 1px, transparent 1px),
     radial-gradient(var(--card-border) 1px, var(--bg-color) 1px);
   overflow-x: hidden;
   padding: 2rem 0 1rem;
@@ -57,25 +53,23 @@ body {
   text-shadow: 0 4px 15px var(--shadow-color);
 }
 
-
 .progress-indicator {
-    width: 80%;
-    max-width: 400px;
-    height: 4px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 2px;
-    margin: 1rem auto 0;
-    overflow: hidden;
+  width: 80%;
+  max-width: 400px;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  margin: 1rem auto 0;
+  overflow: hidden;
 }
 
 .progress-bar {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, #00BFFF, #7CFC00, #FF6F61);
-    transform-origin: left;
-    transition: transform 0.2s linear;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #00bfff, #7cfc00, #ff6f61);
+  transform-origin: left;
+  transition: transform 0.2s linear;
 }
-
 
 .challenges-container {
   padding: 2rem 0;
@@ -102,10 +96,27 @@ body {
   box-shadow: 0 15px 30px var(--shadow-color);
   opacity: 0;
   transition: var(--transition-smooth);
-  position: relative;
+  position: relative; /* This is crucial for positioning the child tag */
   overflow: hidden;
 }
 
+/* --- NEW CSS FOR THE TAG --- */
+.challenge-tag {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  background-color: var(--accent-color);
+  color: var(--bg-gradient-start);
+  padding: 0.4rem 0.9rem;
+  border-radius: 50px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  z-index: 1; /* Ensure it's above other elements if needed */
+}
+/* --- END OF NEW CSS --- */
 
 .challenge-card.left {
   transform: translateX(-100px) scale(0.95);
@@ -117,7 +128,6 @@ body {
   opacity: 1;
   transform: translateX(0) scale(1);
 }
-
 
 .challenge-card:hover {
   transform: scale(1.03);
@@ -132,8 +142,12 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
- 
-  background: radial-gradient(circle at center, rgba(var(--accent-color-rgb), 0.15) 0%, transparent 70%);
+
+  background: radial-gradient(
+    circle at center,
+    rgba(var(--accent-color-rgb), 0.15) 0%,
+    transparent 70%
+  );
   opacity: 0;
   transition: var(--transition-fast);
   pointer-events: none;
@@ -216,7 +230,7 @@ body {
   cursor: pointer;
   transition: var(--transition-fast);
   margin-top: 2rem;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 .cta-button:hover {
   transform: translateY(-3px) scale(1.05);
@@ -230,7 +244,6 @@ body {
   outline-offset: 3px;
 }
 
-
 @media (max-width: 768px) {
   .challenge-wrapper {
     min-height: auto;
@@ -238,7 +251,13 @@ body {
   }
   .challenge-card {
     padding: 2rem 1.5rem;
+    padding-top: 3.5rem; /* Add extra padding at the top to make space for the tag */
     transform: translateY(50px) scale(0.95);
+  }
+  .challenge-tag {
+    top: 1rem;
+    left: 50%; /* Center the tag on mobile */
+    transform: translateX(-50%);
   }
   .challenge-card.left,
   .challenge-card.right {
@@ -271,8 +290,7 @@ body {
   width: 100%;
   padding: 6rem 0;
   background-color: var(--bg-color);
-  background-image:
-    radial-gradient(var(--card-border) 1px, transparent 1px),
+  background-image: radial-gradient(var(--card-border) 1px, transparent 1px),
     radial-gradient(var(--card-border) 1px, var(--bg-color) 1px);
   background-size: 40px 40px;
   background-position: 0 0, 20px 20px;
@@ -283,8 +301,7 @@ body {
 
   position: relative;
   background-color: var(--bg-color);
-  background-image:
-    radial-gradient(var(--card-border) 1px, transparent 1px),
+  background-image: radial-gradient(var(--card-border) 1px, transparent 1px),
     radial-gradient(var(--card-border) 1px, var(--bg-color) 1px);
   overflow-x: hidden;
 }
