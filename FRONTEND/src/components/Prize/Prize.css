@@ -1,6 +1,4 @@
-
-:root {
- 
+\:root {
   --gold: #ffd700;
   --gold-gradient: linear-gradient(135deg, #ffeb3b, #c8a415);
   --gold-glow: 0 0 45px rgba(255, 215, 0, 0.6);
@@ -11,13 +9,14 @@
   --bronze-gradient: linear-gradient(135deg, #d48c42, #8c581e);
   --bronze-glow: 0 0 25px rgba(205, 127, 50, 0.5);
 
- 
+
   --bg-gradient-start: #1a1a2e;
   --card-bg: #1e1e3f;
   --card-border: #3d3d5a;
   --shadow-color: rgba(0, 0, 0, 0.3);
+  --text-color-dark: #333;
+  --text-color-light: #fff; /* Added for contrast on dark backgrounds */
 
- 
   --transition-smooth: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-fast: all 0.3s ease;
 }
@@ -30,7 +29,7 @@
   justify-content: center;
   align-items: center;
   background-color: transparent;
- 
+
   position: relative;
   overflow: hidden;
 }
@@ -99,21 +98,31 @@
   border: 2px solid transparent;
   transition: border-color var(--transition-fast);
   overflow: hidden;
-}
-
-.card-front {
   display: grid;
   place-items: center;
 }
 
+.card-front {
+  /* Content is already centered by the grid layout */
+}
+
 .card-back {
   transform: rotateY(180deg);
-  color: #111;
-  display: flex;
+  color: var(--text-color-dark);
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 1.5rem;
+  text-align: center;
+  position: relative; /* Needed for absolute positioning of separator and drone */
+
+  /* Checkered pattern */
+  background-image:
+    linear-gradient(45deg, #0000001a 25%, transparent 25%),
+    linear-gradient(-45deg, #0000001a 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #0000001a 75%),
+    linear-gradient(-45deg, transparent 75%, #0000001a 75%);
+  background-size: 20px 20px;
 }
 
 
@@ -127,14 +136,23 @@
   order: -1;
 }
 
-.prize-card-group--gold .card-front, .prize-card-group--gold .card-back {
+.prize-card-group--gold .card-front {
   background: var(--gold-gradient);
 }
-.prize-card-group--silver .card-front, .prize-card-group--silver .card-back {
+.prize-card-group--gold .card-back {
+  background-color: #ffeb3bb3;
+}
+.prize-card-group--silver .card-front {
   background: var(--silver-gradient);
 }
-.prize-card-group--bronze .card-front, .prize-card-group--bronze .card-back {
+.prize-card-group--silver .card-back {
+  background-color: #e0e0e0b3;
+}
+.prize-card-group--bronze .card-front {
   background: var(--bronze-gradient);
+}
+.prize-card-group--bronze .card-back {
+  background-color: #d48c42b3;
 }
 
 .prize-card-group:hover {
@@ -157,21 +175,76 @@
   grid-area: 1 / 1;
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   color: #fff;
   text-shadow: 0 3px 8px rgba(0, 0, 0, 0.7);
   position: relative;
   z-index: 2;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
 }
 
 .prize-details-title, .prize-details {
   font-family: "Open Sans", sans-serif;
-  color: #000;
+  color: var(--text-color-dark);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.02em;
 }
-.prize-details-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; }
-.prize-details { font-size: 1.1rem; }
 
+.prize-details-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  color: #222;
+}
 
+.prize-details {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #111;
+}
+
+/* Separator line for visual appeal */
+.prize-details-title::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: #000;
+  margin: 10px auto 0;
+  border-radius: 5px;
+  opacity: 0.7;
+}
+
+/* Specific separator colors for each tier */
+.prize-card-group--gold .prize-details-title::after {
+  background: #a07a00;
+}
+.prize-card-group--silver .prize-details-title::after {
+  background: #7a7a7a;
+}
+.prize-card-group--bronze .prize-details-title::after {
+  background: #8c581e;
+}
+
+/* Keyframes for the subtle hover animation on the card back drone */
+@keyframes hoverDrone {
+  0% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-3px) rotate(2deg); }
+  50% { transform: translateY(0) rotate(0deg); }
+  75% { transform: translateY(3px) rotate(-2deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+/* Keyframes for propeller rotation */
+@keyframes rotatePropeller {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Styling for the main, screen-wide drone */
 .drone-icon-wrapper {
   position: absolute;
   z-index: 15;
@@ -183,10 +256,42 @@
 .drone-icon {
   color: #fff;
   text-shadow: 0 0 10px rgba(137, 206, 235, 0.8);
- 
-  transition: transform 0.1s linear; 
+  transition: transform 0.1s linear;
 }
 
+/* Styling for the drone on the back of the card */
+.card-back-drone {
+  position: absolute;
+  top: 15px; /* Position from top */
+  right: 15px; /* Position from right */
+  font-size: 2.5rem; /* Size of the drone icon */
+  color: rgba(0, 0, 0, 0.2); /* Subtle color to blend with the background */
+  opacity: 0.8; /* Slightly visible */
+  animation: hoverDrone 3s ease-in-out infinite; /* Apply hover animation */
+  z-index: 1; /* Ensure it's behind text if needed */
+}
+
+/* Make the drone icon itself spin to simulate propellers */
+.card-back-drone svg {
+  animation: rotatePropeller 1s linear infinite;
+}
+
+/* Adjustments for specific card backs to make drone more visible or blend */
+.prize-card-group--gold .card-back-drone {
+  color: rgba(160, 122, 0, 0.4); /* Darker gold tint */
+}
+.prize-card-group--silver .card-back-drone {
+  color: rgba(122, 122, 122, 0.4); /* Darker silver tint */
+}
+.prize-card-group--bronze .card-back-drone {
+  color: rgba(140, 88, 30, 0.4); /* Darker bronze tint */
+}
+
+/* Ensure the text is above the drone if z-index conflicts */
+.prize-details-title, .prize-details {
+  position: relative;
+  z-index: 2; /* Ensure text is above the drone */
+}
 
 
 @media (max-width: 768px) {
@@ -205,6 +310,11 @@
   .prize-card-group--silver {
     order: 0;
   }
+  .prize-place {
+    font-size: 1.6rem;
+  }
+  .prize-details-title { font-size: 1.4rem; }
+  .prize-details { font-size: 1.2rem; }
 }
 
 .team-section {
