@@ -172,11 +172,11 @@ const Animation = () => {
 
         const isMobile = window.innerWidth < 768;
         this.data = {
-          text: isMobile ? ' THAPAR DRONE CHALLENGE\nBUILD. FLY. DOMINATE.' : ' THAPAR AERO LEAGUE\n BUILD. FLY. DOMINATE.',
+          text: isMobile ? ' THAPAR DRONE CHALLENGE\n     BUILD. FLY. DOMINATE.' : 'THAPAR DRONE CHALLENGE\n    BUILD. FLY. DOMINATE.',
           amount: isMobile ? 800 : 1500,
           particleSize: 1,
           particleColor: 0xffffff,
-          textSize: isMobile ? 8 : 10,
+          textSize: isMobile ? 7 : 10,
           area: 250,
           ease: 0.05,
         };
