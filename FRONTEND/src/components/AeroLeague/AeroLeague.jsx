@@ -443,7 +443,12 @@ const Animation = () => {
           <div className="button-container">
             {/* 2. Replace the button with a Link component */}
             <Link to="/register" className="btn btn-primary">Register Now</Link>
-            <button className="btn btn-secondary">Learn More</button>
+            <a 
+            href="https://TANICE-GAWD.github.io/tal-doc/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="btn btn-secondary"
+          ></a>
           </div>
         </div>
       </section>

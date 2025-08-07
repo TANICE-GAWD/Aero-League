@@ -46,32 +46,39 @@ const UserDashboard = () => {
   const baseUrl = 'https://tal-backend.vercel.app/users/'; 
   const token = localStorage.getItem('access_token');
 
-  // --- Data Fetching ---
+  // --- Data Fetching (UPDATED) ---
   const fetchInitialData = useCallback(async () => {
     if (!token) {
       navigate('/login');
       return;
     }
     
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      const parsedUser = JSON.parse(storedUser);
-      setUser(parsedUser);
-      setVideoLink(parsedUser.video_link || '');
-    } else {
-      localStorage.removeItem('access_token');
-      navigate('/login');
-      return;
-    }
-
     setIsLoading(true);
+    setError(null);
+
     try {
-      const notificationsData = await api.request('GET', `${baseUrl}notifications/`, token);
+      // Fetch user profile and notifications in parallel
+      const [profileData, notificationsData] = await Promise.all([
+        api.request('GET', `${baseUrl}profile/`, token), // <-- Fetches user profile
+        api.request('GET', `${baseUrl}notifications/`, token)
+      ]);
+
+      // Set state with fresh data
+      setUser(profileData);
       setNotifications(notificationsData);
+      
+      // Pre-fill form fields
+      setVideoLink(profileData.video_link || '');
+
+      // Update localStorage with fresh user data
+      localStorage.setItem('user', JSON.stringify(profileData));
+
     } catch (err) {
-      setError(err.message);
+      setError('Failed to load dashboard data. Please try again.');
+      console.error(err);
+      // If token is invalid, log out the user
       if (err.message.includes('401') || err.message.includes('403')) {
-        handleLogout();
+        setTimeout(handleLogout, 2000);
       }
     } finally {
       setIsLoading(false);
@@ -106,7 +113,10 @@ const UserDashboard = () => {
     try {
       await api.request('POST', `${baseUrl}add-video/`, token, { video_link: videoLink });
       setSuccess('Video link updated successfully!');
-      setUser(prevUser => ({...prevUser, video_link: videoLink}));
+      // Update user state and localStorage
+      const updatedUser = {...user, video_link: videoLink};
+      setUser(updatedUser);
+      localStorage.setItem('user', JSON.stringify(updatedUser));
     } catch (err) {
       setError(err.message);
     } finally {
@@ -230,13 +240,21 @@ const UserDashboard = () => {
     </div>
   );
 
-  if (!user) {
+  if (isLoading && !user) {
     return (
       <div className="loading-fullpage">
         <FaSpinner className="spinner-icon" />
         <p>Loading Pilot Dashboard...</p>
       </div>
     );
+  }
+  
+  if (!user) {
+      return (
+        <div className="loading-fullpage">
+            <p style={{color: 'red'}}>{error || 'Could not load user data. Please try logging in again.'}</p>
+        </div>
+      )
   }
 
   return (
