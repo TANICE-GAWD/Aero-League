@@ -448,7 +448,7 @@ const Animation = () => {
             target="_blank" 
             rel="noopener noreferrer" 
             className="btn btn-secondary"
-          ></a>
+          >Learn More</a>
           </div>
         </div>
       </section>
