@@ -1,18 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Open+Sans:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+
 
 :root {
-  --bg-gradient-start: #1a1a2e;
-  --bg-gradient-mid: #16213e;
-  --bg-gradient-end: #0f1419;
-  --card-bg: rgba(45, 45, 74, 0.8);
-  --card-border: rgba(61, 61, 90, 0.7);
-  --text-primary: #f0f0f0;
-  --text-secondary: rgba(240, 240, 240, 0.7);
+  --bg-color: #0f1419;
+  --card-body-bg: rgba(45, 45, 74, 0.8);
+  --text-primary-dark: #2c3e50;
+  --text-secondary-dark:  rgba(240, 240, 240, 0.7);
+  --text-primary-light: #f0f0f0;
   --shadow-color: rgba(0, 0, 0, 0.3);
-
-  --transition-fast: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  --transition-smooth: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+
 
 * {
   box-sizing: border-box;
@@ -21,256 +18,182 @@
 }
 
 body {
-  background: var(--bg-gradient-start);
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary-light);
 }
+
 
 .challenges-section {
-  position: relative;
-  background-color: var(--bg-color);
-  background-image: radial-gradient(var(--card-border) 1px, transparent 1px),
-    radial-gradient(var(--card-border) 1px, var(--bg-color) 1px);
-  overflow-x: hidden;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
 }
 
-.sticky-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background-color: var(--bg-color);
-  background-image: radial-gradient(var(--card-border) 1px, transparent 1px),
-    radial-gradient(var(--card-border) 1px, var(--bg-color) 1px);
-  overflow-x: hidden;
-  padding: 2rem 0 1rem;
+
+.section-header {
   text-align: center;
+  margin-bottom: 3rem;
 }
 
-.section-title {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 800;
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  color: var(--text-primary);
-  letter-spacing: 0.1em;
-  text-shadow: 0 4px 15px var(--shadow-color);
+.section-main-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--text-primary-light);
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
+
 
 .challenges-container {
-  padding: 2rem 0;
-  max-width: 1200px;
-  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
 }
 
-.challenge-wrapper {
-  min-height: 80vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 2rem;
+
+.challenge-card-wrapper {
+  perspective: 1000px;
 }
+
 
 .challenge-card {
-  background: var(--card-bg);
-  backdrop-filter: blur(15px);
-  border-radius: 24px;
-  padding: 3rem;
-  max-width: 800px;
-  width: 100%;
-  border: 1px solid var(--card-border);
-  box-shadow: 0 15px 30px var(--shadow-color);
-  opacity: 0;
-  transition: var(--transition-smooth);
-  position: relative;
+  background-color: var(--card-body-bg);
+  border-radius: 16px;
   overflow: hidden;
+  box-shadow: 0 10px 25px var(--shadow-color);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+ 
+  opacity: 0;
+  transform: translateY(40px) rotateX(-10deg);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease;
 }
 
-.challenge-tag {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  justify-content: center;
-  background-color: var(--accent-color);
-  color: var(--bg-gradient-start);
-  padding: 0.4rem 1rem;
-  border-radius: 50px;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 700;
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  z-index: 1;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.challenge-card.left {
-  transform: translateX(-100px) scale(0.95);
-}
-.challenge-card.right {
-  transform: translateX(100px) scale(0.95);
-}
 .challenge-card.visible {
   opacity: 1;
-  transform: translateX(0) scale(1);
+  transform: translateY(0) rotateX(0deg);
 }
 
 .challenge-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 20px 40px var(--shadow-color), 0 0 40px var(--accent-color);
-  border-color: var(--accent-color);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }
 
-.challenge-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
 
-  background: radial-gradient(
-    circle at center,
-    rgba(var(--accent-color-rgb), 0.15) 0%,
-    transparent 70%
-  );
-  opacity: 0;
-  transition: var(--transition-fast);
-  pointer-events: none;
-}
-.challenge-card:hover::before {
-  opacity: 1;
-}
-
-.card-content {
+.card-header {
+  background-image: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+  color: var(--text-primary-light);
+  padding: 1.5rem;
   display: flex;
-  gap: 2.5rem;
-  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 180px;
+  position: relative;
 }
 
-.card-visual {
-  flex-shrink: 0;
-  width: 120px;
-  height: 120px;
-  background-color: var(--accent-color);
-  border-radius: 20px;
-  display: grid;
-  place-items: center;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  transition: var(--transition-fast);
-}
-.challenge-card:hover .card-visual {
-  transform: rotate(-8deg) scale(1.1);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-}
-
-.visual-icon {
-  font-size: 3.5rem;
-  color: #1a1a2e;
-}
-
-.card-text {
-  flex: 1;
-}
-
-.card-title {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 700;
-  font-size: 2.2rem;
-  color: var(--text-primary);
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   margin-bottom: 1rem;
 }
 
-.card-description {
-  font-family: "Open Sans", sans-serif;
-  font-size: 1.1rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
-  margin-bottom: 2rem;
+.header-icon {
+  font-size: 1.75rem;
+  opacity: 0.8;
 }
+
+.challenge-tag-header {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+
+.card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.card-description {
+  color: white;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  flex-grow: 1;
+  margin-bottom: 1.5rem;
+}
+
 
 .objective-box {
-  background: rgba(var(--accent-color-rgb), 0.15);
-  color: var(--text-primary);
-  padding: 1rem 1.5rem;
-  border-radius: 12px;
-  border: 1px solid var(--accent-color);
-  margin-top: 1.5rem;
-}
-.objective-text {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 600;
-  font-size: 1rem;
-  color: var(--accent-color);
+  background-color: #f7f9fc;
+  border-left: 4px solid var(--accent-color);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: auto;
 }
 
-.cta-button {
-  background: var(--accent-color);
-  color: #1a1a2e;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: 50px;
-  font-family: "Montserrat", sans-serif;
+.objective-label {
+  font-size: 0.8rem;
   font-weight: 700;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: var(--transition-fast);
-  margin-top: 2rem;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-.cta-button:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 8px 25px rgba(var(--accent-color-rgb), 0.4);
-}
-.cta-button:active {
-  transform: translateY(0) scale(1);
-}
-.cta-button:focus-visible {
-  outline: 3px solid var(--accent-color);
-  outline-offset: 3px;
+  color: var(--text-secondary-dark);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.25rem;
 }
 
-/* --- Mobile Responsive Styles --- */
+.objective-text {
+  color: var(--text-primary-dark);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+
+
 @media (max-width: 768px) {
-  .challenge-wrapper {
-    min-height: auto;
-    padding: 4rem 1rem;
+  .challenges-section {
+    padding: 2rem 1rem;
   }
-  .challenge-card {
-    padding: 2rem 1.5rem;
-    /* This top padding creates space for the centered tag */
-    padding-top: 3.5rem;
-    transform: translateY(50px) scale(0.95);
-  }
-  .challenge-tag {
-    top: 1rem;
-    /* This centers the tag perfectly */
-    left: 50%;
-    transform: translateX(-50%);
-    /* We no longer need the right property */
-    right: auto;
-  }
-  .challenge-card.left,
-  .challenge-card.right {
-    transform: translateY(50px) scale(0.95);
-  }
-  .challenge-card.visible {
-    transform: translateY(0) scale(1);
-  }
-  .challenge-card:hover {
-    transform: scale(1.02);
-  }
-  .card-content {
-    flex-direction: column;
-    text-align: center;
+
+  .challenges-container {
+    grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  .card-visual {
-    width: 100px;
-    height: 100px;
+  
+  .card-header {
+    min-height: 160px;
   }
-  .visual-icon {
-    font-size: 3rem;
-  }
+  
   .card-title {
-    font-size: 1.8rem;
+    font-size: 1.3rem;
   }
+}
+.team-section {
+  width: 100%;
+  padding: 6rem 0;
+  background-color: var(--bg-color);
+  background-image:
+    radial-gradient(var(--card-border) 1px, transparent 1px),
+    radial-gradient(var(--card-border) 1px, var(--bg-color) 1px);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }

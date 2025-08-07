@@ -1,95 +1,94 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-// Added FaFlagCheckered to the import
-import { FaBullhorn, FaCrosshairs, FaParachuteBox, FaArchway, FaBalanceScale, FaFlagCheckered } from "react-icons/fa";
+
+import {
+  FaCrosshairs,
+  FaBullhorn,
+  FaParachuteBox,
+  FaArchway,
+  FaFlagCheckered,
+} from "react-icons/fa";
 import "./Challenges.css";
+
 
 const challengesData = [
   {
     id: 1,
+    tag: "CHALLENGE 1",
     title: "LOW-LEVEL FLIGHT",
     description: "Showcase your piloting skills by performing acrobatic loops and navigating obstacles, all while maintaining a challenging low altitude.",
     objective: "Loops and obstacle flying at 1 meter of height",
-    accentColor: "#32CD32",
-    accentColorRgb: "50, 205, 50",
     Icon: FaCrosshairs,
-    direction: "right",
-    tag: "CHALLENGE 1",
+    accentColor: "#32cd320e",
+    gradientColors: ["#4de24db6", "#32cd3283"],
   },
   {
     id: 2,
+    tag: "CHALLENGE 2",
     title: "EVENING RECON",
     description: "Scan the twilight landscape for signal flashes and use the announcement system to report your findings accurately and swiftly.",
     objective: "Flash spotting at evening with announcement system",
-    accentColor: "#8A2BE2",
-    accentColorRgb: "138, 43, 226",
     Icon: FaBullhorn,
-    direction: "left",
-    tag: "CHALLENGE 2",
+    accentColor: "#892be2",
+    gradientColors: ["#a049f184", "#892be290"],
   },
   {
     id: 3,
+    tag: "CHALLENGE 3",
     title: "TURBULENT DELIVERY",
     description: "Navigate through heavy air turbulence and evade enemy threats to deliver your critical 250 gm payload to a precise landing zone.",
     objective: "Air turbulence based landing on a fixed spot with payload 250 gm escaping from enemies",
-    accentColor: "#FF4500",
-    accentColorRgb: "255, 69, 0",
     Icon: FaParachuteBox,
-    direction: "right",
-    tag: "CHALLENGE 3",
+    accentColor: "#FF4500",
+    gradientColors: ["#ff642ba3", "#ff44008d"],
   },
   {
     id: 4,
+    tag: "CHALLENGE 4",
     title: "THE GAUNTLET",
     description: "Rely solely on your instruments to navigate a treacherous, smoke-filled tunnel. Avoid submerged obstacles and the tunnel walls in zero-visibility conditions.",
     objective: "Navigate a smoky, water-filled tunnel with obstacles using only instruments (no visibility).",
-    accentColor: "#4682B4",
-    accentColorRgb: "70, 130, 180",
     Icon: FaArchway,
-    direction: "left",
-    tag: "CHALLENGE 4",
+    accentColor: "#4682B4",
+    gradientColors: ["#5e89b2", "#4682B4"],
   },
   {
     id: 5,
+    tag: "BONUS RACE",
     title: "STRATEGIC DASH",
     description: "This isn't just about speed, it's about strategy. Decide on the fly which checkpoints to hit and which to skip, but be warned: every missed checkpoint comes at a cost.",
     objective: "Strategically navigate multiple checkpoints; skipping any checkpoint will result in a significant time penalty.",
-    accentColor: "#FFD700",
-    accentColorRgb: "255, 215, 0",
     Icon: FaFlagCheckered,
-    direction: "right",
-    tag: "BONUS RACE",
+    accentColor: "#FFD700",
+    gradientColors: ["#ffe033c6", "#ffd900ba"],
   },
 ];
 
 const ChallengeCard = ({ challenge, isVisible }) => {
-  const { Icon, title, description, objective, accentColor, accentColorRgb, direction, tag } = challenge;
+  const { Icon, title, description, objective, tag, gradientColors, accentColor } = challenge;
 
   return (
     <div
-      className={`challenge-card ${isVisible ? "visible" : ""} ${direction}`}
+      className={`challenge-card ${isVisible ? "visible" : ""}`}
       style={{
+        "--gradient-start": gradientColors[0],
+        "--gradient-end": gradientColors[1],
         "--accent-color": accentColor,
-        "--accent-color-rgb": accentColorRgb,
       }}
     >
-      {/* Conditionally render flags for the bonus tag */}
-      <span className="challenge-tag">
-        {tag}
-        {tag === "BONUS RACE"}
-      </span>
-      <div className="card-content">
-        <div className="card-visual">
-          <Icon className="visual-icon" />
+      <header className="card-header">
+        <div className="header-top">
+          <Icon className="header-icon" />
+          <span className="challenge-tag-header">{tag}</span>
         </div>
-        <div className="card-text">
-          <h3 className="card-title">{title}</h3>
-          <p className="card-description">{description}</p>
-          <div className="objective-box">
-            <span className="objective-text">{objective}</span>
-          </div>
-          <button className="cta-button">Learn More</button>
+        <h3 className="card-title">{title}</h3>
+      </header>
+      <div className="card-body">
+        <p className="card-description">{description}</p>
+        <div className="objective-box">
+          <span className="objective-label">Objective</span>
+          <p className="objective-text">{objective}</p>
         </div>
       </div>
     </div>
@@ -99,7 +98,6 @@ const ChallengeCard = ({ challenge, isVisible }) => {
 const Challenges = () => {
   const [visibleCards, setVisibleCards] = useState([]);
   const cardRefs = useRef([]);
-  const sectionRef = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -108,10 +106,11 @@ const Challenges = () => {
           if (entry.isIntersecting) {
             const cardIndex = Number(entry.target.dataset.index);
             setVisibleCards((prev) => [...new Set([...prev, cardIndex])]);
+            observer.unobserve(entry.target);
           }
         });
       },
-      { rootMargin: "0px 0px -25% 0px" }
+      { rootMargin: "0px", threshold: 0.1 }
     );
 
     const currentRefs = cardRefs.current;
@@ -127,26 +126,24 @@ const Challenges = () => {
   }, []);
 
   return (
-    <section className="team-section">
-      <section className="challenges-section" ref={sectionRef}>
-        <header className="sticky-header">
-          <h1 className="section-title">CHALLENGES</h1>
-        </header>
+    <section className="team-section"><section className="challenges-section">
+      <header className="section-header">
+        <h1 className="section-main-title">CHALLENGES</h1>
+      </header>
 
-        <div className="challenges-container">
-          {challengesData.map((challenge, index) => (
-            <div
-              key={challenge.id}
-              ref={(el) => (cardRefs.current[index] = el)}
-              data-index={index}
-              className="challenge-wrapper"
-            >
-              <ChallengeCard challenge={challenge} isVisible={visibleCards.includes(index)} />
-            </div>
-          ))}
-        </div>
-      </section>
-    </section>
+      <div className="challenges-container">
+        {challengesData.map((challenge, index) => (
+          <div
+            key={challenge.id}
+            ref={(el) => (cardRefs.current[index] = el)}
+            data-index={index}
+            className="challenge-card-wrapper"
+          >
+            <ChallengeCard challenge={challenge} isVisible={visibleCards.includes(index)} />
+          </div>
+        ))}
+      </div>
+    </section></section>
   );
 };
 

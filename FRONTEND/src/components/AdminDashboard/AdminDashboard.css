@@ -1,7 +1,7 @@
 
 .dashboard-section {
   min-height: 100vh;
-  padding: 6rem 2rem 2rem; /* Padding to account for the main navbar */
+  padding: 6rem 2rem 2rem;
   background-color: var(--bg-color, #0f1419);
   color: var(--text-primary, #f0f0f0);
 }
@@ -75,7 +75,7 @@
 
 .table-container {
   width: 100%;
-  overflow-x: auto; /* For responsiveness on small screens */
+  overflow-x: auto;
 }
 
 .teams-table {

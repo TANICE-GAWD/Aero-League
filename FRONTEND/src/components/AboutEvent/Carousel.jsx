@@ -17,15 +17,15 @@ const teamData = [
 export default function TeamCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [isMobile, setIsMobile] = useState(false); // State to track mobile view
+  const [isMobile, setIsMobile] = useState(false); 
   const totalItems = teamData.length;
 
-  // Effect to check screen size and update the isMobile state
+  
   useEffect(() => {
     const checkScreenSize = () => {
       setIsMobile(window.innerWidth <= 900);
     };
-    checkScreenSize(); // Initial check
+    checkScreenSize(); 
     window.addEventListener("resize", checkScreenSize);
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
@@ -38,12 +38,12 @@ export default function TeamCarousel() {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + totalItems) % totalItems);
   };
 
-  // Autoplay effect now stops if isPaused or isMobile is true
+  
   useEffect(() => {
     if (isPaused || isMobile) return;
     const interval = setInterval(handleNext, 3000);
     return () => clearInterval(interval);
-  }, [isPaused, isMobile]); // Dependency array includes isMobile
+  }, [isPaused, isMobile]); 
 
   return (
     <section className="team-section">
