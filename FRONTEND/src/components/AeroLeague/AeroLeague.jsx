@@ -2,17 +2,19 @@ import React, { useEffect, useRef } from 'react';
 import './AeroLeague.css';
 import * as THREE from 'three';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+// 1. Import the Link component
+import { Link } from 'react-router-dom';
 
 const Animation = () => {
   const mountRef = useRef(null);
 
   useEffect(() => {
-    // Ensure the mount point exists
+    // ... (the entire useEffect hook remains unchanged)
     if (!mountRef.current) return;
 
     const mountPoint = mountRef.current;
-    let isMounted = true; // Flag to track if the component is mounted
-    let env; // This will hold the main Environment instance
+    let isMounted = true;
+    let env; 
 
     const vertexShader = `
       attribute float size;
@@ -45,7 +47,6 @@ const Animation = () => {
         this.renderer = null;
         this.camera = null;
         this.createParticles = null;
-        // Bind the resize handler once to be able to remove it later
         this.boundOnWindowResize = this.onWindowResize.bind(this);
         
         this.createCamera();
@@ -99,9 +100,7 @@ const Animation = () => {
       }
 
       onWindowResize() {
-        // Add guards to prevent errors if called after destruction
         if (!this.container || !this.renderer || !this.camera) return;
-
         this.camera.aspect =
           this.container.clientWidth / this.container.clientHeight;
         this.camera.updateProjectionMatrix();
@@ -109,33 +108,20 @@ const Animation = () => {
           this.container.clientWidth,
           this.container.clientHeight
         );
-        // This part is resource-intensive but matches your original logic
         if (this.createParticles) {
           this.createParticles.destroy();
           this.setup();
         }
       }
       
-      // Robust destroy method for complete cleanup
       destroy() {
-        // Stop the animation loop
         if (this.renderer) this.renderer.setAnimationLoop(null);
-        
-        // Clean up particles
         if (this.createParticles) this.createParticles.destroy();
-
-        // Remove event listener
         window.removeEventListener('resize', this.boundOnWindowResize);
-
-        // Remove the canvas from the DOM
         if (this.renderer && this.renderer.domElement.parentNode === this.container) {
           this.container.removeChild(this.renderer.domElement);
         }
-        
-        // Dispose of the renderer and its resources
         if (this.renderer) this.renderer.dispose();
-
-        // Clear scene objects (good practice)
         this.scene.traverse(object => {
           if (object.geometry) object.geometry.dispose();
           if (object.material) {
@@ -191,7 +177,6 @@ const Animation = () => {
           this.particles.geometry.dispose();
           this.particles.material.dispose();
         }
-        // Also remove event listeners for this class if they were on window/document
       }
 
       setup() {
@@ -216,13 +201,10 @@ const Animation = () => {
         this.container.addEventListener('touchend', this.onTouchEnd.bind(this));
       }
       
-      // ... onMouseDown, onMouseUp, onMouseMove, onTouchStart, etc. from your original code ...
-      // Paste all your event handler methods here. Example:
       onMouseDown(event) {
         const rect = this.container.getBoundingClientRect();
         this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
         this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-        // ... rest of the method
         this.buttom = true;
         this.data.ease = 0.01;
       }
@@ -269,8 +251,6 @@ const Animation = () => {
       render() {
         if (!this.particles || !this.geometryCopy) return;
 
-        // ... a large block of rendering logic from your original code ...
-        // Paste your entire render method logic here.
         const time = ((0.001 * performance.now()) % 12) / 12;
         const zigzagTime = (1 + Math.sin(time * 2 * Math.PI)) / 6;
 
@@ -285,7 +265,6 @@ const Animation = () => {
 
           const mx = intersects[0].point.x;
           const my = intersects[0].point.y;
-          const mz = intersects[0].point.z;
 
           for (var i = 0, l = pos.count; i < l; i++) {
             const initX = copy.getX(i);
@@ -349,7 +328,6 @@ const Animation = () => {
                 }
               }
             }
-
             px += (initX - px) * this.data.ease;
             py += (initY - py) * this.data.ease;
             pz += (initZ - pz) * this.data.ease;
@@ -360,8 +338,6 @@ const Animation = () => {
       }
 
       createText() {
-        // ... createText method from your original code ...
-        // Paste your entire createText method logic here.
         let thePoints = [];
         let shapes = this.font.generateShapes(this.data.text, this.data.textSize);
         let geometry = new THREE.ShapeGeometry(shapes);
@@ -430,7 +406,6 @@ const Animation = () => {
       }
     }
 
-    // --- Asset Loading and Initialization ---
     const fontLoader = new FontLoader();
     const textureLoader = new THREE.TextureLoader();
     const particle = textureLoader.load('https://res.cloudinary.com/dfvtkoboz/image/upload/v1605013866/particle_a64uzf.png');
@@ -438,23 +413,21 @@ const Animation = () => {
     fontLoader.load(
       'https://res.cloudinary.com/dydre7amr/raw/upload/v1612950355/font_zsd4dr.json',
       (loadedFont) => {
-        // Only initialize if the component is still mounted
         if (isMounted && mountPoint) {
           env = new Environment(loadedFont, particle, mountPoint);
         }
       },
-      undefined, // onProgress callback (optional)
+      undefined,
       (err) => console.log('An error happened during font loading', err)
     );
 
-    // --- Cleanup Function ---
     return () => {
-      isMounted = false; // Set flag to false on unmount
+      isMounted = false;
       if (env) {
-        env.destroy(); // Call the robust destroy method
+        env.destroy();
       }
     };
-  }, []); // Empty dependency array ensures this runs only once on mount/unmount
+  }, []);
 
   return (
     <>
@@ -464,8 +437,15 @@ const Animation = () => {
         </section>
       </section>
       <section className="next-section">
-        <h1>Prepare for Lift-Off</h1>
-        <p>Swipe to explore what's ahead</p>
+        <div className="next-section-content">
+          <h1>Prepare for Lift-Off</h1>
+          <p>Explore the challenges, hone your skills, and get ready to compete in the ultimate aerial showdown.</p>
+          <div className="button-container">
+            {/* 2. Replace the button with a Link component */}
+            <Link to="/register" className="btn btn-primary">Register Now</Link>
+            <button className="btn btn-secondary">Learn More</button>
+          </div>
+        </div>
       </section>
     </>
   );
