@@ -10,7 +10,6 @@ import UserProfile from './UserProfile'; // Ensure this path is correct
 import './UserDashboard.css';
 
 // --- API Helper ---
-// A self-contained API request function
 const api = {
   request: async (method, url, token, body = null) => {
     const options = {
@@ -26,7 +25,7 @@ const api = {
         const errorData = await response.json().catch(() => ({ error: 'Request failed with status ' + response.status }));
         throw new Error(errorData.error || JSON.stringify(errorData));
     }
-    if (response.status === 204) return null; // Handle No Content response
+    if (response.status === 204) return null;
     return response.json();
   }
 };
@@ -36,9 +35,10 @@ const UserDashboard = () => {
   // --- Component State ---
   const [user, setUser] = useState(null);
   const [notifications, setNotifications] = useState([]);
-  const [activeView, setActiveView] = useState('dashboard'); // 'dashboard', 'profile', 'password'
-  
+  const [activeView, setActiveView] = useState('dashboard');
+
   // --- Form State ---
+  // ADD VIDEO - STEP 1: State to manage the video link input field.
   const [videoLink, setVideoLink] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -60,14 +60,13 @@ const UserDashboard = () => {
       return;
     }
     
-    // Load user data from localStorage, saved during login
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);
+      // ADD VIDEO - STEP 1.1: Pre-fill the input with the user's existing video link, if any.
       setVideoLink(parsedUser.video_link || '');
     } else {
-      // If no user data, the session is invalid
       localStorage.removeItem('access_token');
       navigate('/login');
       return;
@@ -75,19 +74,17 @@ const UserDashboard = () => {
 
     setIsLoading(true);
     try {
-      // Fetch data that might change, like notifications
       const notificationsData = await api.request('GET', `${baseUrl}notifications/`, token);
       setNotifications(notificationsData);
     } catch (err) {
       setError(err.message);
-      // If token is invalid or expired, log the user out
       if (err.message.includes('401') || err.message.includes('403')) {
         handleLogout();
       }
     } finally {
       setIsLoading(false);
     }
-  }, [navigate, token]); // Removed baseUrl from dependency array as it's constant
+  }, [navigate, token]);
 
   useEffect(() => {
     fetchInitialData();
@@ -110,18 +107,20 @@ const UserDashboard = () => {
     setActiveView(view);
   };
 
+  // ADD VIDEO - STEP 2: The handler function that submits the video link to the backend.
   const handleAddVideoLink = async (e) => {
     e.preventDefault();
     clearMessages();
     setIsLoading(true);
     try {
+      // Makes the API call to the '/add-video/' endpoint.
       await api.request('POST', `${baseUrl}add-video/`, token, { video_link: videoLink });
       setSuccess('Video link updated successfully!');
       
-      // Update user state locally to reflect the change immediately
+      // Updates user state locally for an immediate UI update.
       const updatedUser = {...user, video_link: videoLink};
       setUser(updatedUser);
-      localStorage.setItem('user', JSON.stringify(updatedUser)); // Also update localStorage
+      localStorage.setItem('user', JSON.stringify(updatedUser));
     } catch (err) {
       setError(err.message);
     } finally {
@@ -135,7 +134,6 @@ const UserDashboard = () => {
     setIsLoading(true);
 
     const payload = { new_password: newPassword };
-    // Only include old_password if it's not the user's first login
     if (!user.first_login) {
       payload.old_password = oldPassword;
     }
@@ -143,7 +141,7 @@ const UserDashboard = () => {
     try {
       await api.request('POST', `${baseUrl}password/change/`, token, payload);
       setSuccess('Password changed successfully! You will be logged out shortly.');
-      setTimeout(handleLogout, 3000); // Log out after 3 seconds
+      setTimeout(handleLogout, 3000);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -154,14 +152,17 @@ const UserDashboard = () => {
   // --- Render Methods for Different Views ---
   const renderDashboard = () => (
     <>
+      {/* ADD VIDEO - STEP 3: The UI form for submitting the link. */}
       <div className="content-section">
         <h2><FaVideo /> Submit Your Video Link</h2>
+        {/* The onSubmit handler is correctly wired to the handleAddVideoLink function. */}
         <form onSubmit={handleAddVideoLink} className="dashboard-form">
           <div className="form-group">
             <label htmlFor="videoLink">YouTube or Google Drive Link</label>
             <input
               type="url"
               id="videoLink"
+              // The input's value is controlled by the 'videoLink' state.
               value={videoLink}
               onChange={(e) => setVideoLink(e.target.value)}
               placeholder="https://..."
