@@ -1,12 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { 
-    FaTachometerAlt, FaUserAstronaut, FaBell, FaKey, FaSignOutAlt, FaVideo, 
-    FaSpinner, FaCheckCircle, FaExclamationTriangle 
+import {
+    FaTachometerAlt, FaUserAstronaut, FaBell, FaKey, FaSignOutAlt, FaVideo,
+    FaSpinner, FaCheckCircle, FaExclamationTriangle
 } from 'react-icons/fa';
+
+// --- Import your new component ---
+import UserProfile from './UserProfile'; // Ensure this path is correct
 import './UserDashboard.css';
 
-// --- API Helper (remains the same) ---
+// --- API Helper ---
+// A self-contained API request function
 const api = {
   request: async (method, url, token, body = null) => {
     const options = {
@@ -22,74 +26,74 @@ const api = {
         const errorData = await response.json().catch(() => ({ error: 'Request failed with status ' + response.status }));
         throw new Error(errorData.error || JSON.stringify(errorData));
     }
-    if (response.status === 204) return null;
+    if (response.status === 204) return null; // Handle No Content response
     return response.json();
   }
 };
 
+// --- Main Dashboard Component ---
 const UserDashboard = () => {
+  // --- Component State ---
   const [user, setUser] = useState(null);
   const [notifications, setNotifications] = useState([]);
   const [activeView, setActiveView] = useState('dashboard'); // 'dashboard', 'profile', 'password'
   
-  // Form State
+  // --- Form State ---
   const [videoLink, setVideoLink] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
-  // UI State
+  // --- UI State ---
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState('');
 
+  // --- Hooks ---
   const navigate = useNavigate();
-  const baseUrl = 'https://tal-backend.vercel.app/users/'; 
+  const baseUrl = 'https://tal-backend.vercel.app/users/';
   const token = localStorage.getItem('access_token');
 
-  // --- Data Fetching (UPDATED) ---
+  // --- Data Fetching ---
   const fetchInitialData = useCallback(async () => {
     if (!token) {
       navigate('/login');
       return;
     }
     
+    // Load user data from localStorage, saved during login
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+      setVideoLink(parsedUser.video_link || '');
+    } else {
+      // If no user data, the session is invalid
+      localStorage.removeItem('access_token');
+      navigate('/login');
+      return;
+    }
+
     setIsLoading(true);
-    setError(null);
-
     try {
-      // Fetch user profile and notifications in parallel
-      const [profileData, notificationsData] = await Promise.all([
-        api.request('GET', `${baseUrl}profile/`, token), // <-- Fetches user profile
-        api.request('GET', `${baseUrl}notifications/`, token)
-      ]);
-
-      // Set state with fresh data
-      setUser(profileData);
+      // Fetch data that might change, like notifications
+      const notificationsData = await api.request('GET', `${baseUrl}notifications/`, token);
       setNotifications(notificationsData);
-      
-      // Pre-fill form fields
-      setVideoLink(profileData.video_link || '');
-
-      // Update localStorage with fresh user data
-      localStorage.setItem('user', JSON.stringify(profileData));
-
     } catch (err) {
-      setError('Failed to load dashboard data. Please try again.');
-      console.error(err);
-      // If token is invalid, log out the user
+      setError(err.message);
+      // If token is invalid or expired, log the user out
       if (err.message.includes('401') || err.message.includes('403')) {
-        setTimeout(handleLogout, 2000);
+        handleLogout();
       }
     } finally {
       setIsLoading(false);
     }
-  }, [navigate, token, baseUrl]);
+  }, [navigate, token]); // Removed baseUrl from dependency array as it's constant
 
   useEffect(() => {
     fetchInitialData();
   }, [fetchInitialData]);
 
-  // --- Handlers ---
+  // --- Event Handlers ---
   const handleLogout = () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('user');
@@ -113,10 +117,11 @@ const UserDashboard = () => {
     try {
       await api.request('POST', `${baseUrl}add-video/`, token, { video_link: videoLink });
       setSuccess('Video link updated successfully!');
-      // Update user state and localStorage
+      
+      // Update user state locally to reflect the change immediately
       const updatedUser = {...user, video_link: videoLink};
       setUser(updatedUser);
-      localStorage.setItem('user', JSON.stringify(updatedUser));
+      localStorage.setItem('user', JSON.stringify(updatedUser)); // Also update localStorage
     } catch (err) {
       setError(err.message);
     } finally {
@@ -130,14 +135,15 @@ const UserDashboard = () => {
     setIsLoading(true);
 
     const payload = { new_password: newPassword };
+    // Only include old_password if it's not the user's first login
     if (!user.first_login) {
       payload.old_password = oldPassword;
     }
 
     try {
       await api.request('POST', `${baseUrl}password/change/`, token, payload);
-      setSuccess('Password changed successfully! Please log in again.');
-      setTimeout(handleLogout, 3000);
+      setSuccess('Password changed successfully! You will be logged out shortly.');
+      setTimeout(handleLogout, 3000); // Log out after 3 seconds
     } catch (err) {
       setError(err.message);
     } finally {
@@ -145,7 +151,7 @@ const UserDashboard = () => {
     }
   };
 
-  // --- Render Methods ---
+  // --- Render Methods for Different Views ---
   const renderDashboard = () => (
     <>
       <div className="content-section">
@@ -187,25 +193,6 @@ const UserDashboard = () => {
     </>
   );
 
-  const renderProfile = () => (
-    <div className="content-section">
-      <h2><FaUserAstronaut /> Your Profile</h2>
-      <div className="profile-details-card">
-        <p><strong>Name:</strong> {user.name}</p>
-        <p><strong>Email:</strong> {user.email}</p>
-        <p><strong>Institute:</strong> {user.institute_name}</p>
-        <p><strong>Phone:</strong> {user.phone_number}</p>
-        <p>
-          <strong>Email Status:</strong> 
-          {user.email_verified 
-            ? <span className="status-tag verified"><FaCheckCircle /> Verified</span> 
-            : <span className="status-tag unverified"><FaExclamationTriangle /> Not Verified</span>}
-        </p>
-        <p><strong>Team Members:</strong> {user.team_members}</p>
-      </div>
-    </div>
-  );
-
   const renderPasswordChange = () => (
     <div className="content-section">
       <h2><FaKey /> Change Your Password</h2>
@@ -240,7 +227,8 @@ const UserDashboard = () => {
     </div>
   );
 
-  if (isLoading && !user) {
+  // --- Loading State ---
+  if (!user) {
     return (
       <div className="loading-fullpage">
         <FaSpinner className="spinner-icon" />
@@ -248,15 +236,8 @@ const UserDashboard = () => {
       </div>
     );
   }
-  
-  if (!user) {
-      return (
-        <div className="loading-fullpage">
-            <p style={{color: 'red'}}>{error || 'Could not load user data. Please try logging in again.'}</p>
-        </div>
-      )
-  }
 
+  // --- Main Component Render ---
   return (
     <div className="dashboard-container">
       <aside className="dashboard-sidebar">
@@ -288,8 +269,12 @@ const UserDashboard = () => {
         {error && <div className="message error-message"><FaExclamationTriangle /> {error}</div>}
         {success && <div className="message success-message"><FaCheckCircle /> {success}</div>}
         
+        {/* --- Conditionally Render the Active View --- */}
         {activeView === 'dashboard' && renderDashboard()}
-        {activeView === 'profile' && renderProfile()}
+        
+        {/* Use the new UserProfile component for the profile view */}
+        {activeView === 'profile' && <UserProfile user={user} />} 
+
         {activeView === 'password' && renderPasswordChange()}
       </main>
     </div>
