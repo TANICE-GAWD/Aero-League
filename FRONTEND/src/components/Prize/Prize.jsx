@@ -49,7 +49,7 @@ export default function PrizesSection() {
           opacity: 1, 
           top: `${y}px`,
           left: `${x}px`,
-          fontSize: `${scale * 40}px`,
+          fontSize: `${scale * 80}px`,
           
           transform: `translate(-50%, -50%) rotate(${rotation}deg)`, 
         });
