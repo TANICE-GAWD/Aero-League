@@ -13,7 +13,7 @@ const AdminLogin = () => {
     // State for the admin registration form
     const [registerData, setRegisterData] = useState({ name: '', email: '', password: '', access_code: '' });
     
-    // --- NEW: State for the Forgot Password form ---
+    // State for the Forgot Password form
     const [forgotData, setForgotData] = useState({ email: '', otp_code: '', new_password: '' });
     const [otpSent, setOtpSent] = useState(false); // Tracks if OTP has been sent
 
@@ -107,7 +107,7 @@ const AdminLogin = () => {
         }
     };
 
-    // --- NEW: Handlers for Forgot Password Flow ---
+    // --- Handlers for Forgot Password Flow ---
     const handleForgotChange = (e) => {
         setForgotData({ ...forgotData, [e.target.name]: e.target.value });
     };

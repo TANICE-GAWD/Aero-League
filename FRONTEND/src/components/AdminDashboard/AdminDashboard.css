@@ -52,7 +52,7 @@
  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
 }
 
-.dashboard-content {
+.admin-dashboard-content {
  background: #ffffff;
  border-radius: var(--border-radius, 12px);
  padding: 2rem;

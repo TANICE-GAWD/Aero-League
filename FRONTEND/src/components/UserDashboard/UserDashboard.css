@@ -67,6 +67,7 @@ body {
   flex-grow: 1;
   padding: 2rem;
   overflow-y: auto;
+  background-color: #020232;
 }
 
 

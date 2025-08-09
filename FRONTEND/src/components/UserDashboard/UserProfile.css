@@ -1,6 +1,3 @@
-
-
-
 :root {
   --primary-color: #0378ff;
   --dark-bg-primary: #121212;
@@ -31,7 +28,7 @@
 }
 
 .profile-card-header {
-  background: var(--dark-bg-primary);
+  background: var(--card-bg);
   color: var(--text-primary-dark);
   padding: 2.5rem 2rem;
   text-align: center;
@@ -62,6 +59,7 @@
 
 .profile-card-body {
   padding: 1.5rem 2rem;
+  background-color: var(--card-bg);
 }
 
 .profile-detail-grid {

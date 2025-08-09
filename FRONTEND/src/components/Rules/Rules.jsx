@@ -84,10 +84,8 @@ const RulesBriefing = () => {
     <section className="team-section">
       <div className="rules-container">
         <div className="rules-header-content">
-          <h2 className="rules-main-title">MISSION BRIEFING</h2>
-          <p className="rules-main-subtitle">
-            Key regulations and guidelines for a fair and competitive event.
-          </p>
+          <h2 className="rules-main-title">GUIDELINES</h2>
+
         </div>
         
         <div className="accordion-wrapper">

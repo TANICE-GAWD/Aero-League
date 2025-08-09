@@ -301,7 +301,7 @@ const AdminDashboard = () => {
         </button>
       </nav>
       
-      <div className="dashboard-content">
+      <div className="user-dashboard-content">
         {renderContent()}
       </div>
 

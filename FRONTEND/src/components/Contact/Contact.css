@@ -1,9 +1,8 @@
-
 :root {
   --bg-color: #0f1419;
   --primary-glow: #00bfff;
   --secondary-glow: #7cfc00;
-  --card-bg: rgba(22, 33, 62, 0.8);
+  --card-bg: rgba(22, 33, 62, 1);
   --card-border: rgba(0, 191, 255, 0.3);
   --text-primary: #f0f0f0;
   --text-secondary: rgba(240, 240, 240, 0.7);
@@ -14,8 +13,7 @@
   100% { transform: rotate(360deg); }
 }
 
-
-.contact-points-section {
+.team-section {
   padding: 6rem 1rem;
   background-color: var(--bg-color);
   min-height: 100vh;
@@ -51,13 +49,11 @@
   line-height: 1.6;
 }
 
-
 .contact-cards-wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2.5rem;
 }
-
 
 .contact-card {
   background: var(--card-bg);
@@ -67,7 +63,6 @@
   transition: transform 0.4s ease, box-shadow 0.4s ease;
   z-index: 1;
 }
-
 
 .contact-card::before {
   content: "";
@@ -87,14 +82,13 @@
   z-index: 2;
 }
 
-
 .contact-card::after {
   content: "";
   position: absolute;
   inset: -2px;
   background: conic-gradient(
     from 180deg at 50% 50%,
-    var(--secondary-glow), 
+    var(--secondary-glow),
     var(--primary-glow),
     var(--secondary-glow)
   );
@@ -122,15 +116,89 @@
 .contact-card-content {
   background: var(--card-bg);
   border-radius: inherit;
-  padding: 2.5rem 2rem;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 100%;
   height: 100%;
   z-index: 3;
   position: relative;
 }
+
+
+.card-image-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+
+.linkedin-overlay {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  color: var(--text-primary);
+  border-radius: 8px;
+  padding: 0.5rem 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.linkedin-overlay:hover {
+  background-color: var(--primary-glow);
+  color: var(--bg-color);
+}
+
+
+
+.profile-image {
+  width: 100%;
+  height: 220px;
+  border-radius: 16px 16px 0 0;
+  object-fit: cover;
+  object-position: center;
+  border: none;
+  box-shadow: none;
+}
+
+
+.card-info-content {
+  padding: 1.5rem;
+  text-align: left;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.contact-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.contact-title-secondary {
+  color: var(--primary-glow);
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.contact-description {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 0;
+  flex-grow: 1;
+}
+
+
+
+
 
 
 .card-drone {
@@ -144,97 +212,16 @@
 }
 
 
-.drone-tl { top: -20px; left: -20px; transform: rotate(-45deg); }
-.drone-tr { top: -20px; right: -20px; transform: rotate(45deg); }
-.drone-bl { bottom: -20px; left: -20px; transform: rotate(-135deg); }
 .drone-br { bottom: -20px; right: -20px; transform: rotate(135deg); }
-
 
 .contact-card:hover .card-drone {
   opacity: 1;
-  transform: rotate(0deg);
-}
-.contact-card:hover .drone-tl { top: 1rem; left: 1rem; transition-delay: 0s; }
-.contact-card:hover .drone-tr { top: 1rem; right: 1rem; transition-delay: 0.1s; }
-.contact-card:hover .drone-bl { bottom: 1rem; left: 1rem; transition-delay: 0.2s; }
-.contact-card:hover .drone-br { bottom: 1rem; right: 1rem; transition-delay: 0.3s; }
-
-
-
-.contact-card-header { margin-bottom: 1.5rem; }
-.profile-image-container { width: 120px; height: 120px; }
-
-.profile-image {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border: 3px solid var(--primary-glow);
-  object-fit: cover;
-  box-shadow: 0 0 15px rgba(0, 191, 255, 0.4);
-  transition: all 0.3s ease;
 }
 
-.contact-card:hover .profile-image {
-  transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(0, 191, 255, 0.6);
-}
-
-.contact-card-body { flex-grow: 1; }
-.contact-name {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 0.25rem;
-}
-.contact-title-secondary {
-  color: var(--primary-glow);
-  font-weight: 500;
-  margin-bottom: 1rem;
-}
-.contact-description {
-  color: var(--text-secondary);
-  line-height: 1.6;
-  margin-bottom: 2rem;
-  min-height: 50px;
-}
-
-
-.contact-card-footer { display: flex; gap: 1rem; width: 100%; }
-
-.contact-button {
-  flex: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  border: 1px solid transparent;
-}
-
-.contact-button.primary {
-  background-color: var(--primary-glow);
-  color: var(--bg-color);
-  border-color: var(--primary-glow);
-}
-.contact-button.primary:hover {
-  background-color: transparent;
-  color: var(--primary-glow);
-}
-
-.contact-button.secondary {
-  background-color: rgba(255, 255, 255, 0.05);
-  color: var(--text-secondary);
-  border-color: var(--card-border-color);
-}
-.contact-button.secondary:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: var(--text-primary);
-  border-color: var(--text-primary);
-}
+.contact-card:hover .drone-tl { top: 1rem; left: 1rem; transition-delay: 0s; transform: rotate(0deg); }
+.contact-card:hover .drone-tr { top: 1rem; right: 1rem; transition-delay: 0.1s; transform: rotate(0deg); }
+.contact-card:hover .drone-bl { bottom: 1rem; left: 1rem; transition-delay: 0.2s; transform: rotate(0deg); }
+.contact-card:hover .drone-br { bottom: 1rem; right: 1rem; transition-delay: 0.3s; transform: rotate(0deg); }
 
 
 @media (max-width: 768px) {
