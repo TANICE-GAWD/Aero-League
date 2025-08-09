@@ -170,8 +170,8 @@ const generateOtp = async () => {
         return (
             <>
                 <div className="registration-header">
-                    <h1 className="registration-title">Join the League</h1>
-                    <p className="registration-subtitle">Create your team and prepare for lift-off</p>
+                    <h1 className="registration-title">Join the Challenge</h1>
+                    <p className="registration-subtitle">Create your team below</p>
                 </div>
                 <form onSubmit={handleFormSubmit} className="registration-form">
                     <fieldset className="form-fieldset">

@@ -436,22 +436,6 @@ const Animation = () => {
           {/* Three.js canvas will be appended here */}
         </section>
       </section>
-      <section className="next-section">
-        <div className="next-section-content">
-          <h1>Prepare for Lift-Off</h1>
-          <p>Explore the challenges, hone your skills, and get ready to compete in the ultimate aerial showdown.</p>
-          <div className="button-container">
-            {/* 2. Replace the button with a Link component */}
-            <Link to="/register" className="btn btn-primary">Register Now</Link>
-            <a 
-            href="https://TANICE-GAWD.github.io/tal-doc/" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="btn btn-secondary"
-          >Learn More</a>
-          </div>
-        </div>
-      </section>
     </>
   );
 };

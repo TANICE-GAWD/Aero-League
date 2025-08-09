@@ -187,8 +187,7 @@ const AdminLogin = () => {
                     // --- LOGIN VIEW ---
                     <>
                         <div className="login-header">
-                            <h1 className="login-title">Mission Control</h1>
-                            <p className="login-subtitle">User Authentication</p>
+                            <h1 className="login-title">Login</h1>
                         </div>
                         {successMessage && <p className="login-success">{successMessage}</p>}
                         <form onSubmit={handleLoginSubmit} className="login-form">
@@ -209,12 +208,7 @@ const AdminLogin = () => {
                                     Forgot Password?
                                 </span>
                             </p>
-                            <p className="toggle-view-text">
-                                Need an admin account?{' '}
-                                <span onClick={() => switchView('register')} className="toggle-view-link">
-                                    Register here
-                                </span>
-                            </p>
+                            
                         </form>
                     </>
                 ) : view === 'register' ? (
@@ -281,7 +275,7 @@ const AdminLogin = () => {
                         )}
                         
                         <p className="toggle-view-text">
-                            Remembered your password?{' '}
+                            {' '}
                             <span onClick={() => switchView('login')} className="toggle-view-link">
                                 Back to Login
                             </span>

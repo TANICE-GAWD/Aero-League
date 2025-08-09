@@ -88,10 +88,7 @@ const ContactPoints = () => {
     <section className="team-section">
       <div className="contact-points-container">
         <div className="contact-points-header">
-          <h2 className="contact-points-title">Dedicated Contacts</h2>
-          <p className="contact-points-subtitle">
-            Need Assistance? Our team is ready to help.
-          </p>
+          <h2 className="contact-points-title">Organizing Team</h2>
         </div>
 
         <div className="contact-cards-wrapper">

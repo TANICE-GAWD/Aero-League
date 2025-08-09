@@ -92,7 +92,7 @@ export default function PrizesSection() {
         </div>
 
         <div className="prizes-container">
-          <h2 className="prizes-title">CHAMPION'S REWARDS</h2>
+          <h2 className="prizes-title">PRIZES</h2>
           <div className="prizes-grid">
             {sortedRewards.map((reward) => (
               <div key={reward.tier} className={`prize-card-group prize-card-group--${reward.tier}`}>
