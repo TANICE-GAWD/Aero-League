@@ -101,8 +101,7 @@ const FlightpathTimeline = () => {
     <section className="team-section">
       <div className="timeline-container">
         <div className="timeline-header">
-          <h2 className="timeline-title">MISSION TIMELINE</h2>
-          <p className="timeline-subtitle">Key dates and milestones for the Aero-League competition.</p>
+          <h2 className="timeline-title">TIMELINE</h2>
         </div>
         
         <div className="timeline-wrapper" ref={timelineRef}>

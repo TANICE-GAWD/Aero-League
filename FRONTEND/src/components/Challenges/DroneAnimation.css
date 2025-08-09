@@ -1,0 +1,90 @@
+@keyframes flyAcross {
+  0% {
+    transform: translateX(-150%);
+  }
+  100% {
+    /* The drone will fly to the end of the screen width plus its own width */
+    transform: translateX(calc(100vw + 150%));
+  }
+}
+
+.sky {
+  width: 100%;
+  height: 40vh; /* Use viewport height for responsiveness */
+  max-height: 400px;
+  background: linear-gradient(to bottom, #87CEEB, #B0E0E6); /* Sky blue gradient */
+  position: relative;
+  overflow: hidden; /* This is crucial to hide the drones before they enter */
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.drone {
+  position: absolute;
+  /* Start the drone off-screen to the left */
+  left: 0; 
+  animation-name: flyAcross;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+ 
+.drone svg {
+  width: 50px;
+  height: 50px;
+  color: #333;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.controls {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  width: 80%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+ 
+.controls label {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.speed-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 10px;
+  background: #ddd;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity .2s;
+  border-radius: 5px;
+}
+
+.speed-slider:hover {
+  opacity: 1;
+}
+
+.speed-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #61DAFB;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 3px solid #fff;
+}
+
+.speed-slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #61DAFB;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 3px solid #fff;
+}
