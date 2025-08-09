@@ -1,4 +1,3 @@
-
 :root {
   --bg-color: #0f1419;
   --primary-glow: #00bfff;
@@ -9,10 +8,15 @@
   --text-secondary: rgba(240, 240, 240, 0.7);
 }
 
-
-.timeline-section {
+.team-section {
+  width: 100%;
   padding: 6rem 1rem;
   background-color: var(--bg-color);
+  background-image:
+    radial-gradient(var(--card-border) 1px, transparent 1px),
+    radial-gradient(var(--card-border) 1px, var(--bg-color) 1px);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
   min-height: 100vh;
 }
 
@@ -22,28 +26,15 @@
   width: 100%;
 }
 
-.timeline-header {
+.timeline-header, .timeline-title {
   text-align: center;
   margin-bottom: 5rem;
-}
-
-.timeline-title {
   font-family: "Montserrat", sans-serif;
   font-weight: 800;
   font-size: clamp(2.5rem, 5vw, 3.5rem);
   color: var(--text-primary);
   letter-spacing: 0.05em;
-  margin-bottom: 1rem;
 }
-
-.timeline-subtitle {
-  font-size: 1.125rem;
-  color: var(--text-secondary);
-  max-width: 600px;
-  margin: 0 auto;
-  line-height: 1.6;
-}
-
 
 .timeline-wrapper {
   position: relative;
@@ -58,6 +49,7 @@
   width: 4px;
   background-color: rgba(0, 191, 255, 0.15);
   border-radius: 2px;
+  z-index: 1;
 }
 
 .timeline-progress-trail {
@@ -70,86 +62,89 @@
 }
 
 
-.timeline-steps-container {
+.timeline-rows-container {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 2rem;
+  z-index: 2;
 }
 
-.timeline-step {
+
+.timeline-row {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
   position: relative;
-  width: 50%;
+ 
   opacity: 0;
   transform: translateY(50px);
   transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
-.timeline-step.in-view {
+.timeline-row.in-view {
   opacity: 1;
   transform: translateY(0);
 }
 
 
-.timeline-step:nth-child(odd) {
-  align-self: flex-start;
-  padding-right: 3rem;
-  justify-content: flex-end;
+.timeline-content {
+  width: calc(50% - 40px);
 }
-.timeline-step:nth-child(even) {
-  align-self: flex-end;
-  padding-left: 3rem;
+
+.timeline-content-left {
+  text-align: right;
 }
 
 
 .timeline-waypoint {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
   border-radius: 50%;
   background-color: var(--bg-color);
   border: 3px solid var(--card-border);
   display: grid;
   place-items: center;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   color: var(--card-border);
   transition: all 0.5s ease;
   z-index: 10;
 }
 
-.timeline-step:nth-child(odd) .timeline-waypoint { right: -25px; }
-.timeline-step:nth-child(even) .timeline-waypoint { left: -25px; }
-
-.timeline-step.in-view .timeline-waypoint {
+.timeline-row.in-view .timeline-waypoint {
   border-color: var(--primary-glow);
   color: var(--primary-glow);
   box-shadow: 0 0 20px var(--primary-glow);
 }
 
-
 .timeline-card {
+  display: inline-block;
+  text-align: left;
   width: 100%;
+  max-width: 350px;
   background: var(--card-bg);
   backdrop-filter: blur(10px);
   border-radius: 1rem;
   border: 1px solid var(--card-border);
   padding: 1.5rem 2rem;
-  position: relative;
   transition: all 0.4s ease;
 }
 
-.timeline-step.in-view .timeline-card {
+.timeline-row.in-view .timeline-card {
   border-color: var(--primary-glow);
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.timeline-card-title, .timeline-card-description, .timeline-card-date {
+  color: var(--text-primary);
+  margin: 0;
 }
 
 .timeline-card-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--text-primary);
   margin-bottom: 0.75rem;
 }
 
@@ -166,36 +161,47 @@
 }
 
 
+
 @media (max-width: 768px) {
-  .timeline-flight-path { left: 25px; }
+  .timeline-flight-path { 
+    left: 25px;
+  }
+
+  .timeline-rows-container {
+    gap: 0;
+  }
   
-  .timeline-step,
-  .timeline-step:nth-child(odd),
-  .timeline-step:nth-child(even) {
+  .timeline-row {
+    display: block;
+    padding-left: 5rem;
+    margin-bottom: 4rem;
+  }
+
+  .timeline-content {
     width: 100%;
-    align-self: flex-end;
-    padding-left: 4rem;
-    padding-right: 0;
+    text-align: left;
   }
 
-  .timeline-waypoint,
-  .timeline-step:nth-child(odd) .timeline-waypoint,
-  .timeline-step:nth-child(even) .timeline-waypoint {
+ 
+  .timeline-content-left {
+    margin-bottom: 1.5rem;
+  }
+  
+  .timeline-content-right:empty {
+    display: none;
+  }
+  
+  .timeline-content-right:empty + .timeline-content-left {
+    margin-bottom: 0;
+  }
+
+  .timeline-waypoint {
+   
+    position: absolute;
     left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
   }
-}
-
-.team-section {
-  width: 100%;
-  padding: 6rem 0;
-  background-color: var(--bg-color);
-  background-image:
-    radial-gradient(var(--card-border) 1px, transparent 1px),
-    radial-gradient(var(--card-border) 1px, var(--bg-color) 1px);
-  background-size: 40px 40px;
-  background-position: 0 0, 20px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
 }
