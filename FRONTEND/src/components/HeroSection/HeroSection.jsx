@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom'; // Import Link and useLocation
+import { Link, useLocation } from 'react-router-dom';
 import './HeroSection.css'; 
 
 const HeroSection = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('home');
     const [isScrolled, setIsScrolled] = useState(false);
-    const location = useLocation(); // Get the current URL path
+    const location = useLocation();
 
     const navItems = [
         { id: 'home', label: 'Home', href: '#home' },
@@ -17,14 +19,12 @@ const HeroSection = () => {
         { id: 'contact', label: 'Contact', href: '#contact' }
     ];
 
-    // Separate items for routes vs. page anchors
     const routeNavItems = [
         { id: 'register', label: 'Register', href: '/register' },
         { id: 'login', label: 'Login', href: '/login' }
     ];
 
     useEffect(() => {
-        // Only run scroll logic on the homepage
         if (location.pathname === '/') {
             const handleScroll = () => {
                 const scrollTop = window.scrollY;
@@ -46,7 +46,7 @@ const HeroSection = () => {
 
     const scrollToSection = (href) => {
         if (location.pathname !== '/') {
-            window.location.href = `/${href}`; // Navigate to homepage then scroll
+            window.location.href = `/${href}`;
         } else {
             const element = document.querySelector(href);
             if (element) {
@@ -85,14 +85,28 @@ const HeroSection = () => {
                                 </a>
                             </li>
                         ))}
-                        {/* Links to other pages */}
-                        {routeNavItems.map(item => (
-                             <li key={item.id} className="header__nav-item">
-                                <Link to={item.href} className="header__nav-link header__nav-link--button">
-                                    {item.label}
-                                </Link>
-                            </li>
-                        ))}
+                        
+                        {/* NEW: Dropdown for Login/Register */}
+                        <li 
+                            className="header__nav-item header__nav-item--dropdown"
+                            onMouseEnter={() => setIsDropdownOpen(true)}
+                            onMouseLeave={() => setIsDropdownOpen(false)}
+                        >
+                            <button className="header__nav-link header__dropdown-trigger">
+                                Account
+                            </button>
+                            {isDropdownOpen && (
+                                <ul className="header__dropdown-menu">
+                                    {routeNavItems.map(item => (
+                                        <li key={item.id} className="header__dropdown-item">
+                                            <Link to={item.href} className="header__dropdown-link">
+                                                {item.label}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </li>
                     </ul>
                 </nav>
 
@@ -102,6 +116,8 @@ const HeroSection = () => {
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                     aria-label="Menu"
                 >
+                    <span className="header__menu-icon"></span>
+                    <span className="header__menu-icon"></span>
                     <span className="header__menu-icon"></span>
                 </button>
 
@@ -119,7 +135,7 @@ const HeroSection = () => {
                                 </a>
                             </li>
                         ))}
-                         {/* Links to other pages for Mobile */}
+                         {/* Kept separate for better mobile UX */}
                         {routeNavItems.map(item => (
                             <li key={item.id} className="header__mobile-nav-item">
                                 <Link to={item.href} className="header__mobile-nav-link header__mobile-nav-link--button">
