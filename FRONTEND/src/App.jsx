@@ -40,7 +40,7 @@ const SharedLayout = () => (
 
 const HomePageContent = () => (
   <>
-    <section id="animation-section"><Animation /></section>
+    <section id="home"><Animation /></section>
     <section id="challenges"><Challenges /></section>
     <section id="timeline"><TimeLine /></section>
     <section id="prizes"><RewardsSection /></section>
