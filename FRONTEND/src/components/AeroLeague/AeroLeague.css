@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap');
 
 .animation-section {
@@ -7,6 +6,21 @@
   min-height: 70vh;
   overflow: hidden;
   z-index: 1;
+}
+
+.animation-section::before {
+ content: '';
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ background-image: url("/assets/Drone.webp");
+ background-size: contain; 
+ background-repeat: no-repeat; 
+ background-position: center;
+ opacity: 0.15;
+ z-index: -1;
 }
 
 .animation-canvas {
@@ -19,15 +33,17 @@
 }
 
 
+
+
 @media (max-width: 768px) {
   .animation-section {
-    min-height: 60vh;
+    min-height: 50vh;
   }
 }
 
 @media (max-width: 480px) {
   .animation-section {
-    min-height: 40vh;
+    min-height: 30vh;
   }
 }
 

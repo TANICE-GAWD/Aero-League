@@ -155,7 +155,7 @@ const Animation = () => {
 
                 const isMobile = window.innerWidth < 768;
                 this.data = {
-                    text: isMobile ? ' THAPAR DRONE CHALLENGE\n   BUILD. FLY. DOMINATE.' : 'THAPAR DRONE CHALLENGE\n   BUILD. FLY. DOMINATE.',
+                    text: isMobile ? ' THAPAR DRONE CHALLENGE\n   BUILD. FLY. DOMINATE.' : 'THAPAR DRONE CHALLENGE\n   BUILD. FLY. DOMINATE.',
                     amount: isMobile ? 800 : 1500,
                     particleSize: 1,
                     particleColor: 0xffffff,
@@ -292,11 +292,11 @@ const Animation = () => {
                         let pz = pos.getZ(i);
 
                         // Default color
-                        this.colorChange.setHSL(0.5, 1, 0.5); // Techy green
+                        this.colorChange.set(0xffffff); // Set to white
                         coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
                         size.array[i] = this.data.particleSize;
 
-                        // "Prop-Wash" hover effect
+                        // *** MODIFIED HOVER EFFECT ***
                         if (intersects.length > 0) {
                             const mx = intersects[0].point.x;
                             const my = intersects[0].point.y;
@@ -308,15 +308,25 @@ const Animation = () => {
                                 let d = dx * dx + dy * dy;
                                 if (d === 0) d = 0.001;
                                 const f = -this.data.area / d;
-                                const angle = Math.atan2(dy, dx);
-                                
-                                // Swirl for prop-wash
-                                px += f * Math.cos(angle + Math.PI / 2) * 0.5;
-                                py += f * Math.sin(angle + Math.PI / 2) * 0.5;
+                                const t = Math.atan2(dy, dx);
 
-                                // Change color when disturbed
-                                this.colorChange.setHSL(0.3, 1.0, 0.6);
-                                coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
+                                if (i % 5 === 0) {
+                                    px -= 0.03 * Math.cos(t);
+                                    py -= 0.03 * Math.sin(t);
+                                    this.colorChange.setHSL(0.15, 1.0, 0.5);
+                                    coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
+                                    size.array[i] = this.data.particleSize / 1.2;
+                                } else {
+                                    px += f * Math.cos(t);
+                                    py += f * Math.sin(t);
+                                    size.array[i] = this.data.particleSize * 1.3;
+                                }
+
+                                if (px > initX + 10 || px < initX - 10 || py > initY + 10 || py < initY - 10) {
+                                    this.colorChange.setHSL(0.15, 1.0, 0.5);
+                                    coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
+                                    size.array[i] = this.data.particleSize / 1.8;
+                                }
                             }
                         }
 
