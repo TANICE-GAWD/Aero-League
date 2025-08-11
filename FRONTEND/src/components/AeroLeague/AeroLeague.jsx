@@ -13,30 +13,38 @@ const Animation = () => {
         let isMounted = true;
         let env;
 
+        // *** NEW: Updated Shaders to handle a 'glow' attribute ***
         const vertexShader = `
-      attribute float size;
-      attribute vec3 customColor;
-      varying vec3 vColor;
-      void main() {
-        vColor = customColor;
-        vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
-        gl_PointSize = size * ( 300.0 / -mvPosition.z );
-        gl_Position = projectionMatrix * mvPosition;
-      }
-    `;
+          attribute float size;
+          attribute vec3 customColor;
+          attribute float glow; // Glow attribute for flight trails
+          varying vec3 vColor;
+          varying float vGlow;
+          void main() {
+            vColor = customColor;
+            vGlow = glow;
+            vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+            gl_PointSize = size * ( 300.0 / -mvPosition.z );
+            gl_Position = projectionMatrix * mvPosition;
+          }
+        `;
 
         const fragmentShader = `
-      uniform vec3 color;
-      uniform sampler2D pointTexture;
-      varying vec3 vColor;
-      void main() {
-        gl_FragColor = vec4( color * vColor, 1.0 );
-        gl_FragColor = gl_FragColor * texture2D( pointTexture, gl_PointCoord );
-      }
-    `;
+          uniform vec3 color;
+          uniform sampler2D pointTexture;
+          varying vec3 vColor;
+          varying float vGlow; // Glow value from vertex shader
+          void main() {
+            vec3 baseColor = color * vColor;
+            // Make the particle brighter based on its glow value
+            vec3 finalColor = baseColor + baseColor * vGlow * 3.0;
+            gl_FragColor = vec4( finalColor, 1.0 );
+            gl_FragColor = gl_FragColor * texture2D( pointTexture, gl_PointCoord );
+          }
+        `;
 
         class Environment {
-            constructor(font, particle, container) {
+             constructor(font, particle, container) {
                 this.font = font;
                 this.particle = particle;
                 this.container = container;
@@ -147,20 +155,22 @@ const Animation = () => {
                 this.raycaster = new THREE.Raycaster();
                 this.mouse = new THREE.Vector2(-200, 200);
                 this.colorChange = new THREE.Color();
-                this.button = false;
-                this.touchStartX = 0;
-                this.touchStartY = 0;
-                this.isScrolling = false;
-                this.touchMoveThreshold = 10;
+
+                // *** NEW: State management for touch gestures ***
+                this.isDragging = false;
+                this.dragStartTime = 0;
+                this.dragStartPos = new THREE.Vector2();
+                this.previousMousePos = new THREE.Vector2();
+                this.ripple = null; // For tap effect
 
                 const isMobile = window.innerWidth < 768;
                 this.data = {
-                    text: isMobile ? ' THAPAR DRONE CHALLENGE\n     BUILD. FLY. DOMINATE.' : 'THAPAR DRONE CHALLENGE\n     BUILD. FLY. DOMINATE.',
+                    text: isMobile ? ' THAPAR DRONE CHALLENGE\n   BUILD. FLY. DOMINATE.' : 'THAPAR DRONE CHALLENGE\n   BUILD. FLY. DOMINATE.',
                     amount: isMobile ? 800 : 1500,
-                    particleSize: 1,
+                    particleSize: 1.2,
                     particleColor: 0xffffff,
-                    textSize: isMobile ? 4 : 7,
-                    area: 250,
+                    textSize: isMobile ? 7 : 12,
+                    area: 150,
                     ease: 0.05,
                 };
 
@@ -187,65 +197,58 @@ const Animation = () => {
                 this.scene.add(this.planeArea);
                 this.createText();
             }
-
+            
+            // *** NEW: Updated event handlers to distinguish Taps from Drags ***
             bindEvents() {
-                this.container.addEventListener('mousedown', this.onMouseDown.bind(this));
-                this.container.addEventListener('mousemove', this.onMouseMove.bind(this));
-                this.container.addEventListener('mouseup', this.onMouseUp.bind(this));
-                this.container.addEventListener('mouseleave', this.onMouseUp.bind(this));
-                this.container.addEventListener('touchstart', this.onTouchStart.bind(this), { passive: true });
-                this.container.addEventListener('touchmove', this.onTouchMove.bind(this), { passive: false });
-                this.container.addEventListener('touchend', this.onTouchEnd.bind(this));
+                this.container.addEventListener('mousedown', this.onPointerDown.bind(this));
+                this.container.addEventListener('mousemove', this.onPointerMove.bind(this));
+                this.container.addEventListener('mouseup', this.onPointerUp.bind(this));
+                this.container.addEventListener('mouseleave', this.onPointerUp.bind(this));
+                this.container.addEventListener('touchstart', this.onPointerDown.bind(this), { passive: true });
+                this.container.addEventListener('touchmove', this.onPointerMove.bind(this), { passive: false });
+                this.container.addEventListener('touchend', this.onPointerUp.bind(this));
             }
 
-            onMouseDown(event) {
+            onPointerDown(event) {
+                const pointer = event.touches ? event.touches[0] : event;
+                this.isDragging = false;
+                this.dragStartTime = Date.now();
+                this.dragStartPos.set(pointer.clientX, pointer.clientY);
+                this.previousMousePos.set(pointer.clientX, pointer.clientY);
+            }
+
+            onPointerMove(event) {
+                const pointer = event.touches ? event.touches[0] : event;
+                const distance = this.dragStartPos.distanceTo(new THREE.Vector2(pointer.clientX, pointer.clientY));
+                if (distance > 10) { // If moved more than 10 pixels, it's a drag
+                    this.isDragging = true;
+                }
+                
                 const rect = this.container.getBoundingClientRect();
-                this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-                this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-                this.button = true;
-            }
+                this.mouse.x = ((pointer.clientX - rect.left) / rect.width) * 2 - 1;
+                this.mouse.y = -((pointer.clientY - rect.top) / rect.height) * 2 + 1;
 
-            onMouseUp() {
-                this.button = false;
-            }
-
-            onMouseMove(event) {
-                const rect = this.container.getBoundingClientRect();
-                this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-                this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-            }
-
-            onTouchStart(event) {
-                if (event.touches.length > 0) {
-                    const touch = event.touches[0];
-                    this.touchStartX = touch.clientX;
-                    this.touchStartY = touch.clientY;
-                    this.isScrolling = false;
-                    this.onMouseDown(touch);
+                if (this.isDragging && (event.touches || event.buttons === 1)) {
+                    if (event.cancelable) event.preventDefault();
                 }
             }
 
-            onTouchMove(event) {
-                if (event.touches.length > 0) {
-                    const touch = event.touches[0];
-                    const deltaX = touch.clientX - this.touchStartX;
-                    const deltaY = touch.clientY - this.touchStartY;
-
-                    if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > this.touchMoveThreshold) {
-                        this.isScrolling = true;
-                        this.onMouseUp();
-                        return;
-                    }
-                    if (!this.isScrolling) {
-                        event.preventDefault();
-                        this.onMouseMove(touch);
+            onPointerUp(event) {
+                const duration = Date.now() - this.dragStartTime;
+                if (!this.isDragging && duration < 200) { // If not dragged and held for < 200ms, it's a tap
+                    this.raycaster.setFromCamera(this.mouse, this.camera);
+                    const intersects = this.raycaster.intersectObject(this.planeArea);
+                    if (intersects.length > 0) {
+                        this.ripple = {
+                            x: intersects[0].point.x,
+                            y: intersects[0].point.y,
+                            startTime: Date.now(),
+                            duration: 400,
+                            maxRadius: 80,
+                        };
                     }
                 }
-            }
-
-            onTouchEnd() {
-                this.isScrolling = false;
-                this.onMouseUp();
+                this.isDragging = false;
             }
 
             render() {
@@ -253,94 +256,95 @@ const Animation = () => {
 
                 const pos = this.particles.geometry.attributes.position;
                 const copy = this.geometryCopy.attributes.position;
-                const coulors = this.particles.geometry.attributes.customColor;
-                const size = this.particles.geometry.attributes.size;
+                const colors = this.particles.geometry.attributes.customColor;
+                const sizes = this.particles.geometry.attributes.size;
+                const glows = this.particles.geometry.attributes.glow;
 
-                // On click, trigger the "Swarm Takeoff"
-                if (this.button) {
-                    for (let i = 0, l = pos.count; i < l; i++) {
-                        let px = pos.getX(i);
-                        let py = pos.getY(i);
-                        let pz = pos.getZ(i);
-
-                        // Calculate direction from the center
-                        const angle = Math.atan2(py, px);
-                        const force = 1.0; // Takeoff force
-
-                        // Apply force outwards and towards the camera
-                        px += force * Math.cos(angle);
-                        py += force * Math.sin(angle);
-                        pz += force * Math.random(); // Add random Z movement
-
-                        pos.setXYZ(i, px, py, pz);
-                        this.colorChange.setHSL(0.55, 1.0, 0.7); // Bright cyan takeoff color
-                        coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
-                    }
-
-                } else {
-                    this.raycaster.setFromCamera(this.mouse, this.camera);
-                    const intersects = this.raycaster.intersectObject(this.planeArea);
-
-                    // Standard easing and hover effect when not clicking
-                    for (let i = 0, l = pos.count; i < l; i++) {
-                        const initX = copy.getX(i);
-                        const initY = copy.getY(i);
-                        const initZ = copy.getZ(i);
-
-                        let px = pos.getX(i);
-                        let py = pos.getY(i);
-                        let pz = pos.getZ(i);
-
-                        // Default color
-                        this.colorChange.set(0xffffff); // Set to white
-                        coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
-                        size.array[i] = this.data.particleSize;
-
-                        // *** MODIFIED HOVER EFFECT ***
-                        if (intersects.length > 0) {
-                            const mx = intersects[0].point.x;
-                            const my = intersects[0].point.y;
-                            const mouseDistance = this.distance(mx, my, px, py);
-
-                            if (mouseDistance < this.data.area) {
-                                let dx = mx - px;
-                                let dy = my - py;
-                                let d = dx * dx + dy * dy;
-                                if (d === 0) d = 0.001;
-                                const f = -this.data.area / d;
-                                const t = Math.atan2(dy, dx);
-
-                                if (i % 5 === 0) {
-                                    px -= 0.03 * Math.cos(t);
-                                    py -= 0.03 * Math.sin(t);
-                                    this.colorChange.setHSL(0.15, 1.0, 0.5);
-                                    coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
-                                    size.array[i] = this.data.particleSize / 1.2;
-                                } else {
-                                    px += f * Math.cos(t);
-                                    py += f * Math.sin(t);
-                                    size.array[i] = this.data.particleSize * 1.3;
-                                }
-
-                                if (px > initX + 10 || px < initX - 10 || py > initY + 10 || py < initY - 10) {
-                                    this.colorChange.setHSL(0.15, 1.0, 0.5);
-                                    coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
-                                    size.array[i] = this.data.particleSize / 1.8;
-                                }
-                            }
-                        }
-
-                        // Ease back to original position
-                        px += (initX - px) * this.data.ease;
-                        py += (initY - py) * this.data.ease;
-                        pz += (initZ - pz) * this.data.ease;
-                        pos.setXYZ(i, px, py, pz);
+                this.raycaster.setFromCamera(this.mouse, this.camera);
+                const intersects = this.raycaster.intersectObject(this.planeArea);
+                
+                // *** NEW: Handle the "Target Lock" ripple effect ***
+                let rippleRadius = -1;
+                if (this.ripple) {
+                    const elapsed = Date.now() - this.ripple.startTime;
+                    if (elapsed < this.ripple.duration) {
+                        rippleRadius = (elapsed / this.ripple.duration) * this.ripple.maxRadius;
+                    } else {
+                        this.ripple = null; // Ripple finished
                     }
                 }
                 
+                // *** NEW: Handle the "Flight Path" drag effect ***
+                if (this.isDragging && intersects.length > 0) {
+                    const mx = intersects[0].point.x;
+                    const my = intersects[0].point.y;
+
+                    // Calculate swipe direction
+                    const currentMousePos = new THREE.Vector2(mx, my);
+                    const swipeDirection = currentMousePos.clone().sub(this.previousMousePos).normalize();
+                    this.previousMousePos.copy(currentMousePos);
+
+                    for(let i = 0; i < pos.count; i++) {
+                        const px = pos.getX(i);
+                        const py = pos.getY(i);
+                        const mouseDistance = this.distance(mx, my, px, py);
+                        
+                        if (mouseDistance < 20) { // Activate particles near the drag path
+                            const force = Math.max(0, 1 - mouseDistance / 20);
+                            pos.setX(i, px + swipeDirection.x * force * 2.0);
+                            pos.setY(i, py + swipeDirection.y * force * 2.0);
+                            glows.setX(i, 1.0); // Set glow to maximum
+                        }
+                    }
+                }
+
+
+                for (let i = 0; i < pos.count; i++) {
+                    const initX = copy.getX(i);
+                    const initY = copy.getY(i);
+                    const initZ = copy.getZ(i);
+
+                    let px = pos.getX(i);
+                    let py = pos.getY(i);
+                    let pz = pos.getZ(i);
+
+                    // Decay the glow effect over time
+                    glows.setX(i, glows.getX(i) * 0.96);
+
+                    // Default particle color (a techy green)
+                    this.colorChange.setHSL(0.4, 1.0, 0.5);
+                    colors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
+                    
+                    // Ripple effect overrides color
+                    if(this.ripple) {
+                        const distFromRipple = this.distance(this.ripple.x, this.ripple.y, px, py);
+                        if (distFromRipple > rippleRadius - 5 && distFromRipple < rippleRadius + 5) {
+                            this.colorChange.setHSL(0.55, 1.0, 0.7); // Bright cyan
+                            colors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
+                            glows.setX(i, 0.5);
+                        }
+                    }
+
+                    // Prop-wash for mouse hover (only when not dragging)
+                    if (!this.isDragging && intersects.length > 0) {
+                        const mx = intersects[0].point.x;
+                        const my = intersects[0].point.y;
+                        const mouseDistance = this.distance(mx, my, px, py);
+                        if (mouseDistance < this.data.area) {
+                           glows.setX(i, Math.max(glows.getX(i), (1 - mouseDistance / this.data.area) * 0.2));
+                        }
+                    }
+
+                    // Ease particles back to their original position
+                    px += (initX - px) * this.data.ease;
+                    py += (initY - py) * this.data.ease;
+                    pz += (initZ - pz) * this.data.ease;
+                    pos.setXYZ(i, px, py, pz);
+                }
+
                 pos.needsUpdate = true;
-                coulors.needsUpdate = true;
-                size.needsUpdate = true;
+                colors.needsUpdate = true;
+                glows.needsUpdate = true;
             }
 
             createText() {
@@ -355,14 +359,13 @@ const Animation = () => {
                 for (let q = 0; q < shapes.length; q++) {
                     let shape = shapes[q];
                     if (shape.holes && shape.holes.length > 0) {
-                        for (let j = 0; j < shape.holes.length; j++) {
-                            holeShapes.push(shape.holes[j]);
-                        }
+                        for (let j = 0; j < shape.holes.length; j++) holeShapes.push(shape.holes[j]);
                     }
                 }
                 shapes.push.apply(shapes, holeShapes);
                 let colors = [];
                 let sizes = [];
+                let glows = []; // *** NEW: Glow attribute array ***
                 for (let x = 0; x < shapes.length; x++) {
                     let shape = shapes[x];
                     const amountPoints = shape.type === 'Path' ? this.data.amount / 2 : this.data.amount;
@@ -371,27 +374,21 @@ const Animation = () => {
                         thePoints.push(new THREE.Vector3(element.x, element.y, 0));
                         colors.push(this.colorChange.r, this.colorChange.g, this.colorChange.b);
                         sizes.push(1);
+                        glows.push(0); // Initialize all glows to 0
                     });
                 }
                 let geoParticles = new THREE.BufferGeometry().setFromPoints(thePoints);
                 geoParticles.translate(xMid, yMid, 0);
                 geoParticles.setAttribute('customColor', new THREE.Float32BufferAttribute(colors, 3));
                 geoParticles.setAttribute('size', new THREE.Float32BufferAttribute(sizes, 1));
+                geoParticles.setAttribute('glow', new THREE.Float32BufferAttribute(glows, 1)); // *** NEW: Set glow attribute ***
                 
-                // Keep a copy of the final positions
                 this.geometryCopy = new THREE.BufferGeometry();
                 this.geometryCopy.copy(geoParticles);
                 
-                // *** NEW: Initial Swarm Formation ***
-                // Scatters the particles randomly at the start. The render loop will `ease` them into place.
                 const positions = geoParticles.attributes.position;
                 for (let i = 0; i < positions.count; i++) {
-                    positions.setXYZ(
-                        i,
-                        (Math.random() - 0.5) * this.data.area * 2,
-                        (Math.random() - 0.5) * this.data.area,
-                        (Math.random() - 0.5) * this.data.area
-                    );
+                    positions.setXYZ(i, (Math.random() - 0.5) * 400, (Math.random() - 0.5) * 200, (Math.random() - 0.5) * 200);
                 }
 
                 const material = new THREE.ShaderMaterial({
@@ -409,17 +406,17 @@ const Animation = () => {
                 this.scene.add(this.particles);
             }
 
-            visibleHeightAtZDepth(depth, camera) {
+            visibleWidthAtZDepth(depth, camera) {
+                const height = this.visibleHeightAtZDepth(depth, camera);
+                return height * camera.aspect;
+            }
+
+             visibleHeightAtZDepth(depth, camera) {
                 const cameraOffset = camera.position.z;
                 if (depth < cameraOffset) depth -= cameraOffset;
                 else depth += cameraOffset;
                 const vFOV = (camera.fov * Math.PI) / 180;
                 return 2 * Math.tan(vFOV / 2) * Math.abs(depth);
-            }
-
-            visibleWidthAtZDepth(depth, camera) {
-                const height = this.visibleHeightAtZDepth(depth, camera);
-                return height * camera.aspect;
             }
 
             distance(x1, y1, x2, y2) {
@@ -452,11 +449,11 @@ const Animation = () => {
 
     return (
         <>
-            
+            <section className="team-section">
                 <section className="animation-section" ref={mountRef}>
                     {/* Three.js canvas will be appended here */}
                 </section>
-            
+            </section>
         </>
     );
 };
