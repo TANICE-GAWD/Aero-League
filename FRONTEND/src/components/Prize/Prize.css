@@ -1,333 +1,238 @@
-\:root {
+
+:root {
   --gold: #ffd700;
-  --gold-gradient: linear-gradient(135deg, #ffeb3b, #c8a415);
-  --gold-glow: 0 0 45px rgba(255, 215, 0, 0.6);
   --silver: #c0c0c0;
-  --silver-gradient: linear-gradient(135deg, #e0e0e0, #a0a0a0);
-  --silver-glow: 0 0 35px rgba(192, 192, 192, 0.5);
   --bronze: #cd7f32;
-  --bronze-gradient: linear-gradient(135deg, #d48c42, #8c581e);
-  --bronze-glow: 0 0 25px rgba(205, 127, 50, 0.5);
+
+  --bg-color: #0f0f1a;
+  --card-bg: #ffffff;
+  --card-border: #e0e0e0;
+  --card-shadow: rgba(0, 0, 0, 0.05);
+  --text-dark: #1a1a2e;
+  --text-light: #ffffff;
+  --text-muted: #6c757d;
+  --accent-color: #4a90e2;
+}
 
 
-  --bg-gradient-start: #1a1a2e;
-  --card-bg: #1e1e3f;
-  --card-border: #3d3d5a;
-  --shadow-color: rgba(0, 0, 0, 0.3);
-  --text-color-dark: #333;
-  --text-color-light: #fff; /* Added for contrast on dark backgrounds */
-
-  --transition-smooth: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-fast: all 0.3s ease;
+.prizes-parent-section {
+  width: 100%;
+  padding: 5rem 1rem;
+  background-color: transparent;
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    radial-gradient(rgba(255, 255, 255, 0.1) 1px, var(--bg-color) 1px);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 
 .prizes-section {
   width: 100%;
-  padding: 6rem 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: transparent;
-
   position: relative;
   overflow: hidden;
 }
 
 .prizes-container {
   max-width: 1200px;
-  width: 100%;
-  padding: 0 1rem;
+  margin: 0 auto;
   text-align: center;
   position: relative;
   z-index: 5;
 }
 
 .prizes-title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 800;
-  color: #fff;
-  margin-bottom: 6rem;
-  letter-spacing: 0.05em;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--text-light);
+  margin-bottom: 0.5rem;
+}
+
+.prizes-subtitle {
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  color: var(--text-muted);
+  margin-bottom: 4rem;
+  font-weight: 500;
 }
 
 
 .prizes-grid {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
-}
-
-
-.prize-card-group {
-  width: clamp(16rem, 25vw, 20rem);
-  height: clamp(16rem, 25vw, 20rem);
-  perspective: 1500px;
-  flex-shrink: 0;
-  position: relative;
-  transition: var(--transition-smooth);
+  margin-bottom: 4rem;
 }
 
 .prize-card {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  transition: var(--transition-smooth);
-  border-radius: 20px;
-}
-
-.prize-card-group:hover .prize-card {
-  transform: rotateY(180deg);
-}
-
-.prize-card-group:hover {
-  transform: translateY(-10px) scale(1.05);
-}
-
-
-.card-front,
-.card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  border-radius: 20px;
-  border: 2px solid transparent;
-  transition: border-color var(--transition-fast);
-  overflow: hidden;
-  display: grid;
-  place-items: center;
-}
-
-.card-front {
-  /* Content is already centered by the grid layout */
-}
-
-.card-back {
-  transform: rotateY(180deg);
-  color: var(--text-color-dark);
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 1.5rem;
+  background-color: transparent;
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 2rem;
   text-align: center;
-  position: relative; /* Needed for absolute positioning of separator and drone */
-
-  /* Checkered pattern */
-  background-image:
-    linear-gradient(45deg, #0000001a 25%, transparent 25%),
-    linear-gradient(-45deg, #0000001a 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #0000001a 75%),
-    linear-gradient(-45deg, transparent 75%, #0000001a 75%);
-  background-size: 20px 20px;
-}
-
-
-.prize-card-group--gold {
-  width: clamp(18rem, 28vw, 22rem);
-  height: clamp(18rem, 28vw, 22rem);
-  z-index: 10;
-}
-
-.prize-card-group--silver {
-  order: -1;
-}
-
-.prize-card-group--gold .card-front {
-  background: var(--gold-gradient);
-}
-.prize-card-group--gold .card-back {
-  background-color: #ffeb3bb3;
-}
-.prize-card-group--silver .card-front {
-  background: var(--silver-gradient);
-}
-.prize-card-group--silver .card-back {
-  background-color: #e0e0e0b3;
-}
-.prize-card-group--bronze .card-front {
-  background: var(--bronze-gradient);
-}
-.prize-card-group--bronze .card-back {
-  background-color: #d48c42b3;
-}
-
-.prize-card-group:hover {
-  box-shadow: var(--shadow-color);
-}
-.prize-card-group--gold:hover { box-shadow: var(--gold-glow); }
-.prize-card-group--silver:hover { box-shadow: var(--silver-glow); }
-.prize-card-group--bronze:hover { box-shadow: var(--bronze-glow); }
-
-
-.prize-image {
-  grid-area: 1 / 1;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: none;
-}
-
-.prize-place {
-  grid-area: 1 / 1;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 700;
-  font-size: 1.75rem;
-  color: #fff;
-  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 20px var(--card-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
-  z-index: 2;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 0.5rem 1rem;
-  border-radius: 10px;
+  overflow: hidden;
+  border-top: 5px solid;
 }
 
-.prize-details-title, .prize-details {
-  font-family: "Open Sans", sans-serif;
-  color: var(--text-color-dark);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  letter-spacing: 0.02em;
+.prize-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
 }
 
-.prize-details-title {
-  font-size: 1.6rem;
-  font-weight: 800;
-  margin-bottom: 0.75rem;
-  text-transform: uppercase;
-  color: #222;
-}
 
-.prize-details {
-  font-size: 1.4rem;
+.prize-card--gold { border-color: var(--gold); }
+.prize-card--silver { border-color: var(--silver); }
+.prize-card--bronze { border-color: var(--bronze); }
+
+.prize-card-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.prize-card--gold .prize-card-icon { color: var(--gold); }
+.prize-card--silver .prize-card-icon { color: var(--silver); }
+.prize-card--bronze .prize-card-icon { color: var(--bronze); }
+
+
+.prize-card-title {
+  font-size: 1.5rem;
   font-weight: 700;
-  color: #111;
+  color: var(--text-light);
+  margin-bottom: 0.25rem;
 }
 
-/* Separator line for visual appeal */
-.prize-details-title::after {
-  content: '';
-  display: block;
-  width: 50px;
-  height: 3px;
-  background: #000;
-  margin: 10px auto 0;
-  border-radius: 5px;
-  opacity: 0.7;
+.prize-card-count {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
 }
 
-/* Specific separator colors for each tier */
-.prize-card-group--gold .prize-details-title::after {
-  background: #a07a00;
-}
-.prize-card-group--silver .prize-details-title::after {
-  background: #7a7a7a;
-}
-.prize-card-group--bronze .prize-details-title::after {
-  background: #8c581e;
+.prize-card-amount {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 1.5rem;
 }
 
-/* Keyframes for the subtle hover animation on the card back drone */
-@keyframes hoverDrone {
-  0% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-3px) rotate(2deg); }
-  50% { transform: translateY(0) rotate(0deg); }
-  75% { transform: translateY(3px) rotate(-2deg); }
-  100% { transform: translateY(0) rotate(0deg); }
+
+.prize-card--gold .prize-card-amount { color: var(--gold); }
+.prize-card--silver .prize-card-amount { color: var(--silver); }
+.prize-card--bronze .prize-card-amount { color: var(--bronze); }
+
+
+.prize-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  margin: 1.5rem -2rem -2rem;
 }
 
-/* Keyframes for propeller rotation */
-@keyframes rotatePropeller {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.prize-card-footer svg {
+  color: var(--accent-color);
 }
 
-/* Styling for the main, screen-wide drone */
+
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  text-align: left;
+}
+
+.info-card {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 2rem;
+  color: var(--text-light);
+}
+
+.info-card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--text-light);
+}
+
+
+.quick-stats-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+.quick-stat-icon {
+    font-size: 1.75rem;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+.quick-stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-light);
+}
+
+.quick-stat-label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+
+
+.beyond-cash-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.beyond-cash-list li {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text-muted);
+}
+
+.beyond-cash-list li::before {
+  content: '✓';
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+
+
 .drone-icon-wrapper {
   position: absolute;
-  z-index: 15;
+ 
+  z-index: 10;
   pointer-events: none;
   will-change: transform, top, left;
   transition: opacity 0.5s ease;
 }
 
 .drone-icon {
-  color: #fff;
-  text-shadow: 0 0 10px rgba(137, 206, 235, 0.8);
+  color: rgb(255, 255, 255);
+  text-shadow: 0 0 10px rgba(137, 206, 235, 0.2);
   transition: transform 0.1s linear;
-}
-
-/* Styling for the drone on the back of the card */
-.card-back-drone {
-  position: absolute;
-  top: 15px; /* Position from top */
-  right: 15px; /* Position from right */
-  font-size: 2.5rem; /* Size of the drone icon */
-  color: rgba(0, 0, 0, 0.2); /* Subtle color to blend with the background */
-  opacity: 0.8; /* Slightly visible */
-  animation: hoverDrone 3s ease-in-out infinite; /* Apply hover animation */
-  z-index: 1; /* Ensure it's behind text if needed */
-}
-
-/* Make the drone icon itself spin to simulate propellers */
-.card-back-drone svg {
-  animation: rotatePropeller 1s linear infinite;
-}
-
-/* Adjustments for specific card backs to make drone more visible or blend */
-.prize-card-group--gold .card-back-drone {
-  color: rgba(160, 122, 0, 0.4); /* Darker gold tint */
-}
-.prize-card-group--silver .card-back-drone {
-  color: rgba(122, 122, 122, 0.4); /* Darker silver tint */
-}
-.prize-card-group--bronze .card-back-drone {
-  color: rgba(140, 88, 30, 0.4); /* Darker bronze tint */
-}
-
-/* Ensure the text is above the drone if z-index conflicts */
-.prize-details-title, .prize-details {
-  position: relative;
-  z-index: 2; /* Ensure text is above the drone */
 }
 
 
 @media (max-width: 768px) {
-  .prizes-grid {
-    align-items: center;
-    flex-direction: column;
-    gap: 3rem;
+  .prizes-grid, .info-grid {
+    grid-template-columns: 1fr;
   }
-  .prize-card-group,
-  .prize-card-group--gold {
-    width: 80vw;
-    height: 80vw;
-    max-width: 300px;
-    max-height: 300px;
-  }
-  .prize-card-group--silver {
-    order: 0;
-  }
-  .prize-place {
-    font-size: 1.6rem;
-  }
-  .prize-details-title { font-size: 1.4rem; }
-  .prize-details { font-size: 1.2rem; }
-}
-
-.team-section {
-  width: 100%;
-  padding: 6rem 0;
-  background-color: var(--bg-color);
-  background-image:
-    radial-gradient(var(--card-border) 1px, transparent 1px),
-    radial-gradient(var(--card-border) 1px, var(--bg-color) 1px);
-  background-size: 40px 40px;
-  background-position: 0 0, 20px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
 }
