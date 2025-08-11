@@ -159,7 +159,7 @@ const Animation = () => {
                     amount: isMobile ? 800 : 1500,
                     particleSize: 1,
                     particleColor: 0xffffff,
-                    textSize: isMobile ? 5 : 7,
+                    textSize: isMobile ? 4 : 7,
                     area: 250,
                     ease: 0.05,
                 };
