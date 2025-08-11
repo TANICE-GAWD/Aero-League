@@ -45,6 +45,7 @@
 @media (max-width: 768px) {
   .animation-section {
     min-height: 50vh;
+    padding: 15rem 1rem;
   }
 }
 
@@ -148,6 +149,3 @@
   box-shadow: 0 10px 20px rgba(0, 191, 255, 0.2);
 }
 
-.team-section {
-
-}
