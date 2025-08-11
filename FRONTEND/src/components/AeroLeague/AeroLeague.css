@@ -3,9 +3,16 @@
 .animation-section {
   position: relative;
   width: 100%;
-  min-height: 70vh;
+  max-height: 10vh;
   overflow: hidden;
   z-index: 1;
+  padding: 6rem 1rem;
+  background-color: var(--bg-color);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", sans-serif;
 }
 
 .animation-section::before {
@@ -139,4 +146,8 @@
   color: #0f1419;
   transform: translateY(-3px);
   box-shadow: 0 10px 20px rgba(0, 191, 255, 0.2);
+}
+
+.team-section {
+
 }

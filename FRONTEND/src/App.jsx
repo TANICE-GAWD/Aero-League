@@ -14,7 +14,6 @@ import RewardsSection from './components/Prize/Prize';
 import Rules from './components/Rules/Rules';
 import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer'
-
 import './App.css';
 
 

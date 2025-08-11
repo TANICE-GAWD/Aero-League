@@ -1,6 +1,3 @@
-
-
-
 * {
   margin: 0;
   padding: 0;
@@ -13,7 +10,6 @@ html, body {
   width: 100%;
   height: 100%;
 }
-
 
 :root {
   --color-bg-primary: #1a1a2e;
@@ -36,7 +32,6 @@ html, body {
   --shadow-strong: 0 8px 32px rgba(0, 0, 0, 0.25);
 }
 
-
 .app {
   min-height: 100vh;
   background: linear-gradient(135deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 50%, var(--color-bg-tertiary) 100%);
@@ -46,22 +41,16 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-
 .main-content {
   padding-top: var(--header-height);
 }
 
-
-
-
 .section {
- 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
- 
-  padding: 4rem 1rem;
+  padding: 2.5rem 1rem; /* UPDATED: Reduced vertical padding from 4rem */
   position: relative;
   width: 100%;
 }
@@ -94,14 +83,13 @@ html, body {
   font-weight: 400;
 }
 
-
 @media (max-width: 768px) {
   .main-content {
     padding-top: var(--header-height-mobile);
   }
   
   .section {
-    padding: 100px 0 60px;
+    padding: 60px 0 40px; /* UPDATED: Reduced padding from 100px and 60px */
   }
   
   .section__container {
@@ -115,7 +103,7 @@ html, body {
 
 @media (max-width: 480px) {
   .section {
-    padding: 80px 0 40px;
+    padding: 50px 0 30px; /* UPDATED: Reduced padding from 80px and 40px */
   }
   
   .section__container {
@@ -124,11 +112,9 @@ html, body {
   }
 }
 
-
 html {
   scroll-behavior: smooth;
 }
-
 
 ::-webkit-scrollbar {
   width: 8px;
@@ -147,7 +133,6 @@ html {
   background: var(--color-accent);
 }
 
-
 @media (prefers-contrast: high) {
   .section__title {
     -webkit-text-fill-color: var(--color-text-primary);
@@ -155,13 +140,8 @@ html {
   }
 }
 
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-} 
-
-
-
-
+}

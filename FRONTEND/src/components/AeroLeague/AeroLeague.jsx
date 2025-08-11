@@ -159,7 +159,7 @@ const Animation = () => {
                     amount: isMobile ? 800 : 1500,
                     particleSize: 1,
                     particleColor: 0xffffff,
-                    textSize: isMobile ? 7 : 12,
+                    textSize: isMobile ? 7 : 7,
                     area: 250,
                     ease: 0.05,
                 };
@@ -452,11 +452,11 @@ const Animation = () => {
 
     return (
         <>
-            <section className="team-section">
+            
                 <section className="animation-section" ref={mountRef}>
                     {/* Three.js canvas will be appended here */}
                 </section>
-            </section>
+            
         </>
     );
 };
