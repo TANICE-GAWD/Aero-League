@@ -1,4 +1,4 @@
-import { FaEnvelope, FaLinkedin } from 'react-icons/fa';
+import { FaEnvelope, FaLinkedin, FaPhoneAlt, FaMapMarkerAlt } from 'react-icons/fa';
 import { GiDeliveryDrone } from "react-icons/gi";
 import './Contact.css';
 
@@ -34,7 +34,6 @@ const contactsData = [
     description: 'Sophomore at Thapar University, building the future.',
     image: '/assets/Prince_Sharma.webp',
     contactLink: 'mailto:thaparaeroleague@gmail.com',
-
     linkedinLink: 'https://www.linkedin.com/in/prince-tanice',
   }
 ];
@@ -52,19 +51,14 @@ const ContactCard = ({ contact }) => {
 
   return (
     <div className="contact-card" onMouseMove={handleMouseMove}>
-      {/* Drone icons for the corner animation are kept */}
       <GiDeliveryDrone className="card-drone drone-br" />
-
       <div className="contact-card-content">
-        {/* NEW: Wrapper for the image and the LinkedIn overlay */}
         <div className="card-image-wrapper">
           <img src={contact.image} alt={contact.name} className="profile-image" />
           <a href={contact.linkedinLink} target="_blank" rel="noopener noreferrer" className="linkedin-overlay">
             <FaLinkedin />
           </a>
         </div>
-
-        {/* NEW: Wrapper for the text content */}
         <div className="card-info-content">
           <h3 className="contact-name">{contact.name}</h3>
           <p className="contact-title-secondary">{contact.title}</p>
@@ -88,6 +82,32 @@ const ContactPoints = () => {
             <ContactCard key={index} contact={contact} />
           ))}
         </div>
+
+        {/* --- NEW GENERAL CONTACT SECTION --- */}
+        <div className="general-contact-container">
+          <a href="mailto:mailmailmail.@mail.com" className="contact-info-pill email">
+            <span className="icon-wrapper">
+              <FaEnvelope />
+            </span>
+            mailmailmail@mail.com
+          </a>
+          <a href="tel:+91xxxxxxxxxx" className="contact-info-pill phone">
+            <span className="icon-wrapper">
+              <FaPhoneAlt />
+            </span>
+            +91-xxxxxxxxxxx
+          </a>
+
+          <div className="contact-info-pill location">
+            <span className="icon-wrapper">
+              <FaMapMarkerAlt />
+            </span>
+            Physical: On-Site
+          </div>
+
+        </div>
+        {/* --- END OF NEW SECTION --- */}
+
       </div>
     </section>
   );

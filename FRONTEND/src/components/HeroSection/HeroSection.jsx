@@ -16,7 +16,7 @@ const HeroSection = () => {
         { id: 'timeline', label: 'Timeline', href: '#timeline' },
         { id: 'prizes', label: 'Prizes', href: '#prizes' },
         { id: 'rules', label: 'Rules', href: '#rules' },
-        { id: 'contact', label: 'Contact', href: '#contact' }
+        { id: 'contact', label: 'Contact', href: '#contact' },
     ];
 
     const routeNavItems = [

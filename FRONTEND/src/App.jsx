@@ -13,6 +13,7 @@ import TimeLine from './components/TimeLine/TimeLine';
 import RewardsSection from './components/Prize/Prize';
 import Rules from './components/Rules/Rules';
 import Contact from './components/Contact/Contact';
+import Footer from './components/Footer/Footer'
 
 import './App.css';
 
@@ -46,6 +47,7 @@ const HomePageContent = () => (
     <section id="prizes"><RewardsSection /></section>
     <section id="rules"><Rules /></section>
     <section id="contact"><Contact /></section>
+    <section id="footer"><Footer /></section>
   </>
 );
 
