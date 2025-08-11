@@ -1,11 +1,12 @@
 
 
 .site-footer {
-  background-color: #1a1d24;
-  color: #adb5bd;           
+  background-color: #000000;
+  color: #ffffff;           
   padding: 4rem 2rem 1.5rem 2rem;
   font-family: "Inter", sans-serif;
   font-size: 0.95rem;
+  border-top: 1px solid #e9ecef;
 }
 
 .footer-container {
@@ -51,7 +52,7 @@
 }
 
 .footer-column ul li a {
-  color: #adb5bd;
+  color: #ffffff;
   text-decoration: none;
   transition: color 0.3s ease, padding-left 0.3s ease;
   display: inline-flex;
@@ -71,7 +72,7 @@
 }
 
 .social-icons a {
-  color: #adb5bd;
+  color: #ffffff;
   font-size: 1.2rem;
   transition: color 0.3s ease, transform 0.3s ease;
 }
@@ -101,7 +102,7 @@
 
 
 .footer-bottom {
-  border-top: 1px solid #343a40;
+  border-top: 1px solid #e9ecef;
   padding-top: 1.5rem;
   display: flex;
   justify-content: space-between;

@@ -69,8 +69,8 @@ const Footer = () => {
                 <div className="footer-bottom">
                     <div className="copyright-text">© 2025 Thapar Drone Challenge. All rights reserved.</div>
                     <div className="developer-credit">
-                        <span>Developed by Team CCS</span>
-                        <a href="mailto:ccs@thapar.edu">ccs@thapar.edu</a>
+                        <span>Developed by Prince Sharma</span>
+                        <a href="mailto:ccs@thapar.edu">tanisha2005sharma@gmail.com</a>
                     </div>
                 </div>
             </div>

@@ -1,9 +1,9 @@
 
 :root {
-  --bg-color: #0f1419;
-  --primary-glow: #00bfff;
-  --card-bg: rgba(22, 33, 62, 0.7);
-  --card-border: rgba(0, 191, 255, 0.3);
+  --bg-color: #000000;
+  --primary-glow: #ffffff;
+  --card-bg: rgba(26, 26, 26, 0.7);
+  --card-border: rgba(255, 255, 255, 0.3)
   --card-border-active: rgba(0, 191, 255, 0.8);
   --text-primary: #f0f0f0;
   --text-secondary: rgba(240, 240, 240, 0.7);

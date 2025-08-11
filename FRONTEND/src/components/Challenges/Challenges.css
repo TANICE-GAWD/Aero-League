@@ -1,13 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
 
 :root {
-  --bgColor: #0f1419;
-  --cardBodyBg: rgba(22, 33, 62, 0.8);
-  --textPrimaryDark: #2c3e50;
-  --textSecondaryDark: rgba(240, 240, 240, 0.7);
-  --textPrimaryLight: #f0f0f0;
-  --shadowColor: rgba(0, 0, 0, 0.3);
-  --cardBorder: rgba(255, 255, 255, 0.1);
+  --bgColor: #ffffff;
+  --cardBodyBg: #f8f9fa;
+  --textPrimaryDark: #212529;
+  --textSecondaryDark: #495057;
+  --textPrimaryLight: #212529;
+  --shadowColor: rgba(0, 0, 0, 0.1);
+  --cardBorder: rgba(13, 110, 253, 0.1);
 }
 
 * {
