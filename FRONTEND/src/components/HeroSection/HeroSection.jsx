@@ -79,7 +79,7 @@ const HeroSection = () => {
                                 <a
                                     href={item.href}
                                     onClick={(e) => { e.preventDefault(); scrollToSection(item.href); }}
-                                    className={`header__nav-link ${activeSection === item.id ? 'header__nav-link--active' : ''}`}
+                                    className="header__nav-link"
                                 >
                                     {item.label}
                                 </a>
