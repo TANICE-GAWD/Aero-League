@@ -57,6 +57,8 @@ body {
 
 .challengeCardWrapper {
   perspective: 1000px;
+  display: flex;
+  align-items: center;
 }
 
 .challengeCard {
@@ -66,7 +68,6 @@ body {
   box-shadow: 0 10px 25px var(--shadowColor);
   display: flex;
   flex-direction: column;
-  height: 100%;
   opacity: 0;
   transform: translateY(40px) rotateX(-10deg);
   transition: opacity 0.6s ease-out, transform 0.6s ease-out,

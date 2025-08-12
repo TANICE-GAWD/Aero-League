@@ -5,35 +5,35 @@ import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 
 const Animation = () => {
     const mountRef = useRef(null);
-    const envRef = useRef(null);
+
     useEffect(() => {
-        if (!mountRef.current || envRef.current) return;
+        if (!mountRef.current) return;
 
         const mountPoint = mountRef.current;
         let isMounted = true;
         let env;
 
         const vertexShader = `
-      attribute float size;
-      attribute vec3 customColor;
-      varying vec3 vColor;
-      void main() {
-        vColor = customColor;
-        vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
-        gl_PointSize = size * ( 300.0 / -mvPosition.z );
-        gl_Position = projectionMatrix * mvPosition;
-      }
-    `;
+            attribute float size;
+            attribute vec3 customColor;
+            varying vec3 vColor;
+            void main() {
+                vColor = customColor;
+                vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+                gl_PointSize = size * ( 300.0 / -mvPosition.z );
+                gl_Position = projectionMatrix * mvPosition;
+            }
+        `;
 
         const fragmentShader = `
-      uniform vec3 color;
-      uniform sampler2D pointTexture;
-      varying vec3 vColor;
-      void main() {
-        gl_FragColor = vec4( color * vColor, 1.0 );
-        gl_FragColor = gl_FragColor * texture2D( pointTexture, gl_PointCoord );
-      }
-    `;
+            uniform vec3 color;
+            uniform sampler2D pointTexture;
+            varying vec3 vColor;
+            void main() {
+                gl_FragColor = vec4( color * vColor, 1.0 );
+                gl_FragColor = gl_FragColor * texture2D( pointTexture, gl_PointCoord );
+            }
+        `;
 
         class Environment {
             constructor(font, particle, container) {
@@ -49,10 +49,6 @@ const Animation = () => {
                 this.createCamera();
                 this.createRenderer();
                 this.setup();
-                this.bindEvents();
-            }
-
-            bindEvents() {
                 window.addEventListener('resize', this.boundOnWindowResize);
             }
 
@@ -61,9 +57,7 @@ const Animation = () => {
                     this.scene,
                     this.font,
                     this.particle,
-                    this.camera,
-                    this.renderer,
-                    this.container
+                    this.camera
                 );
             }
 
@@ -105,10 +99,6 @@ const Animation = () => {
                     this.container.clientWidth,
                     this.container.clientHeight
                 );
-                if (this.createParticles) {
-                    this.createParticles.destroy();
-                    this.setup();
-                }
             }
 
             destroy() {
@@ -134,38 +124,27 @@ const Animation = () => {
         }
 
         class CreateParticles {
-            constructor(scene, font, particleImg, camera, renderer, container) {
+            constructor(scene, font, particleImg, camera) {
                 this.scene = scene;
                 this.font = font;
                 this.particleImg = particleImg;
                 this.camera = camera;
-                this.renderer = renderer;
-                this.container = container;
                 this.particles = null;
                 this.geometryCopy = null;
-
-                this.raycaster = new THREE.Raycaster();
-                this.mouse = new THREE.Vector2(-200, 200);
-                this.colorChange = new THREE.Color();
-                this.button = false;
-                this.touchStartX = 0;
-                this.touchStartY = 0;
-                this.isScrolling = false;
-                this.touchMoveThreshold = 10;
+                this.colorChange = new THREE.Color(0x0047AB);
+                this.animationDone = false;
 
                 const isMobile = window.innerWidth < 768;
                 this.data = {
                     text: isMobile ? ' THAPAR DRONE CHALLENGE\n     BUILD. FLY. DOMINATE.' : 'THAPAR DRONE CHALLENGE\n     BUILD. FLY. DOMINATE.',
                     amount: isMobile ? 800 : 1500,
                     particleSize: 1,
-                    particleColor: 0xffffff,
                     textSize: isMobile ? 4 : 7,
                     area: 250,
                     ease: 0.05,
                 };
 
                 this.setup();
-                this.bindEvents();
             }
 
             destroy() {
@@ -177,167 +156,47 @@ const Animation = () => {
             }
 
             setup() {
-                const geometry = new THREE.PlaneGeometry(
-                    this.visibleWidthAtZDepth(100, this.camera),
-                    this.visibleHeightAtZDepth(100, this.camera)
-                );
-                const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, transparent: true });
-                this.planeArea = new THREE.Mesh(geometry, material);
-                this.planeArea.visible = false;
-                this.scene.add(this.planeArea);
                 this.createText();
             }
 
-            bindEvents() {
-                this.container.addEventListener('mousedown', this.onMouseDown.bind(this));
-                this.container.addEventListener('mousemove', this.onMouseMove.bind(this));
-                this.container.addEventListener('mouseup', this.onMouseUp.bind(this));
-                this.container.addEventListener('mouseleave', this.onMouseUp.bind(this));
-                this.container.addEventListener('touchstart', this.onTouchStart.bind(this), { passive: true });
-                this.container.addEventListener('touchmove', this.onTouchMove.bind(this), { passive: false });
-                this.container.addEventListener('touchend', this.onTouchEnd.bind(this));
-            }
-
-            onMouseDown(event) {
-                const rect = this.container.getBoundingClientRect();
-                this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-                this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-                this.button = true;
-            }
-
-            onMouseUp() {
-                this.button = false;
-            }
-
-            onMouseMove(event) {
-                const rect = this.container.getBoundingClientRect();
-                this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-                this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-            }
-
-            onTouchStart(event) {
-                if (event.touches.length > 0) {
-                    const touch = event.touches[0];
-                    this.touchStartX = touch.clientX;
-                    this.touchStartY = touch.clientY;
-                    this.isScrolling = false;
-                    this.onMouseDown(touch);
-                }
-            }
-
-            onTouchMove(event) {
-                if (event.touches.length > 0) {
-                    const touch = event.touches[0];
-                    const deltaX = touch.clientX - this.touchStartX;
-                    const deltaY = touch.clientY - this.touchStartY;
-
-                    if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > this.touchMoveThreshold) {
-                        this.isScrolling = true;
-                        this.onMouseUp();
-                        return;
-                    }
-                    if (!this.isScrolling) {
-                        event.preventDefault();
-                        this.onMouseMove(touch);
-                    }
-                }
-            }
-
-            onTouchEnd() {
-                this.isScrolling = false;
-                this.onMouseUp();
-            }
-
             render() {
-                if (!this.particles || !this.geometryCopy) return;
+                if (!this.particles || !this.geometryCopy || this.animationDone) return;
 
                 const pos = this.particles.geometry.attributes.position;
                 const copy = this.geometryCopy.attributes.position;
                 const coulors = this.particles.geometry.attributes.customColor;
                 const size = this.particles.geometry.attributes.size;
 
-                // On click, trigger the "Swarm Takeoff"
-                if (this.button) {
-                    for (let i = 0, l = pos.count; i < l; i++) {
-                        let px = pos.getX(i);
-                        let py = pos.getY(i);
-                        let pz = pos.getZ(i);
+                let allSettled = true;
 
-                        // Calculate direction from the center
-                        const angle = Math.atan2(py, px);
-                        const force = 1.0; // Takeoff force
+                for (let i = 0, l = pos.count; i < l; i++) {
+                    const initX = copy.getX(i);
+                    const initY = copy.getY(i);
+                    const initZ = copy.getZ(i);
 
-                        // Apply force outwards and towards the camera
-                        px += force * Math.cos(angle);
-                        py += force * Math.sin(angle);
-                        pz += force * Math.random(); // Add random Z movement
+                    let px = pos.getX(i);
+                    let py = pos.getY(i);
+                    let pz = pos.getZ(i);
 
-                        pos.setXYZ(i, px, py, pz);
-                        this.colorChange.setHSL(0.55, 1.0, 0.7); // Bright cyan takeoff color
-                        coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
+                    coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
+                    size.array[i] = this.data.particleSize;
+
+                    // ease to final
+                    px += (initX - px) * this.data.ease;
+                    py += (initY - py) * this.data.ease;
+                    pz += (initZ - pz) * this.data.ease;
+
+                    if (Math.abs(initX - px) > 0.01 || Math.abs(initY - py) > 0.01 || Math.abs(initZ - pz) > 0.01) {
+                        allSettled = false;
                     }
 
-                } else {
-                    this.raycaster.setFromCamera(this.mouse, this.camera);
-                    const intersects = this.raycaster.intersectObject(this.planeArea);
-
-                    // Standard easing and hover effect when not clicking
-                    for (let i = 0, l = pos.count; i < l; i++) {
-                        const initX = copy.getX(i);
-                        const initY = copy.getY(i);
-                        const initZ = copy.getZ(i);
-
-                        let px = pos.getX(i);
-                        let py = pos.getY(i);
-                        let pz = pos.getZ(i);
-
-                        // Default color
-                        this.colorChange.set(0x0047AB); // Set to white
-                        coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
-                        size.array[i] = this.data.particleSize;
-
-                        // *** MODIFIED HOVER EFFECT ***
-                        if (intersects.length > 0) {
-                            const mx = intersects[0].point.x;
-                            const my = intersects[0].point.y;
-                            const mouseDistance = this.distance(mx, my, px, py);
-
-                            if (mouseDistance < this.data.area) {
-                                let dx = mx - px;
-                                let dy = my - py;
-                                let d = dx * dx + dy * dy;
-                                if (d === 0) d = 0.001;
-                                const f = -this.data.area / d;
-                                const t = Math.atan2(dy, dx);
-
-                                if (i % 5 === 0) {
-                                    px -= 0.03 * Math.cos(t);
-                                    py -= 0.03 * Math.sin(t);
-                                    this.colorChange.set(0x0047AB);
-                                    coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
-                                    size.array[i] = this.data.particleSize / 1.2;
-                                } else {
-                                    px += f * Math.cos(t);
-                                    py += f * Math.sin(t);
-                                    size.array[i] = this.data.particleSize * 1.3;
-                                }
-
-                                if (px > initX + 10 || px < initX - 10 || py > initY + 10 || py < initY - 10) {
-                                    this.colorChange.set(0x0047AB);
-                                    coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
-                                    size.array[i] = this.data.particleSize / 1.8;
-                                }
-                            }
-                        }
-
-                        // Ease back to original position
-                        px += (initX - px) * this.data.ease;
-                        py += (initY - py) * this.data.ease;
-                        pz += (initZ - pz) * this.data.ease;
-                        pos.setXYZ(i, px, py, pz);
-                    }
+                    pos.setXYZ(i, px, py, pz);
                 }
-                
+
+                if (allSettled) {
+                    this.animationDone = true;
+                }
+
                 pos.needsUpdate = true;
                 coulors.needsUpdate = true;
                 size.needsUpdate = true;
@@ -351,6 +210,7 @@ const Animation = () => {
                 const xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
                 const yMid = (geometry.boundingBox.max.y - geometry.boundingBox.min.y) / 2.85;
                 geometry.center();
+
                 let holeShapes = [];
                 for (let q = 0; q < shapes.length; q++) {
                     let shape = shapes[q];
@@ -361,6 +221,7 @@ const Animation = () => {
                     }
                 }
                 shapes.push.apply(shapes, holeShapes);
+
                 let colors = [];
                 let sizes = [];
                 for (let x = 0; x < shapes.length; x++) {
@@ -377,13 +238,11 @@ const Animation = () => {
                 geoParticles.translate(xMid, yMid, 0);
                 geoParticles.setAttribute('customColor', new THREE.Float32BufferAttribute(colors, 3));
                 geoParticles.setAttribute('size', new THREE.Float32BufferAttribute(sizes, 1));
-                
-                // Keep a copy of the final positions
+
                 this.geometryCopy = new THREE.BufferGeometry();
                 this.geometryCopy.copy(geoParticles);
-                
-                // *** NEW: Initial Swarm Formation ***
-                // Scatters the particles randomly at the start. The render loop will `ease` them into place.
+
+                // start scattered
                 const positions = geoParticles.attributes.position;
                 for (let i = 0; i < positions.count; i++) {
                     positions.setXYZ(
@@ -408,23 +267,6 @@ const Animation = () => {
                 this.particles = new THREE.Points(geoParticles, material);
                 this.scene.add(this.particles);
             }
-
-            visibleHeightAtZDepth(depth, camera) {
-                const cameraOffset = camera.position.z;
-                if (depth < cameraOffset) depth -= cameraOffset;
-                else depth += cameraOffset;
-                const vFOV = (camera.fov * Math.PI) / 180;
-                return 2 * Math.tan(vFOV / 2) * Math.abs(depth);
-            }
-
-            visibleWidthAtZDepth(depth, camera) {
-                const height = this.visibleHeightAtZDepth(depth, camera);
-                return height * camera.aspect;
-            }
-
-            distance(x1, y1, x2, y2) {
-                return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
-            }
         }
 
         const fontLoader = new FontLoader();
@@ -432,7 +274,7 @@ const Animation = () => {
         const particle = textureLoader.load('https://res.cloudinary.com/dfvtkoboz/image/upload/v1605013866/particle_a64uzf.png');
 
         fontLoader.load(
-            'https://res.cloudinary.com/dydre7amr/raw/upload/v1612950355/font_zsd4dr.json',
+            '/fonts/monster.json',
             (loadedFont) => {
                 if (isMounted && mountPoint) {
                     env = new Environment(loadedFont, particle, mountPoint);
@@ -442,22 +284,14 @@ const Animation = () => {
             (err) => console.log('An error happened during font loading', err)
         );
 
-        // return () => {
-        //     isMounted = false;
-        //     if (env) {
-        //         env.destroy();
-        //     }
-        // };
+        return () => {
+            isMounted = false;
+            if (env) env.destroy();
+        };
     }, []);
 
     return (
-        <>
-            
-                <section className="animation-section" ref={mountRef}>
-                    {/* Three.js canvas will be appended here */}
-                </section>
-            
-        </>
+        <section className="animation-section" ref={mountRef}></section>
     );
 };
 

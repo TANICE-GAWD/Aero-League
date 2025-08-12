@@ -47,16 +47,16 @@ export default function PrizesSection() {
   
   const prizeData = [
     {
-      icon: <FaCrown />,
-      title: "1st Place Reward",
-      amount: "₹ 25,000",
-      tier: "gold",
-    },
-    {
       icon: <IoMdRibbon />,
       title: "2nd Place Reward",
       amount: "₹ 12,000",
       tier: "silver",
+    },
+    {
+      icon: <FaCrown />,
+      title: "1st Place Reward",
+      amount: "₹ 25,000",
+      tier: "gold",
     },
     {
       icon: <FaLightbulb />,
@@ -109,7 +109,17 @@ export default function PrizesSection() {
               </div>
             ))}
           </div>
-
+          <div className="special-prize">
+            <div key="red" className={`prize-card prize-card--red`}>
+                <div className="prize-card-icon"><FaTrophy /></div>
+                <h3 className="prize-card-title">Strategic Dash Winner</h3>
+                <p className="prize-card-amount">₹ 10,000</p>
+                <div className="prize-card-footer">
+                  <FaCheckCircle />
+                  <span>Certificate Included</span>
+                </div>
+            </div>
+          </div>
           {/* Container for the bottom two info boxes */}
           <div className="info-grid">
             <div className="info-card">
@@ -132,7 +142,9 @@ export default function PrizesSection() {
                 ))}
               </ul>
             </div>
+            
           </div>
+
         </div>
       </div>
     </section>

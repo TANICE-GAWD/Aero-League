@@ -3,6 +3,7 @@
   --gold: #ffd700;
   --silver: #c0c0c0;
   --bronze: #cd7f32;
+  --red: #ff4d4f;
 
   --bg-color: #ffffff;
   --card-bg: #ffffff;
@@ -12,6 +13,7 @@
   --text-light: #212529;
   --text-muted: #6c757d;
   --accent-color: #4a90e2;
+  
 }
 
 
@@ -66,6 +68,19 @@
   margin-bottom: 4rem;
 }
 
+.special-prize{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4rem;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.special-prize > * {
+  flex: 1 1 280px;
+  max-width: 1fr;
+}
+
 .prize-card {
   background-color: var(--card-bg);
   backdrop-filter: blur(10px);
@@ -89,15 +104,16 @@
 .prize-card--gold { border-color: var(--gold); }
 .prize-card--silver { border-color: var(--silver); }
 .prize-card--bronze { border-color: var(--bronze); }
-
+.prize-card--red { border-color: var(--red); }
 .prize-card-icon {
   font-size: 3rem;
   margin-bottom: 1rem;
 }
+
 .prize-card--gold .prize-card-icon { color: var(--gold); }
 .prize-card--silver .prize-card-icon { color: var(--silver); }
 .prize-card--bronze .prize-card-icon { color: var(--bronze); }
-
+.prize-card--red .prize-card-icon { color: var(--red); }
 
 .prize-card-title {
   font-size: 1.5rem;
@@ -123,6 +139,7 @@
 .prize-card--gold .prize-card-amount { color: var(--gold); }
 .prize-card--silver .prize-card-amount { color: var(--silver); }
 .prize-card--bronze .prize-card-amount { color: var(--bronze); }
+.prize-card--red .prize-card-amount { color: var(--red); }
 
 
 .prize-card-footer {
