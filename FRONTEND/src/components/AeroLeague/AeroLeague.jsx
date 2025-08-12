@@ -221,7 +221,6 @@ const Animation = () => {
                     this.touchStartX = touch.clientX;
                     this.touchStartY = touch.clientY;
                     this.isScrolling = false;
-                    this.onMouseDown(touch);
                 }
             }
 
@@ -231,13 +230,19 @@ const Animation = () => {
                     const deltaX = touch.clientX - this.touchStartX;
                     const deltaY = touch.clientY - this.touchStartY;
 
+                    // If user is scrolling vertically
                     if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > this.touchMoveThreshold) {
                         this.isScrolling = true;
                         this.onMouseUp();
                         return;
                     }
+
+                    // If it's a horizontal/tap movement, start interaction
                     if (!this.isScrolling) {
-                        event.preventDefault();
+                        event.preventDefault(); // stop page scroll
+                        if (!this.button) {
+                            this.onMouseDown(touch); // start interaction only now
+                        }
                         this.onMouseMove(touch);
                     }
                 }
@@ -292,7 +297,7 @@ const Animation = () => {
                         let pz = pos.getZ(i);
 
                         // Default color
-                        this.colorChange.set(0xffffff); // Set to white
+                        this.colorChange.set(0x0047AB); // Set to white
                         coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
                         size.array[i] = this.data.particleSize;
 
@@ -313,7 +318,7 @@ const Animation = () => {
                                 if (i % 5 === 0) {
                                     px -= 0.03 * Math.cos(t);
                                     py -= 0.03 * Math.sin(t);
-                                    this.colorChange.setHSL(0.15, 1.0, 0.5);
+                                    this.colorChange.set(0x0047AB);
                                     coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
                                     size.array[i] = this.data.particleSize / 1.2;
                                 } else {
@@ -323,7 +328,7 @@ const Animation = () => {
                                 }
 
                                 if (px > initX + 10 || px < initX - 10 || py > initY + 10 || py < initY - 10) {
-                                    this.colorChange.setHSL(0.15, 1.0, 0.5);
+                                    this.colorChange.set(0x0047AB);
                                     coulors.setXYZ(i, this.colorChange.r, this.colorChange.g, this.colorChange.b);
                                     size.array[i] = this.data.particleSize / 1.8;
                                 }
