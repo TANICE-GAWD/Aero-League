@@ -5,9 +5,9 @@ import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 
 const Animation = () => {
     const mountRef = useRef(null);
-
+    const envRef = useRef(null);
     useEffect(() => {
-        if (!mountRef.current) return;
+        if (!mountRef.current || envRef.current) return;
 
         const mountPoint = mountRef.current;
         let isMounted = true;
@@ -221,6 +221,7 @@ const Animation = () => {
                     this.touchStartX = touch.clientX;
                     this.touchStartY = touch.clientY;
                     this.isScrolling = false;
+                    this.onMouseDown(touch);
                 }
             }
 
@@ -230,19 +231,13 @@ const Animation = () => {
                     const deltaX = touch.clientX - this.touchStartX;
                     const deltaY = touch.clientY - this.touchStartY;
 
-                    // If user is scrolling vertically
                     if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > this.touchMoveThreshold) {
                         this.isScrolling = true;
                         this.onMouseUp();
                         return;
                     }
-
-                    // If it's a horizontal/tap movement, start interaction
                     if (!this.isScrolling) {
-                        event.preventDefault(); // stop page scroll
-                        if (!this.button) {
-                            this.onMouseDown(touch); // start interaction only now
-                        }
+                        event.preventDefault();
                         this.onMouseMove(touch);
                     }
                 }
@@ -447,12 +442,12 @@ const Animation = () => {
             (err) => console.log('An error happened during font loading', err)
         );
 
-        return () => {
-            isMounted = false;
-            if (env) {
-                env.destroy();
-            }
-        };
+        // return () => {
+        //     isMounted = false;
+        //     if (env) {
+        //         env.destroy();
+        //     }
+        // };
     }, []);
 
     return (
