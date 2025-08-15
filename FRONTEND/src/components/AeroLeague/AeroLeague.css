@@ -58,6 +58,7 @@
 
 @media (max-width: 768px) {
   .animation-section {
+    padding-top: 20vh;
     min-height: 100vh;
   }
 }
