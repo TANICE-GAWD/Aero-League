@@ -40,7 +40,7 @@ const SharedLayout = () => (
 
 const HomePageContent = () => (
   <>
-    <section id="home" style={{ backgroundImage: '/assets/drone.png' }}><Animation /></section>
+    <section id="home"><Animation /></section>
     <section id="challenges"><Challenges /></section>
     <section id="timeline"><TimeLine /></section>
     <section id="prizes"><RewardsSection /></section>
@@ -53,29 +53,35 @@ const HomePageContent = () => (
 function App() {
   return (
     <Router>
-      <div className="app">
-        <Routes>
-          {/* Public Routes with Navbar */}
-          <Route path="/" element={<SharedLayout />}>
-            <Route index element={<HomePageContent />} />
-            <Route path="login" element={<AdminLogin />} />
-            <Route path="register" element={<Registration />} />
-          </Route>
+      <div className="app-container">
+        {/* Aurora Dream Vivid Bloom Background */}
+        <div
+          className="overlay-bg"        />
+          {/* Your Content/Components */}
+               <Routes>
+                {/* Public Routes with Navbar */}
+                <Route path="/" element={<SharedLayout />}>
+                  <Route index element={<HomePageContent />} />
+                  <Route path="login" element={<AdminLogin />} />
+                  <Route path="register" element={<Registration />} />
+                </Route>
 
-          {/* Protected Admin Route */}
-          <Route path="/dashboard" element={<AdminProtectedRoute />}>
-            <Route index element={<Dashboard />} />
-          </Route>
+                {/* Protected Admin Route */}
+                <Route path="/dashboard" element={<AdminProtectedRoute />}>
+                  <Route index element={<Dashboard />} />
+                </Route>
 
-          {/* Protected User Route */}
-          <Route path="/user-dashboard" element={<UserProtectedRoute />}>
-            <Route index element={<UserDashboard />} />
-          </Route>
+                {/* Protected User Route */}
+                <Route path="/user-dashboard" element={<UserProtectedRoute />}>
+                  <Route index element={<UserDashboard />} />
+                </Route>
 
-        </Routes>
+              </Routes>
       </div>
     </Router>
+        
   );
 }
 
 export default App;
+
