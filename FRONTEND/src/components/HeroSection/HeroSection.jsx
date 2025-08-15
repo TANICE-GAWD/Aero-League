@@ -79,7 +79,7 @@ const HeroSection = () => {
                                 <a
                                     href={item.href}
                                     onClick={(e) => { e.preventDefault(); scrollToSection(item.href); }}
-                                    className="header__nav-link"
+                                    className={`header__nav-link ${activeSection === item.id ? 'header__nav-link--active' : ''}`}
                                 >
                                     {item.label}
                                 </a>
@@ -93,7 +93,7 @@ const HeroSection = () => {
                             onMouseLeave={() => setIsDropdownOpen(false)}
                         >
                             <button className="header__nav-link header__dropdown-trigger">
-                                Account
+                                Apply
                             </button>
                             {isDropdownOpen && (
                                 <ul className="header__dropdown-menu">
@@ -129,7 +129,7 @@ const HeroSection = () => {
                                 <a
                                     href={item.href}
                                     onClick={(e) => { e.preventDefault(); scrollToSection(item.href); }}
-                                    className="header__mobile-nav-link"
+                                    className={`header__mobile-nav-link ${activeSection === item.id ? 'header__nav-link--active' : ''}`}
                                 >
                                     {item.label}
                                 </a>
