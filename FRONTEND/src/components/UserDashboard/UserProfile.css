@@ -1,10 +1,11 @@
 :root {
-  --primary-color: #0378ff;
-  --dark-bg-primary: #121212;
-  --dark-bg-secondary: #1e1e1e;
-  --text-primary-dark: #ffffff;
-  --text-secondary-dark: #b3b3b3;
-  --border-dark: #333333;
+  --primary-color: var(--color-accent);
+  --dark-bg-primary: var(--color-bg-primary);
+  --dark-bg-secondary: var(--color-card);
+  --text-primary-dark: var(--color-text-primary);
+  --text-secondary-dark: var(--color-text-secondary);
+  --border-dark: var(--color-border);
+  --card-bg: var(--color-card);
   --success-dark: #28a745;
   --error-dark: #dc3545;
 }
@@ -16,9 +17,9 @@
 }
 
 .profile-card {
-  background: var(--dark-bg-secondary);
+  background: var(--card-bg);
   border-radius: 12px;
-  border: 1px solid var(--border-dark);
+  border: 1px solid var(--color-border);
   overflow: hidden;
   transition: border-color 0.3s ease;
 }
@@ -29,7 +30,7 @@
 
 .profile-card-header {
   background: var(--card-bg);
-  color: var(--text-primary-dark);
+  color: var(--color-text-primary);
   padding: 2.5rem 2rem;
   text-align: center;
   border-bottom: 1px solid var(--border-dark);
@@ -54,7 +55,7 @@
 .profile-user-email {
   margin: 0;
   font-size: 0.95rem;
-  color: white;
+  color: var(--color-text-secondary);
 }
 
 .profile-card-body {
@@ -94,7 +95,7 @@
 }
 
 .detail-value {
-  color: white;
+  color: var(--color-text-secondary);
   font-weight: 500;
   text-align: right;
   justify-self: end;
@@ -126,13 +127,13 @@
 }
 
 .status-tag.verified {
-  color: var(--text-primary-dark);
+  color: var(--color-text-primary);
   background-color: rgba(40, 167, 69, 0.3);
   border: 1px solid rgba(40, 167, 69, 0.7);
 }
 
 .status-tag.unverified {
-  color: var(--text-primary-dark);
+  color: var(--color-text-primary);
   background-color: rgba(220, 53, 69, 0.3);
   border: 1px solid rgba(220, 53, 69, 0.7);
 }

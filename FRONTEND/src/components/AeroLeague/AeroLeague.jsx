@@ -1,10 +1,28 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import './AeroLeague.css';
 
 const Animation = () => {
+  const containerRef = useRef(null);
   const splineRef = useRef(null);
+  const [showSpline, setShowSpline] = useState(false);
+
+  // Lazy-load the spline viewer when the section enters the viewport
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShowSpline(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    if (containerRef.current) observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
+    if (!showSpline) return;
     // The logo is inside a shadow DOM, so we need to access it this way.
     // We wait for the component to mount before trying to find the logo.
     if (splineRef.current) {
@@ -35,15 +53,17 @@ const Animation = () => {
         clearTimeout(timeout);
       };
     }
-  }, []); // The empty array ensures this effect runs only once.
+  }, [showSpline]); // The empty array ensures this effect runs only once.
 
   return (
-    <section className="animation-section">
-      <spline-viewer
-        ref={splineRef}
-        url="https://prod.spline.design/BpEFbgTw5ogZjSJJ/scene.splinecode"
-        no-zoom /* This attribute disables scroll-to-zoom */
-      ></spline-viewer>
+    <section ref={containerRef} className="animation-section">
+      {showSpline && (
+        <spline-viewer
+          ref={splineRef}
+          url="https://prod.spline.design/BpEFbgTw5ogZjSJJ/scene.splinecode"
+          no-zoom
+        ></spline-viewer>
+      )}
     </section>
   );
 };

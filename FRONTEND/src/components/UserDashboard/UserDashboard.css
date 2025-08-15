@@ -2,15 +2,15 @@
 
 
 :root {
-  --primary-color: #4a90e2;
-  --secondary-color: #50e3c2;
-  --background-color: #f4f7fa;
-  --sidebar-bg: #2c3e50;
-  --sidebar-text: #ecf0f1;
-  --sidebar-active: #34495e;
-  --card-bg: #ffffff;
-  --text-color: #333;
-  --border-color: #e0e6ed;
+  --primary-color: var(--color-accent);
+  --secondary-color: var(--color-accent-hover);
+  --background-color: var(--color-bg-primary);
+  --sidebar-bg: var(--color-card);
+  --sidebar-text: var(--color-text-primary);
+  --sidebar-active: var(--color-border);
+  --card-bg: var(--color-card);
+  --text-color: var(--color-text-primary);
+  --border-color: var(--color-border);
   --success-color: #2ecc71;
   --error-color: #e74c3c;
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -73,7 +73,7 @@ body {
   z-index: 1;
   padding: 2rem;
   overflow-y: auto;
-  background-color: #020232;
+  background-color: var(--color-bg-primary);
 }
 
 
@@ -116,7 +116,7 @@ body {
   transition: background-color 0.2s, color 0.2s;
 }
 .sidebar-nav button:hover {
-  background-color: var(--sidebar-active);
+  background-color: var(--color-bg-secondary);
 }
 .sidebar-nav button.active {
   background-color: var(--primary-color);
@@ -219,8 +219,8 @@ body {
   gap: 1rem;
 }
 .notification-item {
-  background-color: #f9f9f9;
-  border-left: 4px solid var(--secondary-color);
+  background-color: var(--color-card);
+  border-left: 4px solid var(--color-accent);
   padding: 1rem;
   border-radius: 4px;
 }

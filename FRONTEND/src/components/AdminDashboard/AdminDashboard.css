@@ -1,17 +1,25 @@
 .dashboard-section {
- min-height: 100vh;
- padding: 6rem 2rem 2rem;
- background-color: #ffffff;
- color: #000000;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+  padding: 6rem 2rem 2rem;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
 }
 
 .dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-border);
  display: flex;
  justify-content: space-between;
  align-items: center;
  margin-bottom: 2rem;
  padding-bottom: 1.5rem;
- border-bottom: 1px solid #ffffff;
+ border-bottom: 1px solid var(--color-border);
 }
 
 .dashboard-title-container {
@@ -22,14 +30,14 @@
 
 .dashboard-icon {
  font-size: 2.5rem;
- color: #000000;
+ color: var(--color-text-primary);
 }
 
 .dashboard-title {
  font-family: 'Montserrat', sans-serif;
  font-size: 2rem;
  font-weight: 700;
- color: #000000;
+ color: var(--color-text-primary);
 }
 
 .logout-button {
@@ -37,8 +45,8 @@
  align-items: center;
  gap: 0.5rem;
  background-color: transparent;
- border: 1px solid #000000;
- color: #000000;
+ border: 1px solid var(--color-text-primary);
+ color: var(--color-text-primary);
  padding: 0.75rem 1.25rem;
  border-radius: 8px;
  font-size: 1rem;
@@ -48,15 +56,15 @@
 }
 
 .logout-button:hover {
- background-color: rgba(0, 0, 0, 0.1);
- box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+ background-color: rgba(123, 97, 255, 0.1);
+ box-shadow: 0 0 15px rgba(123, 97, 255, 0.4);
 }
 
 .admin-dashboard-content {
  background: #ffffff;
  border-radius: var(--border-radius, 12px);
  padding: 2rem;
- border: 1px solid #ffffff;
+ border: 1px solid var(--color-border);
 }
 
 .loading-state, .error-state {
@@ -66,11 +74,11 @@
  gap: 1rem;
  font-size: 1.25rem;
  padding: 4rem;
- color: #000000;
+ color: var(--color-text-primary);
 }
 
 .error-state {
- color: #000000;
+ color: var(--color-text-primary);
 }
 
 .table-container {
@@ -86,17 +94,17 @@
 
 .teams-table th, .teams-table td {
  padding: 1rem;
- color: #000000;
- border-bottom: 1px solid #ffffff;
+ color: var(--color-text-primary);
+ border-bottom: 1px solid var(--color-border);
 }
 
 .teams-table th {
  font-size: 1rem;
  font-weight: 700;
  text-transform: uppercase;
- color: #000000;
+ color: var(--color-text-primary);
 }
 
 .teams-table tbody tr:hover {
- background-color: rgba(0, 0, 0, 0.05);
+ background-color: rgba(123, 97, 255, 0.05);
 }

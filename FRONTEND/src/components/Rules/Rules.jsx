@@ -1,7 +1,6 @@
 
 
 "use client";
-import { useState } from 'react';
 import { FaUserGraduate, FaUsers, FaLaptopCode, FaTrophy, FaHandsHelping, FaChevronDown } from 'react-icons/fa';
 import './Rules.css';
 
@@ -74,12 +73,6 @@ const rulesData = [
 ];
 
 const RulesBriefing = () => {
-  const [activeAccordion, setActiveAccordion] = useState(null);
-
-  const toggleAccordion = (id) => {
-    setActiveAccordion(activeAccordion === id ? null : id);
-  };
-
   return (
     <section className="team-section">
       <div className="rules-container">
@@ -90,44 +83,29 @@ const RulesBriefing = () => {
         
         <div className="accordion-wrapper">
           {rulesData.map((rule) => (
-            <div 
-              key={rule.id} 
-              className={`accordion-item ${activeAccordion === rule.id ? 'active' : ''}`}
-            >
-              <button
-                className="accordion-button"
-                onClick={() => toggleAccordion(rule.id)}
-                aria-expanded={activeAccordion === rule.id}
-              >
+            <details key={rule.id} className="accordion-item">
+              <summary className="accordion-button">
                 <rule.Icon className="accordion-icon-main" />
                 <h3 className="accordion-button-title">{rule.title}</h3>
                 <FaChevronDown className="accordion-chevron" />
-              </button>
-              
-              <div className="accordion-content-panel">
-                <div className="accordion-content-inner">
-                  <ul className="rules-details-list">
-                    {rule.content.map((item, index) => (
-                      <li key={index} className="rules-list-item-detail">
-                        {/* Render text for both strings and objects */}
-                        {typeof item === 'string' ? item : item.text}
-
-                        {/* If item has a sublist, render it */}
-                        {item.sublist && (
-                          <ul className="rules-sublist">
-                            {item.sublist.map((subItem, subIndex) => (
-                              <li key={subIndex} className="rules-sublist-item-detail">
-                                {subItem}
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
+              </summary>
+              <ul className="rules-details-list">
+                {rule.content.map((item, index) => (
+                  <li key={index} className="rules-list-item-detail">
+                    {typeof item === 'string' ? item : item.text}
+                    {item.sublist && (
+                      <ul className="rules-sublist">
+                        {item.sublist.map((subItem, subIndex) => (
+                          <li key={subIndex} className="rules-sublist-item-detail">
+                            {subItem}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </details>
           ))}
         </div>
       </div>
