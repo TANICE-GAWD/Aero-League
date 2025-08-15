@@ -4,10 +4,8 @@
   justify-content: center;
   align-items: center;
   padding: 6rem 1rem 3rem;
-  background-color: #ffffff;
-  background-image:
-    radial-gradient(rgba(13, 110, 253, 0.1) 1px, transparent 1px),
-    radial-gradient(rgba(13, 110, 253, 0.1) 1px, #ffffff 1px);
+  background-color: transparent;
+  background: transparent;
   background-size: 40px 40px;
   background-position: 0 0, 20px 20px;
   z-index: 1;
@@ -64,6 +62,33 @@
   font-weight: 600;
 }
 
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 15px;
+    color: #adb5bd;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px 12px 12px 40px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+
 .team-member-row {
   display: grid;
   grid-template-columns: 1fr 1fr auto;
@@ -118,6 +143,9 @@
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .register-button:hover:not(:disabled) {
@@ -131,4 +159,87 @@
   margin-top: -1rem;
 }
 
+.spinner-icon {
+  animation: spin 1s linear infinite;
+}
 
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+
+
+
+@media (max-width: 768px) {
+  .registration-card {
+    padding: 2rem;
+  }
+
+  .registration-title {
+    font-size: 2rem;
+  }
+
+ 
+  .team-member-row {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "name name"
+      "email button";
+    gap: 0.75rem;
+  }
+  
+  .team-member-row .input-wrapper:nth-child(1) {
+      grid-area: name;
+  }
+  .team-member-row .input-wrapper:nth-child(2) {
+      grid-area: email;
+  }
+  .team-member-row .remove-member-btn {
+      grid-area: button;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .registration-page-section {
+    padding: 4rem 1rem 2rem;
+  }
+
+  .registration-card {
+    padding: 1.5rem;
+  }
+
+  .registration-title {
+    font-size: 1.75rem;
+  }
+
+  .registration-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .form-fieldset {
+    padding: 1rem;
+  }
+
+ 
+  .team-member-row {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "name"
+      "email"
+      "button";
+  }
+
+ 
+  .remove-member-btn {
+    width: fit-content;
+    justify-self: end;
+    padding: 8px 12px;
+  }
+
+  .register-button {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+}
