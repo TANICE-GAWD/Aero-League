@@ -18,12 +18,14 @@
   background-size: 40px 40px;
   background-position: 0 0, 20px 20px;
   min-height: 100vh;
+  z-index: 1;
 }
 
 .timeline-container {
   max-width: 900px;
   margin: 0 auto;
   width: 100%;
+  z-index: 1;
 }
 
 .timeline-header, .timeline-title {
@@ -34,6 +36,7 @@
   font-size: clamp(2.5rem, 5vw, 3.5rem);
   color: var(--text-primary);
   letter-spacing: 0.05em;
+  z-index: 1;
 }
 
 .timeline-wrapper {

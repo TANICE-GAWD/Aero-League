@@ -123,7 +123,7 @@ const Challenges = () => {
   }, []);
 
   return (
-    <section className="teamSection">
+    <section className="teamsection1">
       <section className="challengesSection">
         <header className="sectionHeader">
           <h1 className="sectionMainTitle">CHALLENGES</h1>
