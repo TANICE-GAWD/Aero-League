@@ -67,7 +67,7 @@ const HeroSection = () => {
                             className="header__logo-img"
                             onError={(e) => { e.target.onerror = null; e.target.src='https://placehold.co/80x80/1a1a2e/ffffff?text=Logo'; }}
                         />
-                        <span className="header__logo-text">Aero League</span>
+                        <span className="header__logo-text">Thapar Drone Challenge</span>
                     </Link>
                 </div>
 
