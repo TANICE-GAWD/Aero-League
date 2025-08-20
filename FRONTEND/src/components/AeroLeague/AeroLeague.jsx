@@ -22,38 +22,40 @@ const Animation = () => {
   }, []);
 
   useEffect(() => {
-    if (!showSpline) return;
-    // The logo is inside a shadow DOM, so we need to access it this way.
-    // We wait for the component to mount before trying to find the logo.
-    if (splineRef.current) {
-      const splineViewer = splineRef.current;
-      
-      // Function to find and hide the logo
-      const findAndHideLogo = () => {
-        const shadowRoot = splineViewer.shadowRoot;
-        if (shadowRoot) {
-          const logo = shadowRoot.getElementById('logo');
-          if (logo) {
-            logo.style.display = 'none';
-          }
-        }
-      };
+    if (!showSpline || !splineRef.current) return;
 
-      // The viewer might take a moment to initialize and create the shadow DOM.
-      // We'll check for it immediately and then set up a small interval to check again
-      // just in case it wasn't ready right away.
-      findAndHideLogo();
-      const interval = setInterval(findAndHideLogo, 100);
+    const splineViewer = splineRef.current;
 
-      // Clean up the interval after 2 seconds or when the component unmounts
-      const timeout = setTimeout(() => clearInterval(interval), 2000);
-      
-      return () => {
-        clearInterval(interval);
-        clearTimeout(timeout);
-      };
-    }
-  }, [showSpline]); // The empty array ensures this effect runs only once.
+    const hideLogo = () => {
+      const shadowRoot = splineViewer.shadowRoot;
+      if (!shadowRoot) return;
+
+      const logo = shadowRoot.getElementById('logo');
+      if (logo) {
+        logo.style.display = 'none';
+      }
+    };
+
+    // Try immediately in case shadowRoot is already ready
+    hideLogo();
+
+    // Listen for Spline load event → ensures watermark is hidden first load
+    const handleLoad = () => {
+      hideLogo();
+    };
+
+    splineViewer.addEventListener('load', handleLoad);
+
+    // Fallback: interval check for ~2s (in case shadowRoot initializes late)
+    const interval = setInterval(hideLogo, 100);
+    const timeout = setTimeout(() => clearInterval(interval), 2000);
+
+    return () => {
+      splineViewer.removeEventListener('load', handleLoad);
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
+  }, [showSpline]);
 
   return (
     <section ref={containerRef} className="animation-section">
@@ -69,4 +71,3 @@ const Animation = () => {
 };
 
 export default Animation;
-
