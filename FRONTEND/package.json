@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.3",
+    "@react-three/fiber": "^9.3.0",
     "@splinetool/loader": "^1.10.45",
     "aos": "^2.3.4",
     "framer-motion": "^12.23.12",
