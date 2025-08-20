@@ -164,7 +164,7 @@ body {
   line-height: 1.4;
 }
 
-/* AFTER (THE CORRECT FIX) */
+
 .teamsection1 {
   width: 100%;
   padding: 2rem 0;
@@ -174,7 +174,7 @@ body {
   background-size: 40px 40px;
   background-position: 0 0, 20px 20px;
   display: flex;
-  justify-content: center; /* <-- Keep this for horizontal centering */
+  justify-content: center; 
 }
 
 @media (max-width: 992px) {

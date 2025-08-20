@@ -5,7 +5,7 @@
   width: 100%;
   overflow: hidden;
   z-index: 1;
-  padding: 6rem 1rem;
+  padding: 3rem 0rem;
   background-color: transparent;
   min-height: 60vh;
   display: flex;
@@ -21,7 +21,7 @@
  top: 0;
  left: 0;
  width: 100%;
- height: 100%;
+ height: 10%;
  background-size: contain; 
  background-repeat: no-repeat; 
  background-position: center;
@@ -57,7 +57,7 @@
 
 @media (max-width: 768px) {
   .animation-section {
-    padding-top: 20vh;
+    padding-top: 10vhz;
     min-height: 100vh;
   }
 }
