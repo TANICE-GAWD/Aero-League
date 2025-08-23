@@ -96,10 +96,7 @@ export default function PrizesSection() {
                 <div className="prize-card-icon">{prize.icon}</div>
                 <h3 className="prize-card-title">{prize.title}</h3>
                 <p className="prize-card-amount">{prize.amount}</p>
-                <div className="prize-card-footer">
-                  <FaCheckCircle />
-                  <span>Certificate Included</span>
-                </div>
+
               </div>
             ))}
           </div>

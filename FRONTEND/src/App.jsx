@@ -63,44 +63,44 @@ function App() {
     <div className="app">
       <BrowserRouter>
         <Routes>
-        {/* Main SPA Routes with single page navigation */}
-        <Route path="/" element={<Home />} />
-        <Route path="/aeroleague" element={<Home />} />
-        <Route path="/challenges" element={<Home />} />
-        <Route path="/timeline" element={<Home />} />
-        <Route path="/prize" element={<Home />} />
-        <Route path="/rules" element={<Home />} />
-        <Route path="/contact" element={<Home />} />
+          {/* Main SPA Routes with single page navigation */}
+          <Route path="/" element={<Home />} />
+          <Route path="/aeroleague" element={<Home />} />
+          <Route path="/challenges" element={<Home />} />
+          <Route path="/timeline" element={<Home />} />
+          <Route path="/prize" element={<Home />} />
+          <Route path="/rules" element={<Home />} />
+          <Route path="/contact" element={<Home />} />
 
-        {/* Authentication Routes - Standalone (no HeroSection/Footer) */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/otp" element={<OTPVerification />} />
-        <Route path="/forgot" element={<ForgotPassword />} />
+          {/* Authentication Routes - Standalone (no HeroSection/Footer) */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/otp" element={<OTPVerification />} />
+          <Route path="/forgot" element={<ForgotPassword />} />
 
-        {/* User Dashboard Routes - Standalone (no HeroSection/Footer) */}
-        <Route path='/user' element={<RequireAuthAsUser />}>
-          <Route element={<UserDashboardLayout />}>
-            <Route path="dashboard" element={<UserDashboard />} />
-            <Route path="team" element={<Team />} />
-            <Route path="video" element={<VideoPage />} />
-            <Route path="tickets" element={<UserTickets />} />
+          {/* User Dashboard Routes - Standalone (no HeroSection/Footer) */}
+          <Route path='/user' element={<RequireAuthAsUser />}>
+            <Route element={<UserDashboardLayout />}>
+              <Route path="dashboard" element={<UserDashboard />} />
+              <Route path="team" element={<Team />} />
+              <Route path="video" element={<VideoPage />} />
+              <Route path="tickets" element={<UserTickets />} />
+            </Route>
           </Route>
-        </Route>
 
-        {/* Admin Dashboard Routes - Standalone (no HeroSection/Footer) */}
-        <Route path='/admin' element={<RequireAuthAsAdmin />}>
-          <Route element={<AdminDashboardLayout />}>
-            <Route path="dashboard" element={<AdminDashboard />} />
-            <Route path="teams" element={<Teams />} />
-            <Route path="notifications" element={<Notifications />} />
-            <Route path="tickets" element={<AdminTicket />} />
+          {/* Admin Dashboard Routes - Standalone (no HeroSection/Footer) */}
+          <Route path='/admin' element={<RequireAuthAsAdmin />}>
+            <Route element={<AdminDashboardLayout />}>
+              <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="teams" element={<Teams />} />
+              <Route path="notifications" element={<Notifications />} />
+              <Route path="tickets" element={<AdminTicket />} />
+            </Route>
           </Route>
-        </Route>
 
-        {/* Error Routes */}
-        <Route path='/404' element={<NotFound />} />
-        <Route path='*' element={<NotFound />} />
+          {/* Error Routes */}
+          <Route path='/404' element={<NotFound />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </div>

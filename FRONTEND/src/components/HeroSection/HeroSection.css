@@ -157,7 +157,7 @@ html {
 }
 .header__dropdown-menu {
   position: absolute;
-  top: calc(100% + 5px);
+  top: calc(100% - 2px);
   right: 0;
   background: var(--color-card);
   border: 1px solid var(--color-border);
@@ -171,9 +171,15 @@ html {
   opacity: 1;
   visibility: visible;
   transition: opacity 0.2s ease, transform 0.2s ease;
+  /* Add padding-top to create invisible hover area */
+  padding-top: 12px;
+  margin-top: -4px;
 }
 .header__dropdown-item {
   margin: 0;
+}
+.header__dropdown-item:first-child {
+  margin-top: 4px; /* Add space from the invisible padding area */
 }
 .header__dropdown-link {
   display: block;
@@ -300,5 +306,14 @@ html {
   }
   .header__mobile-nav {
     top: var(--header-height-mobile);
+  }
+  
+  /* Adjust page padding for mobile */
+  .login-container {
+    padding-top: 70px;
+  }
+  
+  .register-container {
+    padding-top: 70px;
   }
 }

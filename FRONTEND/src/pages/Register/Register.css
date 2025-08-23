@@ -1,14 +1,18 @@
-.register-container {
+.register-page {
   min-height: 100vh;
   background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 50%, #dbeafe 100%);
+}
+
+.register-container {
+  padding-top: 80px; /* Account for fixed header */
 }
 
 .register-content {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 4rem);
-  padding: 1rem;
+  min-height: calc(100vh - 80px);
+  padding: 2rem 1rem;
 }
 
 .register-wrapper {
@@ -238,4 +242,27 @@
 .modal-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}@medi
+a (max-width: 768px) {
+  .register-container {
+    padding-top: 70px; /* Mobile header height */
+  }
+  
+  .register-content {
+    min-height: calc(100vh - 70px);
+    padding: 1rem;
+  }
+  
+  .register-form {
+    padding: 1.5rem;
+  }
+  
+  .team-member-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .team-member-input {
+    width: 100%;
+  }
 }

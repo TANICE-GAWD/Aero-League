@@ -4,6 +4,7 @@ import { useAdminLoginMutation, useUserLoginMutation } from '@/app/api/authApiSl
 import { setCredentials } from "../../features/authSlice"
 import { useSelector, useDispatch } from "react-redux"
 import { NavLink, useNavigate } from "react-router-dom"
+import HeroSection from '../../components/HeroSection/HeroSection'
 import './Login.css'
 
 function Login() {
@@ -43,8 +44,10 @@ function Login() {
 }, [token, user, navigate])
 
   return (
-    <div className="login-container">
-      <div className="login-card">
+    <div className="login-page">
+      <HeroSection />
+      <div className="login-container">
+        <div className="login-card">
         <div className="login-type-selector">
           <button
             type="button"
@@ -118,9 +121,9 @@ function Login() {
           </NavLink>
         </div>
       </div>
-    </div>
+    </div></div>
   )
 }
 
 
-export default Login
+export default Login;
