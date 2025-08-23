@@ -15,12 +15,13 @@
 
 .team-section {
   padding: 6rem 1rem;
-  background-color: var(--bg-color);
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: "Inter", sans-serif;
+  background: transparent;
+  background-color: transparent;
 }
 
 .contact-points-container {
@@ -28,7 +29,6 @@
   margin: 0 auto;
   width: 100%;
   text-align: center;
-  z-index: 1;
 }
 
 .contact-points-header {

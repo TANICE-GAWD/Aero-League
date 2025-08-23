@@ -25,26 +25,26 @@ const HeroSection = () => {
     ];
 
     useEffect(() => {
-        if (location.pathname === '/') {
-            const handleScroll = () => {
-                const scrollTop = window.scrollY;
-                setIsScrolled(scrollTop > 50);
+        const handleScroll = () => {
+            const scrollTop = window.scrollY;
+            setIsScrolled(scrollTop > 50);
 
-                let currentSectionId = 'home';
-                for (const item of navItems) {
-                    const element = document.getElementById(item.id);
-                    if (element && element.getBoundingClientRect().top <= 100) {
-                        currentSectionId = item.id;
-                    }
+            let currentSectionId = 'home';
+            for (const item of navItems) {
+                const element = document.getElementById(item.id);
+                if (element && element.getBoundingClientRect().top <= 100) {
+                    currentSectionId = item.id;
                 }
-                setActiveSection(currentSectionId);
-            };
-            window.addEventListener('scroll', handleScroll);
-            return () => window.removeEventListener('scroll', handleScroll);
-        }
-    }, [location.pathname, navItems]);
+            }
+            setActiveSection(currentSectionId);
+        };
+        
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [navItems]);
 
     const scrollToSection = (href) => {
+        // Always navigate to home first, then scroll to section
         if (location.pathname !== '/') {
             window.location.href = `/${href}`;
         } else {

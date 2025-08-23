@@ -55,6 +55,7 @@ html {
 }
 
 .header__container {
+  z-index: 1000;
  
   padding: 0 24px;
   height: 100%;

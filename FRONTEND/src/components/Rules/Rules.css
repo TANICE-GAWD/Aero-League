@@ -12,16 +12,17 @@
 
 .rules-section {
   padding: 6rem 1rem;
-  background-color: var(--bg-color);
   min-height: 100vh;
+  background: transparent;
+  background-color: transparent;
 }
 
 .rules-container {
   position: relative;
-  z-index: 5;
   max-width: 900px;
   margin: 0 auto;
   width: 100%;
+  background: transparent;
 }
 
 .rules-header-content {
@@ -55,7 +56,6 @@
 
 .accordion-item {
   position: relative;
-  z-index: 5;
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: 12px;
@@ -168,14 +168,10 @@ details[open].accordion-item .accordion-content-panel {
 .team-section {
   width: 100%;
   padding: 6rem 0;
-  background-color: var(--bg-color);
-  background-image:
-    radial-gradient(var(--card-border) 1px, transparent 1px),
-    radial-gradient(var(--card-border) 1px, var(--bg-color) 1px);
-  background-size: 40px 40px;
-  background-position: 0 0, 20px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  background: transparent;
+  background-color: transparent;
 }

@@ -1,0 +1,115 @@
+
+.dashboard-container {
+    padding: 1.5rem;
+}
+.dashboard-container > * + * {
+    margin-top: 1.5rem;
+}
+
+.dashboard-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+
+.card {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    border-radius: 1rem;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.card-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+.icon-blue {
+    color: #2563eb;
+}
+.icon-yellow {
+    color: #ca8a04;
+}
+
+.card-content {
+    padding: 1.5rem;
+    flex-grow: 1;
+}
+
+.loading-text {
+    color: #6b7280;
+}
+
+.empty-text {
+    color: #6b7280;
+}
+
+.item-list {
+    list-style-type: disc;
+    list-style-position: inside;
+}
+.item-list > * + * {
+    margin-top: 0.25rem;
+}
+
+.list-item {
+    font-size: 0.875rem;
+}
+
+.more-items-text {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    margin-top: 0.5rem;
+}
+
+.card-footer {
+    padding: 1.5rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+
+.button-outline {
+    padding: 0.5rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    background-color: transparent;
+    color: #374151;
+    font-weight: 500;
+    transition: background-color 0.2s, color 0.2s;
+    cursor: pointer;
+}
+.button-outline:hover {
+    background-color: #f3f4f6;
+}
+
+
+
+@media (min-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
