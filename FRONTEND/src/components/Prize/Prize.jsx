@@ -87,7 +87,7 @@ export default function PrizesSection() {
 
         <div className="prizes-container">
           <h2 className="prizes-title">Prizes and Opportunities</h2>
-          <p className="prizes-subtitle">Total Prize Pool: ₹1,00,000</p>
+          <p className="prizes-subtitle"></p>
 
           {/* Single row for all prize cards */}
           <div className="prizes-single-row">

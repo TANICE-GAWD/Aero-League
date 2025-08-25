@@ -1,12 +1,13 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './AeroLeague.css';
 
-const Animation = () => {
+const AeroLeagueLayout = () => {
   const containerRef = useRef(null);
   const splineRef = useRef(null);
   const [showSpline, setShowSpline] = useState(false);
+  const [isSplineLoaded, setIsSplineLoaded] = useState(false);
 
-  // Lazy-load the spline viewer when the section enters the viewport
+  
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -21,53 +22,101 @@ const Animation = () => {
     return () => observer.disconnect();
   }, []);
 
+  
   useEffect(() => {
     if (!showSpline || !splineRef.current) return;
 
     const splineViewer = splineRef.current;
+    let intervalId = null;
 
-    const hideLogo = () => {
-      const shadowRoot = splineViewer.shadowRoot;
-      if (!shadowRoot) return;
+    const onSplineReady = () => {
+      // Prevent this from running multiple times
+      if (splineViewer.hasAttribute('data-ready')) return;
+      splineViewer.setAttribute('data-ready', 'true');
 
-      const logo = shadowRoot.getElementById('logo');
-      if (logo) {
-        logo.style.display = 'none';
+      setIsSplineLoaded(true); // This hides the loader
+      clearInterval(intervalId); 
+
+      const tryInjectingStyle = (retries = 15, interval = 100) => {
+        const shadowRoot = splineViewer.shadowRoot;
+        
+        if (shadowRoot) {
+
+          const style = document.createElement('style');
+          style.innerHTML = `#logo { display: none !important; }`;
+          shadowRoot.appendChild(style);
+          return; // Success!
+        }
+
+
+        if (retries > 0) {
+          setTimeout(() => tryInjectingStyle(retries - 1, interval), interval);
+        }
+      };
+      
+      // Start the process of trying to hide the logo.
+      tryInjectingStyle();
+    };
+
+    // Method 1: Listen for the official 'load' event
+    splineViewer.addEventListener('load', onSplineReady);
+
+    // Method 2: Fallback poller that checks if the canvas has been rendered
+    intervalId = setInterval(() => {
+      if (splineViewer.shadowRoot && splineViewer.shadowRoot.querySelector('canvas')) {
+        onSplineReady();
       }
-    };
+    }, 200);
 
-    // Try immediately in case shadowRoot is already ready
-    hideLogo();
-
-    // Listen for Spline load event → ensures watermark is hidden first load
-    const handleLoad = () => {
-      hideLogo();
-    };
-
-    splineViewer.addEventListener('load', handleLoad);
-
-    // Fallback: interval check for ~2s (in case shadowRoot initializes late)
-    const interval = setInterval(hideLogo, 100);
-    const timeout = setTimeout(() => clearInterval(interval), 2000);
-
+    // Cleanup function
     return () => {
-      splineViewer.removeEventListener('load', handleLoad);
-      clearInterval(interval);
-      clearTimeout(timeout);
+      splineViewer.removeEventListener('load', onSplineReady);
+      clearInterval(intervalId);
     };
   }, [showSpline]);
 
   return (
-    <section ref={containerRef} className="animation-section">
-      {showSpline && (
-        <spline-viewer
-          ref={splineRef}
-          url="https://prod.spline.design/BpEFbgTw5ogZjSJJ/scene.splinecode"
-          no-zoom
-        ></spline-viewer>
-      )}
+    <section ref={containerRef} className="aero-league-section">
+      <div className="top-container">
+        <div className="animation-wrapper">
+          <div className="animation-panel">
+            {showSpline && !isSplineLoaded && <div className="loader-butterfly"></div>}
+
+            {showSpline && (
+              <spline-viewer
+                ref={splineRef}
+                url="https://prod.spline.design/BpEFbgTw5ogZjSJJ/scene.splinecode"
+              ></spline-viewer>
+            )}
+          </div>
+          <h3 className="tagline">BUILD. FLY. DOMINATE.</h3>
+          
+        </div>
+
+        <div className="content-panel">
+          <div className="text-content">
+            <h2>
+              A New Era of <span className="highlight-text">Racing</span>
+            </h2>
+            <p>
+              Explore the cutting-edge technology behind the Thapar Drone Challenge. Witness
+              how 3D modeling and precision engineering come together to create
+              the next generation of competitive drones.
+
+              
+              <p>
+            Join us on 5-6 September, 2025 10:00 AM onwards.
+          </p>
+            </p>
+            <button onClick={() => window.open('https://tanice-gawd.github.io/tal-doc/', '_blank')} className="learn-more-btn">Learn More</button>
+          </div>
+          <div className="image-panel">
+            <img src="./assets/drone.webp" alt="Drone in flight" />
+          </div>
+        </div>
+      </div>
     </section>
   );
 };
 
-export default Animation;
+export default AeroLeagueLayout;
