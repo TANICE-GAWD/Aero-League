@@ -1,0 +1,490 @@
+
+.container {
+    min-height: 75vh;
+    display: flex;
+    background-image: linear-gradient(to bottom right, #faf5ff, #eff6ff);
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    overflow: hidden;
+}
+
+
+.sidebar {
+    border-right: 1px solid #e9d5ff;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(4px);
+}
+.sidebarHeader {
+    padding: 0.75rem;
+    border-bottom: 1px solid #e9d5ff;
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(4px);
+}
+.sidebarHeaderTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+.sidebarTitle {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    color: rgb(31 41 55);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.icon {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+.textPurple600 { color: #9333ea; }
+.textPurple500 { color: #a855f7; }
+.textPurple300 { color: #d8b4fe; }
+.textPurple200 { color: #e9d5ff; }
+.textGray400 { color: #9ca3af; }
+
+
+.searchContainer {
+    position: relative;
+}
+.searchIcon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    width: 1rem;
+    height: 1rem;
+}
+.searchInput {
+    width: 100%;
+    padding-left: 2.5rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 1px solid #e9d5ff;
+    color: #1f2937;
+    border-radius: 0.5rem;
+}
+.searchInput:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px #a855f7;
+    border-color: transparent;
+}
+
+
+.ticketList {
+    flex: 1 1 0%;
+    overflow-y: auto;
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(4px);
+}
+.loaderText {
+    text-align: center;
+    padding: 1rem;
+    color: #6b7280;
+}
+.ticketItem {
+    padding: 0.75rem;
+    border-bottom: 1px solid #f5f3ff;
+    cursor: pointer;
+    transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.ticketItem:hover {
+    background-color: rgba(250, 245, 255, 0.7);
+}
+.ticketItemSelected {
+    background-image: linear-gradient(to right, #f5f3ff, #eff6ff);
+    border-left: 4px solid #a855f7;
+}
+.ticketItemHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+.ticketSubject {
+    font-weight: 500;
+    color: #1f2937;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1 1 0%;
+    margin-right: 0.5rem;
+    font-size: 0.875rem;
+}
+.ticketHeaderIcons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.unreadCount {
+    background-image: linear-gradient(to right, #9333ea, #3b82f6);
+    color: white;
+    font-size: 0.75rem;
+    border-radius: 9999px;
+    padding: 0.25rem 0.5rem;
+}
+.ticketMeta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.statusBadge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+.statusOpen { background-color: #dcfce7; color: #166534; }
+.statusPending { background-color: #fef9c3; color: #854d0e; }
+.statusClosed { background-color: #f3f4f6; color: #374151; }
+.metaText {
+    font-size: 0.75rem;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+.metaIcon {
+    width: 0.75rem;
+    height: 0.75rem;
+}
+.ticketPreview {
+    font-size: 0.875rem;
+    color: #4b5563;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 0.5rem;
+}
+.ticketFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+
+.chatArea {
+    flex: 1 1 0%;
+    flex-direction: column;
+    background-image: linear-gradient(to bottom right, rgba(250, 245, 255, 0.3), rgba(239, 246, 255, 0.3));
+    backdrop-filter: blur(4px);
+}
+.chatHeader {
+    padding: 0.75rem;
+    border-bottom: 1px solid #e9d5ff;
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(4px);
+}
+.chatHeaderContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.chatHeaderInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+.backButton {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+.backButton:hover {
+    background-color: #f5f3ff;
+}
+.backIcon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #4b5563;
+}
+.chatSubject {
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 0.875rem;
+}
+.chatMeta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+}
+.ticketId {
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+.messagesContainer {
+    flex: 1 1 0%;
+    overflow-y: auto;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.messageRow {
+    display: flex;
+}
+.justifyEnd { justify-content: flex-end; }
+.justifyStart { justify-content: flex-start; }
+.messageBubble {
+    max-width: 85%;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+.userMessage {
+    background-image: linear-gradient(to right, #9333ea, #3b82f6);
+    color: white;
+}
+.adminMessage {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #1f2937;
+    border: 1px solid #f5f3ff;
+}
+.messageText {
+    font-size: 0.875rem;
+    line-height: 1.625;
+}
+.messageTimeContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.25rem;
+    margin-top: 0.25rem;
+    font-size: 0.75rem;
+}
+.userMessageTime { color: #e9d5ff; }
+.adminMessageTime { color: #6b7280; }
+
+
+.chatInputArea {
+    padding: 0.75rem;
+    border-top: 1px solid #e9d5ff;
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(4px);
+}
+.chatInputWrapper {
+    display: flex;
+    gap: 0.5rem;
+}
+.messageTextarea {
+    flex: 1 1 0%;
+    padding: 0.5rem 0.75rem;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 1px solid #e9d5ff;
+    color: #1f2937;
+    border-radius: 0.5rem;
+    resize: none;
+    min-height: 40px;
+    max-height: 120px;
+}
+.messageTextarea:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px #a855f7;
+}
+.sendButton {
+    padding: 0.5rem 1rem;
+    background-image: linear-gradient(to right, #9333ea, #3b82f6);
+    color: white;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    border: none;
+    cursor: pointer;
+}
+.sendButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.sendIcon {
+    width: 1rem;
+    height: 1rem;
+}
+
+
+.placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #9ca3af;
+}
+.placeholderIcon {
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.5;
+}
+.placeholderTitle {
+    font-size: 1.125rem;
+    font-weight: 500;
+}
+.placeholderText {
+    font-size: 0.875rem;
+}
+
+
+.createTicketButton {
+    padding: 0.5rem;
+    background-image: linear-gradient(to right, #9333ea, #3b82f6);
+    color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    border: none;
+    cursor: pointer;
+}
+.createTicketIcon {
+    width: 1rem;
+    height: 1rem;
+}
+.closedTicketBanner {
+    padding: 0.75rem;
+    border-top: 1px solid #e9d5ff;
+    background-color: #fefce8;
+    color: #a16207;
+    text-align: center;
+    font-size: 0.875rem;
+}
+
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    z-index: 50;
+}
+.modalContent {
+    background-color: white;
+    border-radius: 0.5rem;
+    max-width: 28rem;
+    width: 100%;
+    padding: 1.5rem;
+}
+.modalHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+.modalIconWrapper {
+    width: 3rem;
+    height: 3rem;
+    background-color: #dbeafe;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.modalIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: #2563eb;
+}
+.modalTitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #111827;
+}
+.modalSubtitle {
+    color: #4b5563;
+}
+.modalBody {
+    margin-bottom: 1.5rem;
+}
+.modalLabel {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.25rem;
+}
+.modalInput, .modalTextarea {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+}
+.modalInput:focus, .modalTextarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #3b82f6;
+}
+.modalTextarea {
+    height: 6rem;
+}
+.modalFooter {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+.modalCancelButton, .modalCreateButton {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 150ms;
+}
+.modalCancelButton {
+    color: #374151;
+    background-color: #f3f4f6;
+}
+.modalCancelButton:hover {
+    background-color: #e5e7eb;
+}
+.modalCreateButton {
+    background-color: #2563eb;
+    color: white;
+}
+.modalCreateButton:hover {
+    background-color: #1d4ed8;
+}
+.modalCreateButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+
+.hidden { display: none; }
+.wFull { width: 100%; }
+.mdFlex { display: none; }
+.smHidden { display: none; }
+.smVisible { display: inline; }
+
+
+@media (min-width: 640px) {
+    .smHidden { display: inline; }
+    .smVisible { display: none; }
+    .ticketSubject { font-size: 1rem; }
+    .ticketPreview { font-size: 0.875rem; }
+}
+
+@media (min-width: 768px) {
+    .mdW1_3 { width: 33.333333%; }
+    .mdFlex { display: flex; }
+    .sidebarHeader { padding: 1rem; }
+    .sidebarHeaderTop { margin-bottom: 1rem; }
+    .sidebarTitle { font-size: 1.25rem; }
+    .ticketItem { padding: 1rem; }
+    .chatHeader { padding: 1rem; }
+    .chatSubject { font-size: 1rem; }
+    .messagesContainer { padding: 1rem; gap: 1rem; }
+    .messageBubble { max-width: 70%; }
+    .chatInputArea { padding: 1rem; }
+    .backButton { display: none; }
+}

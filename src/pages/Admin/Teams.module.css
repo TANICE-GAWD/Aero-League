@@ -1,0 +1,858 @@
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    gap: 1.5rem;
+    padding: 0;
+  }
+}
+
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+@media (min-width: 640px) {
+  .header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+.headerTitle {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+  color: rgb(17 24 39);
+}
+.headerSubtitle {
+  color: rgb(75 85 99);
+}
+.headerBadgeContainer {
+  display: flex;
+  align-items: center;
+}
+.headerBadgeContainer > :not([hidden]) ~ :not([hidden]) {
+  margin-left: 0.75rem;
+}
+.totalTeamsBadge {
+  background-color: rgb(237 233 254);
+  color: rgb(91 33 182);
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+}
+
+
+.filtersCard {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  border: 1px solid rgb(229 231 235);
+  padding: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .filtersCard {
+    padding: 1rem;
+  }
+}
+.searchContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+@media (min-width: 640px) {
+  .searchContainer {
+    flex-direction: row;
+  }
+}
+.searchInputWrapper {
+  flex: 1 1 0%;
+  position: relative;
+}
+.searchIcon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgb(156 163 175);
+  height: 1rem;
+  width: 1rem;
+}
+.searchInput {
+  width: 100%;
+  padding-left: 2.5rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border: 1px solid rgb(209 213 219);
+  border-radius: 0.5rem;
+}
+.searchInput:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+  --tw-ring-color: rgb(167 139 250);
+  border-color: transparent;
+}
+.checkboxFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+}
+.checkboxLabel > :not([hidden]) ~ :not([hidden]) {
+  margin-left: 0.5rem;
+}
+.checkbox {
+  border-radius: 0.25rem;
+  border-color: rgb(209 213 219);
+  color: rgb(139 92 246);
+}
+.checkbox:focus {
+  --tw-ring-color: rgb(167 139 250);
+}
+.checkboxText {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: rgb(55 65 81);
+}
+
+
+.loadingText {
+  text-align: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.tableContainer {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  border: 1px solid rgb(229 231 235);
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .tableContainer {
+    font-size: 0.875rem;
+  }
+}
+.tableWrapper {
+  overflow-x: auto;
+}
+.table {
+  width: 100%;
+}
+.tableHead {
+  background-color: rgb(249 250 251);
+  border-bottom: 1px solid rgb(229 231 235);
+}
+.tableHeader {
+  padding: 0.75rem 1.5rem;
+  text-align: left;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+  color: rgb(107 114 128);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.tableBody {
+  background-color: #fff;
+}
+.tableBody tr + tr {
+  border-top: 1px solid rgb(229 231 235);
+}
+.tableRow {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.tableRow:hover {
+  background-color: rgb(249 250 251);
+}
+.tableCell {
+  padding: 0.75rem 1rem;
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .tableCell {
+    padding: 1rem 1.5rem;
+  }
+}
+.sortButton {
+  display: flex;
+  align-items: center;
+  transition: color 150ms ease-in-out;
+}
+.sortButton > :not([hidden]) ~ :not([hidden]) {
+  margin-left: 0.25rem;
+}
+.sortButton:hover {
+  color: rgb(139 92 246);
+}
+.sortIcon {
+  height: 1rem;
+  width: 1rem;
+}
+.cellFlexContainer {
+  display: flex;
+  align-items: center;
+}
+.avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-image: linear-gradient(to bottom right, rgb(167 139 250), rgb(139 92 246));
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.avatarInitials {
+  color: #fff;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+}
+.leaderInfo {
+  margin-left: 1rem;
+}
+.textMdMedium {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  color: rgb(17 24 39);
+}
+.textSmMuted {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: rgb(107 114 128);
+}
+.textSmDefault {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: rgb(17 24 39);
+}
+.teamSizeIcon {
+  height: 1rem;
+  width: 1rem;
+  color: rgb(156 163 175);
+  margin-right: 0.25rem;
+}
+.statusContainer {
+  display: flex;
+  flex-direction: column;
+}
+.statusContainer > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 0.25rem;
+}
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+}
+.statusIcon {
+  height: 0.75rem;
+  width: 0.75rem;
+  margin-right: 0.25rem;
+}
+.statusVerified {
+  background-color: rgb(220 252 231);
+  color: rgb(22 101 52);
+}
+.statusUnverified {
+  background-color: rgb(254 226 226);
+  color: rgb(153 27 27);
+}
+.statusSubmitted {
+  background-color: rgb(219 234 254);
+  color: rgb(30 64 175);
+}
+.statusFreezed {
+  background-color: rgb(254 240 138);
+  color: rgb(133 77 14);
+}
+.actionsContainer {
+  display: flex;
+  align-items: center;
+}
+.actionsContainer > :not([hidden]) ~ :not([hidden]) {
+  margin-left: 0.5rem;
+}
+.iconButton {
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  transition: background-color 150ms ease-in-out;
+}
+.actionIcon {
+  height: 1rem;
+  width: 1rem;
+}
+.iconButtonView {
+  color: rgb(139 92 246);
+}
+.iconButtonView:hover {
+  color: rgb(107 33 168);
+  background-color: rgb(245 243 255);
+}
+.iconButtonEdit {
+  color: rgb(37 99 235);
+}
+.iconButtonEdit:hover {
+  color: rgb(29 78 216);
+  background-color: rgb(239 246 255);
+}
+.iconButtonDelete {
+  color: rgb(220 38 38);
+}
+.iconButtonDelete:hover {
+  color: rgb(185 28 28);
+  background-color: rgb(254 242 242);
+}
+
+
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 50;
+}
+.modalContent {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  max-width: 95vw;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@media (min-width: 768px) {
+  .modalContent {
+    max-width: 42rem;
+  }
+}
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 1px solid rgb(229 231 235);
+}
+
+@media (min-width: 768px) {
+  .modalHeader {
+    padding: 1.5rem;
+  }
+}
+.modalTitle {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  color: rgb(17 24 39);
+}
+.modalCloseButton {
+  color: rgb(156 163 175);
+  transition: color 150ms ease-in-out;
+}
+.modalCloseButton:hover {
+  color: rgb(75 85 99);
+}
+.modalCloseIcon {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+.modalBody {
+  padding: 1rem;
+}
+.modalBody > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  .modalBody {
+    padding: 1.5rem;
+  }
+  .modalBody > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 1.5rem;
+  }
+}
+.viewModalLeaderInfo {
+  display: flex;
+  align-items: center;
+}
+.viewModalLeaderInfo > :not([hidden]) ~ :not([hidden]) {
+  margin-left: 1rem;
+}
+.viewModalAvatar {
+  width: 4rem;
+  height: 4rem;
+  background-image: linear-gradient(to bottom right, rgb(167 139 250), rgb(139 92 246));
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.viewModalAvatarInitials {
+  color: #fff;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+}
+.viewModalLeaderName {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  color: rgb(17 24 39);
+}
+.textGray600 {
+  color: rgb(75 85 99);
+}
+.viewModalGrid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1rem;
+}
+@media (min-width: 768px) {
+  .viewModalGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.modalSection {
+  display: flex;
+  flex-direction: column;
+}
+.modalSection > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 0.75rem;
+}
+.infoItem {
+  display: flex;
+  align-items: center;
+}
+.infoItem > :not([hidden]) ~ :not([hidden]) {
+  margin-left: 0.75rem;
+}
+.infoIcon {
+  height: 1.25rem;
+  width: 1.25rem;
+  color: rgb(156 163 175);
+}
+.infoLabel {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: rgb(107 114 128);
+}
+.infoValue {
+  color: rgb(17 24 39);
+}
+.verifiedIcon {
+  height: 1rem;
+  width: 1rem;
+  color: rgb(34 197 94);
+}
+.sectionTitle {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 500;
+  color: rgb(17 24 39);
+  margin-bottom: 0.75rem;
+}
+.memberItem {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  background-color: rgb(249 250 251);
+  border-radius: 0.5rem;
+}
+.memberItem > :not([hidden]) ~ :not([hidden]) {
+  margin-left: 0.75rem;
+}
+.memberAvatar {
+  width: 2rem;
+  height: 2rem;
+  background-image: linear-gradient(to bottom right, rgb(192 132 252), rgb(167 139 250));
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.memberAvatarInitials {
+  color: #fff;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 600;
+}
+.memberName {
+  font-weight: 500;
+  color: rgb(17 24 39);
+}
+.memberEmail {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: rgb(75 85 99);
+}
+.videoSubmissionBox {
+  background-image: linear-gradient(to right, rgb(245 243 255), rgb(239 246 255));
+  border-radius: 0.5rem;
+  padding: 1rem;
+  border: 1px solid rgb(224 231 255);
+}
+.videoInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.videoLabel {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: rgb(75 85 99);
+  margin-bottom: 0.25rem;
+}
+.videoLink {
+  color: rgb(17 24 39);
+  font-weight: 500;
+  max-width: 28rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.viewVideoButton {
+  background-color: rgb(139 92 246);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  transition: background-color 150ms ease-in-out;
+}
+.viewVideoButton > :not([hidden]) ~ :not([hidden]) {
+  margin-left: 0.5rem;
+}
+.viewVideoButton:hover {
+  background-color: rgb(126 34 206);
+}
+
+
+.editModalBody {
+  display: flex;
+  flex-direction: column;
+}
+.editModalBody > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 1rem;
+}
+.editFormGrid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1rem;
+}
+@media (min-width: 768px) {
+  .editFormGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.inputLabel {
+  display: block;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  color: rgb(55 65 81);
+  margin-bottom: 0.25rem;
+}
+.formInput {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgb(209 213 219);
+  border-radius: 0.5rem;
+}
+.formInput:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --tw-ring-color: rgb(167 139 250);
+  border-color: transparent;
+}
+.formInput:disabled {
+  background-color: rgb(243 244 246);
+  cursor: not-allowed;
+}
+.editSectionTitle {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 600;
+  color: rgb(17 24 39);
+  margin-bottom: 0.5rem;
+}
+.videoEditList > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 0.5rem;
+}
+.videoEditItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  background-color: rgb(249 250 251);
+  border-radius: 0.5rem;
+}
+.videoInput {
+  flex: 1 1 0%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgb(209 213 219);
+  border-radius: 0.5rem;
+}
+.videoInput:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --tw-ring-color: rgb(167 139 250);
+  border-color: transparent;
+}
+.videoLinkDisplay {
+  flex: 1 1 0%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgb(209 213 219);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgb(37 99 235);
+}
+.videoLinkDisplay:hover {
+  text-decoration: underline;
+}
+.editCheckboxesContainer {
+  display: flex;
+  align-items: center;
+}
+.editCheckboxesContainer > :not([hidden]) ~ :not([hidden]) {
+  margin-left: 1rem;
+}
+.editMembersList > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 0.75rem;
+}
+.editMemberItem {
+  display: flex;
+  align-items: center;
+}
+.editMemberItem > :not([hidden]) ~ :not([hidden]) {
+  margin-left: 0.75rem;
+}
+.memberInput {
+  flex: 1 1 0%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgb(209 213 219);
+  border-radius: 0.5rem;
+}
+.memberInput:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --tw-ring-color: rgb(167 139 250);
+  border-color: transparent;
+}
+.addMemberButton {
+  margin-top: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background-color: rgb(22 163 74);
+  color: #fff;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  transition: background-color 150ms ease-in-out;
+}
+.addMemberButton:hover {
+  background-color: rgb(21 128 61);
+}
+.addMemberButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1rem;
+}
+.modalFooter > :not([hidden]) ~ :not([hidden]) {
+  margin-left: 0.75rem;
+}
+.button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 150ms ease-in-out;
+  display: flex;
+  align-items: center;
+}
+.button > :not([hidden]) ~ :not([hidden]) {
+  margin-left: 0.5rem;
+}
+.button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+.cancelButton {
+  color: rgb(55 65 81);
+  background-color: rgb(243 244 246);
+}
+.cancelButton:hover {
+  background-color: rgb(229 231 235);
+}
+.saveButton {
+  background-color: rgb(139 92 246);
+  color: #fff;
+}
+.saveButton:hover {
+  background-color: rgb(126 34 206);
+}
+
+
+.deleteModalContent {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  max-width: 28rem;
+  width: 100%;
+}
+.deleteModalHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.deleteModalHeader > :not([hidden]) ~ :not([hidden]) {
+  margin-left: 0.75rem;
+}
+.deleteIconWrapper {
+  width: 3rem;
+  height: 3rem;
+  background-color: rgb(254 226 226);
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.deleteIcon {
+  height: 1.5rem;
+  width: 1.5rem;
+  color: rgb(220 38 38);
+}
+.deleteConfirmationText {
+  color: rgb(55 65 81);
+  margin-bottom: 1.5rem;
+}
+.deleteButton {
+  background-color: rgb(220 38 38);
+  color: #fff;
+}
+.deleteButton:hover {
+  background-color: rgb(185 28 28);
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 768px) {
+  .headerTitle {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+  
+  .headerActions {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+  
+  .totalTeamsBadge {
+    text-align: center;
+  }
+  
+  .checkboxFilters {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .tableWrapper {
+    font-size: 0.75rem;
+  }
+  
+  .tableHeader {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .cellFlexContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .leaderInfo {
+    margin-left: 0;
+  }
+  
+  .statusContainer {
+    gap: 0.125rem;
+  }
+  
+  .actionsContainer {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .iconButton {
+    width: 100%;
+    justify-content: center;
+    padding: 0.5rem;
+  }
+  
+  .videoInfo {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  
+  .viewVideoButton {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .editCheckboxesContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .editMemberItem {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+  
+  .modalFooter {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .button {
+    width: 100%;
+    justify-content: center;
+  }
+}

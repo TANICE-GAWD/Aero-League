@@ -224,7 +224,7 @@
 
 /* Navbar Styles */
 .navbar {
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 1rem;
 }
 
 .mobile-header {
@@ -285,7 +285,7 @@
 }
 
 .desktop-header {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .desktop-title {
@@ -309,8 +309,8 @@
 }
 
 .mobile-title-section {
-  margin-bottom: 1.5rem;
-  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  margin-top: 0.5rem;
   padding: 0 0.5rem;
 }
 
@@ -343,11 +343,19 @@
   }
   
   .navbar {
-    padding: 1rem 1.5rem;
+    padding: 0.75rem 1.5rem;
   }
   
   .page-content-inner {
     padding: 0 2rem;
+  }
+  
+  .sidebar-container {
+    width: 16rem;
+  }
+  
+  .main-content {
+    margin-left: 0;
   }
 }
 
@@ -358,5 +366,76 @@
   
   .sidebar-overlay {
     display: block;
+  }
+  
+  .sidebar-container {
+    width: 0;
+  }
+  
+  .main-content {
+    width: 100%;
+    margin-left: 0;
+  }
+  
+  .dashboard-container {
+    position: relative;
+  }
+  
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 16rem;
+    z-index: 50;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .sidebar.open {
+    transform: translateX(0);
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .page-content-inner {
+    padding: 0 0.5rem;
+  }
+  
+  .navbar {
+    padding: 0.5rem;
+  }
+  
+  .mobile-header {
+    padding: 0.5rem 1rem;
+  }
+  
+  .breadcrumb {
+    font-size: 0.75rem;
+  }
+  
+  .mobile-title {
+    font-size: 1.25rem;
+  }
+  
+  .sidebar {
+    width: 14rem;
+  }
+  
+  .sidebar-header {
+    padding: 1rem;
+  }
+  
+  .sidebar-title {
+    font-size: 1.125rem;
+  }
+  
+  .nav-item {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .sidebar-footer {
+    padding: 0.75rem;
   }
 }

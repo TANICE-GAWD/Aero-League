@@ -1,0 +1,490 @@
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    gap: 1.5rem;
+    padding: 0;
+  }
+}
+
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.headerTitle {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+@media (min-width: 768px) {
+  .headerTitle {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+}
+.headerSubtitle {
+  color: #4b5563;
+}
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.totalBadge {
+  background-color: #ede9fe;
+  color: #5b21b6;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+}
+.newButton {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  background-color: #7c3aed;
+  color: #ffffff;
+  border-radius: 0.5rem;
+  transition-property: background-color;
+  transition-duration: 150ms;
+}
+.newButton:hover {
+  background-color: #6d28d9;
+}
+.newButtonIcon {
+  height: 1rem;
+  width: 1rem;
+  margin-right: 0.25rem;
+}
+
+
+.searchContainer {
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  border: 1px solid #e5e7eb;
+  padding: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .searchContainer {
+    padding: 1rem;
+  }
+}
+.searchWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.searchInputWrapper {
+  flex: 1;
+  position: relative;
+}
+.searchIcon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  height: 1rem;
+  width: 1rem;
+}
+.searchInput {
+  width: 100%;
+  padding-left: 2.5rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+}
+.searchInput:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px #a78bfa;
+  border-color: transparent;
+}
+
+
+.loadingText {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+
+.tableContainer {
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+}
+.tableScrollWrapper {
+  overflow-x: auto;
+}
+.table {
+  width: 100%;
+}
+.tableHead {
+  background-color: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+.tableHeaderCell {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+@media (min-width: 768px) {
+  .tableHeaderCell {
+    padding: 0.75rem 1.5rem;
+  }
+}
+.tableBody {
+  background-color: #ffffff;
+  divide-y: 1px solid #e5e7eb;
+}
+.tableRow {
+  transition-property: background-color;
+  transition-duration: 150ms;
+}
+.tableRow:hover {
+  background-color: #f9fafb;
+}
+.tableCell {
+  padding: 0.75rem 1rem;
+  white-space: nowrap;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 768px) {
+  .tableCell {
+    padding: 1rem 1.5rem;
+  }
+}
+.tableCellTitle {
+  font-weight: 500;
+  color: #111827;
+}
+.tableCellMessage,
+.tableCellUser {
+  color: #4b5563;
+}
+.tableCellDate {
+  color: #6b7280;
+}
+.tableCellActions {
+  font-weight: 500;
+}
+
+
+.sortButton {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition-property: color;
+  transition-duration: 150ms;
+}
+.sortButton:hover {
+  color: #7c3aed;
+}
+.sortIcon {
+  height: 1rem;
+  width: 1rem;
+}
+
+
+.actionsGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.actionButton {
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  transition-property: background-color, color;
+  transition-duration: 150ms;
+}
+.actionIcon {
+  height: 1rem;
+  width: 1rem;
+}
+.viewButton {
+  color: #7c3aed;
+}
+.viewButton:hover {
+  color: #5b21b6;
+  background-color: #f5f3ff;
+}
+.editButton {
+  color: #2563eb;
+}
+.editButton:hover {
+  color: #1d4ed8;
+  background-color: #eff6ff;
+}
+.deleteButton {
+  color: #dc2626;
+}
+.deleteButton:hover {
+  color: #991b1b;
+  background-color: #fef2f2;
+}
+
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 50;
+}
+.modalContent {
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  max-width: 95vw;
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .modalContent {
+    max-width: 32rem;
+    padding: 1.5rem;
+  }
+}
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.75rem;
+}
+.modalTitle {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  color: #111827;
+}
+.modalCloseButton {
+  color: #9ca3af;
+}
+.modalCloseButton:hover {
+  color: #4b5563;
+}
+.modalCloseIcon {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.formLabel {
+  display: block;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.25rem;
+}
+.formInput,
+.formTextarea {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+}
+.formInput:focus,
+.formTextarea:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px #a78bfa;
+}
+.modalFooter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 1rem;
+}
+
+@media (min-width: 640px) {
+  .modalFooter {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+.cancelButton {
+  padding: 0.5rem 1rem;
+  color: #374151;
+  background-color: #f3f4f6;
+  border-radius: 0.5rem;
+}
+.cancelButton:hover {
+  background-color: #e5e7eb;
+}
+.saveButton {
+  padding: 0.5rem 1rem;
+  background-color: #7c3aed;
+  color: #ffffff;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.saveButton:hover {
+  background-color: #6d28d9;
+}
+.saveButtonIcon {
+  height: 1rem;
+  width: 1rem;
+}
+
+
+.viewModalBody {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.viewLabel {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 0.25rem;
+}
+.viewValue {
+  color: #111827;
+}
+.viewValueTitle {
+  color: #111827;
+  font-weight: 500;
+}
+
+
+.deleteModalContent {
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  max-width: 95vw;
+  width: 100%;
+  padding: 1rem;
+}
+
+@media (min-width: 640px) {
+  .deleteModalContent {
+    max-width: 28rem;
+    padding: 1.5rem;
+  }
+}
+.deleteModalHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.deleteIconWrapper {
+  width: 3rem;
+  height: 3rem;
+  background-color: #fee2e2;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.deleteIconHeader {
+  height: 1.5rem;
+  width: 1.5rem;
+  color: #dc2626;
+}
+.deleteConfirmationText {
+  color: #374151;
+  margin-bottom: 1.5rem;
+}
+.deleteConfirmButton {
+  padding: 0.5rem 1rem;
+  background-color: #dc2626;
+  color: #ffffff;
+  border-radius: 0.5rem;
+}
+.deleteConfirmButton:hover {
+  background-color: #b91c1c;
+}
+
+
+@media (min-width: 640px) {
+  .header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .searchWrapper {
+    flex-direction: row;
+  }
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 640px) {
+  .headerActions {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+  
+  .totalBadge {
+    text-align: center;
+  }
+  
+  .newButton {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .tableScrollWrapper {
+    font-size: 0.75rem;
+  }
+  
+  .tableCellMessage {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .actionsGroup {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .actionButton {
+    width: 100%;
+    justify-content: center;
+    padding: 0.5rem;
+  }
+  
+  .cancelButton,
+  .saveButton,
+  .deleteConfirmButton {
+    width: 100%;
+    justify-content: center;
+  }
+}
