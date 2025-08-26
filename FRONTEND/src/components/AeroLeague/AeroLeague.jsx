@@ -90,28 +90,19 @@ const AeroLeagueLayout = () => {
             )}
           </div>
           <h3 className="tagline">BUILD. FLY. DOMINATE.</h3>
+            <div className="text-content">
+            <p>
+                  Join us on 5-6 September, 2025 10:00 AM onwards.
+            </p>
+            <button onClick={() => window.open('https://tanice-gawd.github.io/tal-doc/', '_blank')} className="learn-more-btn">Learn More</button>
+          </div>
           
         </div>
 
         <div className="content-panel">
-          <div className="text-content">
-            <h2>
-              A New Era of <span className="highlight-text">Racing</span>
-            </h2>
-            <p>
-              Explore the cutting-edge technology behind the Thapar Drone Challenge. Witness
-              how 3D modeling and precision engineering come together to create
-              the next generation of competitive drones.
 
-              
-              <p>
-            Join us on 5-6 September, 2025 10:00 AM onwards.
-          </p>
-            </p>
-            <button onClick={() => window.open('https://tanice-gawd.github.io/tal-doc/', '_blank')} className="learn-more-btn">Learn More</button>
-          </div>
           <div className="image-panel">
-            <img src="./assets/drone.webp" alt="Drone in flight" />
+            <img src="./assets/Logo.png" alt="Drone in flight" />
           </div>
         </div>
       </div>
