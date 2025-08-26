@@ -44,7 +44,7 @@ body {
   margin-bottom: 5rem;
   font-family: "Montserrat", sans-serif;
   font-weight: 800;
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-size: clamp(3rem, 5vw, 5rem);
   color: var(--text-primary);
   letter-spacing: 0.05em;
   z-index: 1;
@@ -112,7 +112,20 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 0.75rem;
+}
+
+.headerInfo{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.challengeSubheader {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-top: 0.25rem;
+  color: var(--textPrimaryLight);
+  text-transform: none;
 }
 
 .headerIcon {

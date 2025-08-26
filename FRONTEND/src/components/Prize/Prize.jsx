@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { GiDeliveryDrone } from "react-icons/gi";
-import { FaCrown, FaTrophy, FaLightbulb, FaUsers, FaRupeeSign, FaListUl, FaCheckCircle } from "react-icons/fa";
+import { FaCrown, FaTrophy, FaLightbulb, FaMedal} from "react-icons/fa";
 import { IoMdRibbon } from "react-icons/io";
 import "./Prize.css";
 
@@ -48,26 +48,26 @@ export default function PrizesSection() {
   const prizeData = [
     {
       icon: <FaCrown />,
-      title: "1st Place Reward",
-      amount: "₹ 25,000",
+      title: "1st Place",
+      amount: "₹ 21,000",
       tier: "gold",
     },
     {
-      icon: <IoMdRibbon />,
-      title: "2nd Place Reward",
-      amount: "₹ 12,000",
+      icon: <FaMedal />,
+      title: "2nd Place",
+      amount: "₹ 15,000",
       tier: "silver",
     },
     {
-      icon: <FaLightbulb />,
-      title: "3rd Place Reward",
-      amount: "₹ 5,000",
+      icon: <IoMdRibbon />,
+      title: "3rd Place",
+      amount: "₹ 11,000",
       tier: "bronze",
     },
     {
       icon: <FaTrophy />,
-      title: "Strategic Dash Winner",
-      amount: "₹ 10,000",
+      title: "Race Winner",
+      amount: "₹ 5,000",
       tier: "red",
     },
   ];
@@ -86,7 +86,7 @@ export default function PrizesSection() {
         </div>
 
         <div className="prizes-container">
-          <h2 className="prizes-title">Prizes and Opportunities</h2>
+          <h2 className="prizes-title">Winning Awards</h2>
           <p className="prizes-subtitle"></p>
 
           {/* Single row for all prize cards */}

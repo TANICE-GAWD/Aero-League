@@ -15,6 +15,7 @@ const challengesData = [
     id: 1,
     tag: "CHALLENGE 1",
     title: "Low-Level Flight",
+    subheader: "Challenging low-altitude obstructed environments.",
     objective:
       "Showcase your piloting skills by performing acrobatic loops and navigating obstacles, all while maintaining a challenging low altitude.",
     Icon: FaCrosshairs,
@@ -25,6 +26,7 @@ const challengesData = [
     id: 2,
     tag: "CHALLENGE 2",
     title: "Evening Recon",
+    subheader: "Signal communication and patrolling.",
     objective:
       "Scan the twilight landscape for signal flashes and use the announcement system to report your findings accurately and swiftly.",
     Icon: FaBullhorn,
@@ -35,6 +37,7 @@ const challengesData = [
     id: 3,
     tag: "CHALLENGE 3",
     title: "TURBULENT DELIVERY",
+    subheader: "Deliver payload during heavy turbulence.",
     objective:
       "Navigate through heavy air turbulence and evade enemy threats to deliver your critical 250 gm payload to a precise landing zone.",
     Icon: FaParachuteBox,
@@ -45,16 +48,18 @@ const challengesData = [
     id: 4,
     tag: "CHALLENGE 4",
     title: "THE GAUNTLET",
+    subheader: "Reach the target in low visibility.",
     objective:
       "Rely solely on your instruments to navigate a treacherous, smoke-filled tunnel. Avoid submerged obstacles and the tunnel walls in zero-visibility conditions.",
     Icon: FaArchway,
-    accentColor: "#4682B4",
-    gradientColors: ["#5e89b2", "#4682B4"],
+    accentColor: "#63b1f0ff",
+    gradientColors: ["#7abcfaff", "#3c96e0ff"],
   },
   {
     id: 5,
     tag: "BONUS RACE",
     title: "STRATEGIC DASH",
+    subheader: "Fastest Drone wins the race.",
     objective:
       "This isn't just about speed, it's about strategy. Decide on the fly which checkpoints to hit and which to skip, but be warned: every missed checkpoint comes at a cost.",
     Icon: FaFlagCheckered,
@@ -64,7 +69,7 @@ const challengesData = [
 ];
 
 const ChallengeCard = ({ challenge, isVisible }) => {
-  const { Icon, title, objective, tag, gradientColors, accentColor } = challenge;
+  const { Icon, title, objective, tag, gradientColors, accentColor, subheader } = challenge;
 
   return (
     <div
@@ -77,10 +82,13 @@ const ChallengeCard = ({ challenge, isVisible }) => {
     >
       <header className="cardHeader">
         <div className="headerTop">
+          <div className="headerInfo">
           <Icon className="headerIcon" />
+          <h3 className="cardTitle">{title}</h3>
+          </div>
           <span className="challengeTagHeader">{tag}</span>
         </div>
-        <h3 className="cardTitle">{title}</h3>
+        <span className="challengeSubheader">{subheader}</span>
       </header>
       <div className="cardBody">
         <div className="objectiveBox">

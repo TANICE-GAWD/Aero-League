@@ -1,6 +1,6 @@
 
 :root {
-  --gold: #ffd700;
+  --gold: #f9d401;
   --silver: #c0c0c0;
   --bronze: #cd7f32;
   --red: #ff4d4f;
@@ -90,6 +90,9 @@
   position: relative;
   overflow: hidden;
   border-top: 5px solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .prize-card:hover {
@@ -103,7 +106,7 @@
 .prize-card--bronze { border-color: var(--bronze); }
 .prize-card--red { border-color: var(--red); }
 .prize-card-icon {
-  font-size: 3rem;
+  font-size: 4rem;
   margin-bottom: 1rem;
 }
 
@@ -116,6 +119,7 @@
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--text-light);
+  margin-top: 0.5rem;
   margin-bottom: 0.25rem;
 }
 
@@ -129,7 +133,6 @@
   font-size: 2.5rem;
   font-weight: 700;
   color: var(--text-dark);
-  margin-bottom: 1.5rem;
 }
 
 

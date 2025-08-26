@@ -1,113 +1,26 @@
-import React, { useRef, useEffect, useState } from 'react';
-import './AeroLeague.css';
+import './AeroLeague.css'
 
-const AeroLeagueLayout = () => {
-  const containerRef = useRef(null);
-  const splineRef = useRef(null);
-  const [showSpline, setShowSpline] = useState(false);
-  const [isSplineLoaded, setIsSplineLoaded] = useState(false);
-
-  
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShowSpline(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    if (containerRef.current) observer.observe(containerRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  
-  useEffect(() => {
-    if (!showSpline || !splineRef.current) return;
-
-    const splineViewer = splineRef.current;
-    let intervalId = null;
-
-    const onSplineReady = () => {
-      // Prevent this from running multiple times
-      if (splineViewer.hasAttribute('data-ready')) return;
-      splineViewer.setAttribute('data-ready', 'true');
-
-      setIsSplineLoaded(true); // This hides the loader
-      clearInterval(intervalId); 
-
-      const tryInjectingStyle = (retries = 15, interval = 100) => {
-        const shadowRoot = splineViewer.shadowRoot;
-        
-        if (shadowRoot) {
-
-          const style = document.createElement('style');
-          style.innerHTML = `#logo { display: none !important; }`;
-          shadowRoot.appendChild(style);
-          return; // Success!
-        }
-
-
-        if (retries > 0) {
-          setTimeout(() => tryInjectingStyle(retries - 1, interval), interval);
-        }
-      };
-      
-      // Start the process of trying to hide the logo.
-      tryInjectingStyle();
-    };
-
-    // Method 1: Listen for the official 'load' event
-    splineViewer.addEventListener('load', onSplineReady);
-
-    // Method 2: Fallback poller that checks if the canvas has been rendered
-    intervalId = setInterval(() => {
-      if (splineViewer.shadowRoot && splineViewer.shadowRoot.querySelector('canvas')) {
-        onSplineReady();
-      }
-    }, 200);
-
-    // Cleanup function
-    return () => {
-      splineViewer.removeEventListener('load', onSplineReady);
-      clearInterval(intervalId);
-    };
-  }, [showSpline]);
-
+function AeroLeagueLayout() {
   return (
-    <section ref={containerRef} className="aero-league-section">
-      <div className="top-container">
-        <div className="animation-wrapper">
-          <div className="animation-panel">
-            {showSpline && !isSplineLoaded && <div className="loader-butterfly"></div>}
-
-            {showSpline && (
-              <spline-viewer
-                ref={splineRef}
-                url="https://prod.spline.design/BpEFbgTw5ogZjSJJ/scene.splinecode"
-              ></spline-viewer>
-            )}
-          </div>
-          <h3 className="tagline">BUILD. FLY. DOMINATE.</h3>
-            <div className="text-content">
-            <p>
-                  Join us on 5-6 September, 2025 10:00 AM onwards.
-            </p>
-            <button onClick={() => window.open('https://tanice-gawd.github.io/tal-doc/', '_blank')} className="learn-more-btn">Learn More</button>
-          </div>
-          
-        </div>
-
-        <div className="content-panel">
-
-          <div className="image-panel">
-            <img src="./assets/Logo.png" alt="Drone in flight" />
-          </div>
-        </div>
+    <div className="aero-container">
+      <img src='/assets/drone/1.png' className='aero-drone-image-1' alt='Drone 1' />
+      <img src='/assets/drone/2.png' className='aero-drone-image-2' alt='Drone 2' />
+      <div className="aero-header">
+        <h1>THAPAR DRONE</h1>
+        <h2>CHALLENGE</h2>
       </div>
-    </section>
-  );
-};
 
-export default AeroLeagueLayout;
+      <h3 className="aero-subtitle">
+        <span className='aero-build'>BUILD.</span>
+        <span className='aero-fly'>FLY.</span>
+        <span className='aero-dominate'>DOMINATE.</span></h3>
+
+      <div className="aero-info">
+        <p>5th & 6th SEPTEMBER 2025 | 10 am Onwards</p>
+        <button className="learn-more-btn" onClick={() => window.open('https://tanice-gawd.github.io/tal-doc/', '_blank')}>Learn More</button>
+      </div>
+    </div>
+  )
+}
+
+export default AeroLeagueLayout

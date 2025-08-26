@@ -85,25 +85,27 @@ const ContactPoints = () => {
 
         {/* --- NEW GENERAL CONTACT SECTION --- */}
         <div className="general-contact-container">
-          <a href="mailto:mailmailmail.@mail.com" className="contact-info-pill email">
+          <a href="mailto:thapardronechallenge@gmail.com" className="contact-info-pill email">
             <span className="icon-wrapper">
               <FaEnvelope />
             </span>
-            mailmailmail@mail.com
+            thapardronechallenge@gmail.com
           </a>
-          <a href="tel:+91xxxxxxxxxx" className="contact-info-pill phone">
+          <a href="tel:+91-7986035529" className="contact-info-pill phone">
             <span className="icon-wrapper">
               <FaPhoneAlt />
             </span>
-            +91-xxxxxxxxxxx
+            +91-7986035529
           </a>
 
-          <div className="contact-info-pill location">
+          <a href='https://share.google/YugvQtKwDjuXnfEhF'>
+            <div className="contact-info-pill location">
             <span className="icon-wrapper">
               <FaMapMarkerAlt />
             </span>
-            Physical: On-Site
+            Thapar Institute of Engineering & Technology, Patiala
           </div>
+          </a>
 
         </div>
         {/* --- END OF NEW SECTION --- */}

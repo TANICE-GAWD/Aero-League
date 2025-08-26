@@ -11,8 +11,7 @@ const Footer = () => {
         { id: 'challenges', label: 'Challenges' },
         { id: 'timeline', label: 'Timeline' },
         { id: 'prizes', label: 'Prizes' },
-        { id: 'rules', label: 'Rules' },
-        { id: 'contact', label: 'Contact' },
+        { id: 'rules', label: 'Guidelines' },
     ];
 
     const handleLinkClick = (e, hash) => {
@@ -39,7 +38,6 @@ const Footer = () => {
                         <ul>
                             {quickLinks.map(link => (
                                 <li key={link.id}>
-                                    {/* --- FIX IS HERE --- */}
                                     <a href={`#${link.id}`} onClick={(e) => handleLinkClick(e, `#${link.id}`)}>
                                         {link.label}
                                     </a>
@@ -48,16 +46,10 @@ const Footer = () => {
                         </ul>
                     </div>
                     <div className="footer-column">
-                        <h3>Follow Us</h3>
-                        <div className="social-icons">
-                            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><FaFacebookF /></a>
-                            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><FaTwitter /></a>
-                            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FaLinkedinIn /></a>
-                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><FaInstagram /></a>
-                        </div>
+                        <h3>Contact Us</h3>
                         <ul className="contact-info">
-                            <li><a href="mailto:mail_uspls@gmail.com"><FaEnvelope /> mail_uspls@gmail.com</a></li>
-                            <li><a href="tel:+91xxxxxxxxx"><FaPhoneAlt /> +91-xxxxxxxxxxx</a></li>
+                            <li><a href="mailto:thapardronechallenge@gmail.com"><FaEnvelope /> thapardronechallenge@gmail.com</a></li>
+                            <li><a href="tel:+91-7986035529"><FaPhoneAlt /> +91-7986035529</a></li>
                         </ul>
                     </div>
                     <div className="footer-column">
@@ -69,8 +61,7 @@ const Footer = () => {
                 <div className="footer-bottom">
                     <div className="copyright-text">© 2025 Thapar Drone Challenge. All rights reserved.</div>
                     <div className="developer-credit">
-                        <span>Developed by Prince Sharma</span>
-                        <a href="mailto:ccs@thapar.edu">psharma_be24@thapar.edu</a>
+                        <span>Developed by: Prince Sharma | Advitya Dua</span>
                     </div>
                 </div>
             </div>
