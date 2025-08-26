@@ -150,23 +150,24 @@
 }
 
 @media (max-width: 1024px) {
-  .aero-header h1 { font-size: 5rem; }
-  .aero-header h2 { font-size: 7rem; margin-bottom: 2rem; }
-  .aero-subtitle { font-size: 2rem; letter-spacing: 6px; }
-  .aero-info p { font-size: 1.2rem; }
+  .aero-header h1 { font-size: 3.5rem; }
+  .aero-header h2 { font-size: 5rem; margin-bottom: 2rem; }
+  .aero-subtitle { font-size: 1.5rem; letter-spacing: 5px; }
+  .aero-info p { font-size: 1rem; }
   .aero-container { min-height: 60vh; }
 
-  .aero-drone-image-1 { width: 250px; visibility: hidden;}
-  .aero-drone-image-2 { width: 230px; visibility: hidden;}
+  .aero-drone-image-1 { display: none; }
+  .aero-drone-image-2 { display: none; }
 }
 
+/* Mobile */
 @media (max-width: 640px) {
-  .aero-header h1 { font-size: 3rem; }
-  .aero-header h2 { font-size: 4.5rem; }
-  .aero-subtitle { font-size: 1.2rem; letter-spacing: 3px; }
-  .aero-info p { font-size: 1rem; }
+  .aero-header h1 { font-size: 2.2rem; }
+  .aero-header h2 { font-size: 3rem; }
+  .aero-subtitle { font-size: 1rem; letter-spacing: 2px; }
+  .aero-info p { font-size: 0.9rem; }
   .aero-container { min-height: 45vh; }
 
-  .aero-drone-image-1 { width: 150px; --tx: 0%; --ty: 0%; visibility: hidden; }
-  .aero-drone-image-2 { width: 140px; --tx: 0%; --ty: 0%; visibility: hidden; }
+  .aero-drone-image-1 {display: none; }
+  .aero-drone-image-2 {display: none; }
 }
