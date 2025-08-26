@@ -73,7 +73,6 @@ html, body {
 
 /* Main Content */
 .main-content {
-  padding-top: var(--header-height);
   position: relative;
   z-index: 1;
 }
@@ -138,9 +137,7 @@ html, body {
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
-  .main-content {
-    padding-top: var(--header-height-mobile);
-  }
+  
 
   .section {
     padding: 60px 0 40px;

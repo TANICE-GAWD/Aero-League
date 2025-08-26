@@ -10,6 +10,7 @@
 
 .admin-sidebar-container {
   width: 16rem;
+  position: fixed;
 }
 
 .admin-main-content {
@@ -36,7 +37,6 @@
 .admin-content-max-width {
   max-width: 80rem;
   margin-bottom: 1rem;
-  height: 100%;
 }
 
 /* Admin Sidebar Styles */
