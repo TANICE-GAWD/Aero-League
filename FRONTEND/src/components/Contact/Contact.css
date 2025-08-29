@@ -25,7 +25,7 @@
 }
 
 .contact-points-container {
-  max-width: 1200px;
+  max-width: 1400px;  /* Increased max-width to better fit 5 cards */
   margin: 0 auto;
   width: 100%;
   text-align: center;
@@ -52,8 +52,9 @@
 
 .contact-cards-wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2.5rem;
+  /* --- CHANGED FOR 5 CARDS IN A ROW --- */
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5rem; /* Reduced gap for a better fit */
 }
 
 .contact-card {
@@ -198,11 +199,6 @@
   flex-grow: 1;
 }
 
-
-
-
-
-
 .card-drone {
   position: absolute;
   font-size: 1.75rem;
@@ -226,8 +222,25 @@
 .contact-card:hover .drone-br { bottom: 1rem; right: 1rem; transition-delay: 0.3s; transform: rotate(0deg); }
 
 
+/* --- Media queries to handle responsiveness --- */
+@media (max-width: 1200px) {
+  .contact-cards-wrapper {
+    /* Shows 3 cards on smaller desktop/large tablets */
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .contact-cards-wrapper {
+    /* Shows 2 cards on tablets */
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
 @media (max-width: 768px) {
   .contact-cards-wrapper {
+    /* Stacks to 1 card on mobile */
     grid-template-columns: 1fr;
     max-width: 400px;
     margin: 0 auto;
@@ -320,5 +333,3 @@
     justify-content: center;
   }
 }
-
-

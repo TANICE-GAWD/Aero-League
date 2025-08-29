@@ -5,40 +5,80 @@ import './Contact.css';
 
 const contactsData = [
   {
+    name: 'Dr. Sandeep Verma',
+    title: 'Event Co-ordinator',
+    description: 'Assistant Professor, CSED',
+    image: '/assets/sandeep.webp',
+    contactLink: 'mailto:thaparaeroleague@gmail.com',
+    linkedinLink: 'https://www.linkedin.com/in/dr-sandeep-verma-39b4a164/',
+  },
+  {
+    name: 'Dr. Neeraj Kumar',
+    title: 'Event Member',
+    description: 'HOD, CSED',
+    image: '/assets/neeraj.webp',
+    contactLink: 'mailto:thaparaeroleague@gmail.com',
+    linkedinLink: 'https://www.linkedin.com/in/neeraj-kumar-06a98b24/',
+  },
+  {
+    name: 'Dr. PS Rana',
+    title: 'Event Member',
+    description: 'Associate Professor, CSED',
+    image: '/assets/rana.webp',
+    contactLink: 'mailto:thaparaeroleague@gmail.com',
+    linkedinLink: 'https://www.linkedin.com/in/psrana/',
+  },
+  {
+    name: 'ABC',
+    title: 'abc',
+    description: 'abc',
+    image: '/assets/abc.webp',
+    contactLink: 'mailto:thaparaeroleague@gmail.com',
+    linkedinLink: 'https://www.linkedin.com/in/dir-ishaan-jindal-804596284',
+  },
+  {
+    name: 'XYZ',
+    title: 'xyz',
+    description: 'xyz',
+    image: '/assets/xyz.webp',
+    contactLink: 'mailto:thaparaeroleague@gmail.com',
+    linkedinLink: 'https://www.linkedin.com/in/dir-ishaan-jindal-804596284',
+  },
+  {
     name: 'Ishaan Jindal',
-    title: 'Organizer',
-    description: 'Leads the organizational efforts for the event.',
+    title: '',
+    description: '',
     image: '/assets/Ishaan_Jindal.webp',
     contactLink: 'mailto:thaparaeroleague@gmail.com',
     linkedinLink: 'https://www.linkedin.com/in/dir-ishaan-jindal-804596284',
   },
   {
     name: 'Advitya Dua',
-    title: 'Organizer',
-    description: 'Coordinates logistics and participant relations.',
+    title: '',
+    description: '',
     image: '/assets/Advitya_Dua.webp',
     contactLink: 'mailto:thaparaeroleague@gmail.com',
     linkedinLink: 'https://www.linkedin.com/in/advitya-dua',
   },
   {
     name: 'Aadil Sharma',
-    title: 'Organizer',
-    description: 'Manages marketing and community outreach.',
+    title: '',
+    description: '',
     image: '/assets/Aadil_Sharma.webp',
     contactLink: 'mailto:thaparaeroleague@gmail.com',
     linkedinLink: 'https://www.linkedin.com/in/aadil-sharma-31b005287',
   },
   {
     name: 'Prince Sharma',
-    title: 'Developer',
-    description: 'Sophomore at Thapar University, building the future.',
+    title: '',
+    description: '',
     image: '/assets/Prince_Sharma.webp',
     contactLink: 'mailto:thaparaeroleague@gmail.com',
     linkedinLink: 'https://www.linkedin.com/in/prince-tanice',
-  }
+  },
 ];
 
-// Individual Card Component to handle its own state and effects
+
 const ContactCard = ({ contact }) => {
   const handleMouseMove = (e) => {
     const { currentTarget: target } = e;
@@ -69,7 +109,7 @@ const ContactCard = ({ contact }) => {
   );
 };
 
-// Main Component
+
 const ContactPoints = () => {
   return (
     <section className="team-section">
@@ -83,7 +123,7 @@ const ContactPoints = () => {
           ))}
         </div>
 
-        {/* --- NEW GENERAL CONTACT SECTION --- */}
+        
         <div className="general-contact-container">
           <a href="mailto:thapardronechallenge@gmail.com" className="contact-info-pill email">
             <span className="icon-wrapper">
@@ -108,7 +148,7 @@ const ContactPoints = () => {
           </a>
 
         </div>
-        {/* --- END OF NEW SECTION --- */}
+        
 
       </div>
     </section>

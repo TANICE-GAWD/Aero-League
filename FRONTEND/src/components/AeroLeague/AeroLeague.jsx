@@ -16,8 +16,11 @@ function AeroLeagueLayout() {
         <span className='aero-dominate'>DOMINATE.</span></h3>
 
       <div className="aero-info">
-        <p>6th & 7th SEPTEMBER 2025 | 10 am Onwards</p>
+        <p>6th & 7th SEPTEMBER 2025 | 10 am Onwards</p>
         <button className="learn-more-btn" onClick={() => window.open('https://tanice-gawd.github.io/tal-doc/', '_blank')}>Learn More</button>
+      </div>
+      <div className="aero-footer">
+        <p className="aero-organizer">An initiative by <strong>CSED, Thapar Institute</strong></p>
       </div>
     </div>
   )
