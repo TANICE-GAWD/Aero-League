@@ -1,26 +1,5 @@
 import './AeroLeague.css';
 import React from 'react';
-
-
-
-const cardData = [
-  {
-    
-    title: 'Premier Competition',
-    description: 'Bringing together the nation\'s brightest minds to tackle demanding challenges in drone technology and test the limits of innovation.'
-  },
-  {
-    
-    title: 'Hands-On Challenge',
-    description: 'This challenge focuses on custom-built drones, fostering excellence in aerodynamics, programming, and piloting among future tech pioneers.'
-  },
-  {
-    title: 'Dominate the Skies',
-    description: 'Competitors will navigate complex obstacle courses and execute precision maneuvers in a race that is a launchpad for aerospace innovators.'
-  }
-];
-
-
 function AeroLeagueLayout() {
   return (
     <div className="aero-container">
@@ -51,21 +30,19 @@ function AeroLeagueLayout() {
 
 function AboutSection() {
   return (
-    <section className="aero-about-section">
-      <div className="aero-about-content">
-        <h2 className="aero-about-heading">ABOUT</h2>
-        <p className="aero-about-subheader">
-          An initiative by <strong>CSED, Thapar Institute</strong>
+    <section>
+      <div className="about-section">
+        <h2 className='about-header'>About</h2>
+        <p className='about-content'>
+          The Thapar Drone Challenge 2025, organized by the Department of Computer Science and Engineering (CSED), Thapar Institute of Engineering and Technology, is an exciting platform that brings together the brightest innovators to push the boundaries of drone technology.
         </p>
-        <div className="about-cards-container">
-          {cardData.map((card, index) => (
-            <div className="info-card" key={index}>
-              <div className="info-card-icon">{card.icon}</div>
-              <h3 className="info-card-title">{card.title}</h3>
-              <p className="info-card-description">{card.description}</p>
-            </div>
-          ))}
-        </div>
+        <p className='about-content'>
+          This dynamic event features four core challenges designed to test creativity, technical expertise, and problem-solving skills, along with an additional bonus race that adds to the thrill and competitive spirit.
+        </p>
+        <p className='about-content'>
+          Participants will engage in real-world scenarios, showcasing their ability to design, build, and maneuver drones with precision. By combining innovation with practical application, the Thapar Drone Challenge not only fosters technological excellence but also inspires collaboration and knowledge exchange among aspiring engineers.
+        </p>
+
       </div>
     </section>
   );

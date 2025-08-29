@@ -122,9 +122,10 @@
 }
 
 
-.aero-about-section {
+.about-section{
   padding: 6rem 2rem;
   width: 100%;
+  text-align: center;
   background-color: var(--footer-bg);
   position: relative;
   overflow: hidden;
@@ -133,29 +134,7 @@
   animation: popUp 0.8s ease-out forwards 1.2s;
 }
 
-.aero-about-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image:
-    linear-gradient(0deg, transparent 24%, var(--footer-grid-color) 25%, var(--footer-grid-color) 26%, transparent 27%, transparent 74%, var(--footer-grid-color) 75%, var(--footer-grid-color) 76%, transparent 77%, transparent),
-    linear-gradient(90deg, transparent 24%, var(--footer-grid-color) 25%, var(--footer-grid-color) 26%, transparent 27%, transparent 74%, var(--footer-grid-color) 75%, var(--footer-grid-color) 76%, transparent 77%, transparent);
-  background-size: 55px 55px;
-  z-index: 0;
-}
-
-.aero-about-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
-  position: relative;
-  z-index: 1;
-}
-
-.aero-about-heading {
+.about-header {
   font-size: 4.5rem;
   font-weight: 900;
   text-transform: uppercase;
@@ -168,65 +147,12 @@
   -webkit-text-fill-color: transparent;
 }
 
-.aero-about-subheader {
-  color: var(--footer-text);
-  font-size: 1.2rem;
-  font-weight: 400;
+.about-content {
+  font-size: 1.25rem;
+  text-align: justify;
+  color: #555;
   margin-bottom: 4rem;
-  opacity: 0.9;
-  letter-spacing: 0.5px;
-}
-
-.aero-about-subheader strong {
-  color: #181ce7;
-  font-weight: 600;
-}
-
-
-.about-cards-container {
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-
-.info-card {
-  background: rgba(43, 44, 100, 0.3);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 15px;
-  padding: 2rem;
-  flex: 1;
-  min-width: 280px;
-  max-width: 360px;
-  text-align: left;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-}
-
-.info-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-}
-
-.info-card-icon {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.info-card-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #fff;
-  margin-bottom: 0.75rem;
-}
-
-.info-card-description {
-  font-family: 'Roboto', sans-serif;
-  font-size: 1rem;
-  color: var(--footer-text);
-  line-height: 1.7;
+  font-weight: 500;
 }
 
 
@@ -315,5 +241,13 @@
   .about-cards-container {
     flex-direction: column;
     align-items: center;
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-content {
+    max-width: 1200px;
+    margin: 1em auto;
+    
   }
 }
