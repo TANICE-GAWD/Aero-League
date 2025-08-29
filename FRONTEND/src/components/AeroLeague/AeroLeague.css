@@ -1,7 +1,12 @@
 :root {
   --accent-color: #4749b5;
-  --shadow-color: rgba(71, 73, 181, 0.4);
+  --shadow-color: rgba(71, 73, 181, 0.2);
+
+ 
+  --footer-bg: transparent;
+  --footer-text: #000000;
 }
+
 
 .aero-container {
   display: flex;
@@ -13,7 +18,6 @@
   min-height: 100vh;
   position: relative;
 }
-
 
 .aero-header h1 {
   font-size: 7rem;
@@ -51,7 +55,6 @@
   animation: popUp 0.8s ease-out forwards 0.6s;
 }
 
-
 .aero-drone-image-1 {
   width: 350px;
   position: absolute;
@@ -74,11 +77,9 @@
   animation: slideInLeft 1s ease-out forwards 1.2s;
 }
 
-
 .aero-build { color: #313284; }
 .aero-fly { color: #313284; }
 .aero-dominate { color: #e43627; }
-
 
 .aero-info {
   display: flex;
@@ -98,7 +99,6 @@
   margin-bottom: 1.25rem;
 }
 
-
 .learn-more-btn {
   background-color: transparent;
   border: 2px solid var(--accent-color);
@@ -113,6 +113,7 @@
   transition: all 0.3s ease;
   position: relative;
   z-index: 2;
+  color: #333;
 }
 
 .learn-more-btn:hover {
@@ -121,65 +122,142 @@
 }
 
 
-/* --- UPDATED FOOTER STYLES --- */
-.aero-footer {
-  margin-top: 4rem;
+.aero-about-section {
+  padding: 6rem 2rem;
   width: 100%;
-  max-width: 800px;
-  padding: 0 1rem;
+  background-color: var(--footer-bg);
+  position: relative;
+  overflow: hidden;
   opacity: 0;
   transform: translateY(40px) scale(0.9);
-  animation: popUp 0.8s ease-out forwards 1.5s;
+  animation: popUp 0.8s ease-out forwards 1.2s;
 }
 
-.aero-footer-description {
-  font-size: 1rem;
+.aero-about-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    linear-gradient(0deg, transparent 24%, var(--footer-grid-color) 25%, var(--footer-grid-color) 26%, transparent 27%, transparent 74%, var(--footer-grid-color) 75%, var(--footer-grid-color) 76%, transparent 77%, transparent),
+    linear-gradient(90deg, transparent 24%, var(--footer-grid-color) 25%, var(--footer-grid-color) 26%, transparent 27%, transparent 74%, var(--footer-grid-color) 75%, var(--footer-grid-color) 76%, transparent 77%, transparent);
+  background-size: 55px 55px;
+  z-index: 0;
+}
+
+.aero-about-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.aero-about-heading {
+  font-size: 4.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 10px;
+  margin-bottom: 1rem;
+  position: relative;
+  display: inline-block;
+  background: black;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.aero-about-subheader {
+  color: var(--footer-text);
+  font-size: 1.2rem;
   font-weight: 400;
-  color: #000000;
-  line-height: 1.6;
-  margin-bottom: 1.25rem;
+  margin-bottom: 4rem;
+  opacity: 0.9;
+  letter-spacing: 0.5px;
 }
 
-.aero-footer-description:last-child {
-  margin-bottom: 0;
+.aero-about-subheader strong {
+  color: #181ce7;
+  font-weight: 600;
 }
 
-.aero-footer-description strong {
+
+.about-cards-container {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.info-card {
+  background: rgba(43, 44, 100, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 2rem;
+  flex: 1;
+  min-width: 280px;
+  max-width: 360px;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.info-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.info-card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.info-card-title {
+  font-size: 1.5rem;
   font-weight: 700;
-  color: var(--accent-color);
+  color: #fff;
+  margin-bottom: 0.75rem;
 }
 
-
+.info-card-description {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  color: var(--footer-text);
+  line-height: 1.7;
+}
 
 
 @keyframes popUp {
-  0% {
+  from {
     opacity: 0;
     transform: translateY(40px) scale(0.9);
   }
-  100% {
+  to {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
 }
 
 @keyframes slideInRight {
-  0% {
+  from {
     opacity: 0;
     transform: translate(100%, -10%);
   }
-  100% {
+  to {
     opacity: 0.6;
     transform: translate(65%, -10%);
   }
 }
 
 @keyframes slideInLeft {
-  0% {
+  from {
     opacity: 0;
     transform: translate(-100%, -15%);
   }
-  100% {
+  to {
     opacity: 0.75;
     transform: translate(-65%, -15%);
   }
@@ -193,10 +271,24 @@
   .aero-info p { font-size: 1rem; }
   .aero-container { min-height: 60vh; }
 
-  .aero-drone-image-1 { display: none; }
-  .aero-drone-image-2 { display: none; }
-}
+  .aero-drone-image-1,
+  .aero-drone-image-2 {
+    display: none;
+  }
+  
+  .aero-about-section {
+    padding: 5rem 1.5rem;
+  }
 
+  .aero-about-heading {
+    font-size: 3rem;
+    letter-spacing: 8px;
+  }
+
+  .aero-about-subheader {
+    font-size: 1.1rem;
+  }
+}
 
 @media (max-width: 640px) {
   .aero-header h1 { font-size: 2.2rem; }
@@ -204,40 +296,24 @@
   .aero-subtitle { font-size: 1rem; letter-spacing: 2px; }
   .aero-info p { font-size: 0.9rem; }
   .aero-container { min-height: 45vh; }
-
-  .aero-drone-image-1 { display: none; }
-  .aero-drone-image-2 { display: none; }
-  .aero-footer {
-    margin-top: 3rem;
+  
+  .aero-about-section {
+    padding: 4rem 1rem;
   }
-  .aero-footer-description {
-    font-size: 0.9rem;
+
+  .aero-about-heading {
+    font-size: 2.2rem;
+    letter-spacing: 5px;
+    margin-bottom: 0.5rem;
   }
-}
 
-
-.aero-footer {
-  margin-top: 2rem;
-  opacity: 0;
-  transform: translateY(40px) scale(0.9);
-  animation: popUp 0.8s ease-out forwards 1.5s;
-}
-
-.aero-organizer {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #000000;
-  margin-bottom: 0.5rem;
-}
-
-.aero-organizer strong {
-  font-weight: 700;
-  color: var(--accent-color);
-}
-
-.aero-credits {
-  font-size: 0.8rem;
-  font-style: italic;
-  color: #000000;
-  margin: 0;
+  .aero-about-subheader {
+    font-size: 1rem;
+    margin-bottom: 3rem;
+  }
+  
+  .about-cards-container {
+    flex-direction: column;
+    align-items: center;
+  }
 }
