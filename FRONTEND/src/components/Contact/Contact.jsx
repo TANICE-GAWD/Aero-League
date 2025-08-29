@@ -16,7 +16,7 @@ const contactsData = [
   {
     name: 'Dr. Neeraj Kumar',
     title: 'Event Member',
-    description: 'HOD, CSED',
+    description: 'Head of Dept., CSED',
     image: '/assets/neeraj.webp',
     contactLink: 'mailto:thaparaeroleague@gmail.com',
     linkedinLink: 'https://www.linkedin.com/in/neeraj-kumar-06a98b24/',
