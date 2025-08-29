@@ -1,4 +1,5 @@
-import { FaEnvelope, FaLinkedin, FaPhoneAlt, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from 'react-icons/fa';
+import { BsLinkedin } from 'react-icons/bs';
 import { GiDeliveryDrone } from "react-icons/gi";
 import './Contact.css';
 
@@ -47,7 +48,7 @@ const contactsData = [
   {
     name: 'Ishaan Jindal',
     title: '',
-    description: '',
+    description: 'Pre-Final year student at Thapar University',
     image: '/assets/Ishaan_Jindal.webp',
     contactLink: 'mailto:thaparaeroleague@gmail.com',
     linkedinLink: 'https://www.linkedin.com/in/dir-ishaan-jindal-804596284',
@@ -55,7 +56,7 @@ const contactsData = [
   {
     name: 'Advitya Dua',
     title: '',
-    description: '',
+    description: 'Pre-Final year student at Thapar University',
     image: '/assets/Advitya_Dua.webp',
     contactLink: 'mailto:thaparaeroleague@gmail.com',
     linkedinLink: 'https://www.linkedin.com/in/advitya-dua',
@@ -63,7 +64,7 @@ const contactsData = [
   {
     name: 'Aadil Sharma',
     title: '',
-    description: '',
+    description: 'Pre-Final year student at Thapar University',
     image: '/assets/Aadil_Sharma.webp',
     contactLink: 'mailto:thaparaeroleague@gmail.com',
     linkedinLink: 'https://www.linkedin.com/in/aadil-sharma-31b005287',
@@ -71,7 +72,7 @@ const contactsData = [
   {
     name: 'Prince Sharma',
     title: '',
-    description: '',
+    description: 'Sophomore at Thapar University',
     image: '/assets/Prince_Sharma.webp',
     contactLink: 'mailto:thaparaeroleague@gmail.com',
     linkedinLink: 'https://www.linkedin.com/in/prince-tanice',
@@ -96,7 +97,7 @@ const ContactCard = ({ contact }) => {
         <div className="card-image-wrapper">
           <img src={contact.image} alt={contact.name} className="profile-image" />
           <a href={contact.linkedinLink} target="_blank" rel="noopener noreferrer" className="linkedin-overlay">
-            <FaLinkedin />
+            <BsLinkedin />
           </a>
         </div>
         <div className="card-info-content">

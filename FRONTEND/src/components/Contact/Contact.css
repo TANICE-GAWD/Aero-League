@@ -25,7 +25,7 @@
 }
 
 .contact-points-container {
-  max-width: 1400px;  /* Increased max-width to better fit 5 cards */
+  max-width: 1400px;
   margin: 0 auto;
   width: 100%;
   text-align: center;
@@ -52,9 +52,8 @@
 
 .contact-cards-wrapper {
   display: grid;
-  /* --- CHANGED FOR 5 CARDS IN A ROW --- */
   grid-template-columns: repeat(5, 1fr);
-  gap: 1.5rem; /* Reduced gap for a better fit */
+  gap: 1.5rem;
 }
 
 .contact-card {
@@ -140,7 +139,7 @@
   right: 1rem;
   background-color: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(4px);
-  color: var(--text-primary);
+  color: #0077B5;
   border-radius: 8px;
   padding: 0.5rem 0.6rem;
   display: flex;
@@ -196,7 +195,7 @@
   color: var(--text-secondary);
   line-height: 1.6;
   margin-bottom: 0;
-  flex-grow: 1;
+  margin-top: auto;
 }
 
 .card-drone {
@@ -222,17 +221,15 @@
 .contact-card:hover .drone-br { bottom: 1rem; right: 1rem; transition-delay: 0.3s; transform: rotate(0deg); }
 
 
-/* --- Media queries to handle responsiveness --- */
+
 @media (max-width: 1200px) {
   .contact-cards-wrapper {
-    /* Shows 3 cards on smaller desktop/large tablets */
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (max-width: 992px) {
   .contact-cards-wrapper {
-    /* Shows 2 cards on tablets */
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -240,7 +237,6 @@
 
 @media (max-width: 768px) {
   .contact-cards-wrapper {
-    /* Stacks to 1 card on mobile */
     grid-template-columns: 1fr;
     max-width: 400px;
     margin: 0 auto;

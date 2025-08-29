@@ -20,7 +20,15 @@ function AeroLeagueLayout() {
         <button className="learn-more-btn" onClick={() => window.open('https://tanice-gawd.github.io/tal-doc/', '_blank')}>Learn More</button>
       </div>
       <div className="aero-footer">
-        <p className="aero-organizer">An initiative by <strong>CSED, Thapar Institute</strong></p>
+        <p className="aero-footer-description">
+          The Thapar Drone Challenge 2025 is a premier event, initiated by <strong>CSED, Thapar Institute</strong>, designed to bring together the most innovative minds in engineering and technology.
+        </p>
+        <p className="aero-footer-description">
+          This high-stakes competition challenges participants to design, build, and fly their own drones, pushing the limits of aerial robotics and fostering a spirit of hands-on innovation.
+        </p>
+        <p className="aero-footer-description">
+          Participants will tackle real-world scenarios, creating robust solutions that could shape the future of drone technology and its applications across various industries.
+        </p>
       </div>
     </div>
   )

@@ -121,6 +121,37 @@
 }
 
 
+/* --- UPDATED FOOTER STYLES --- */
+.aero-footer {
+  margin-top: 4rem;
+  width: 100%;
+  max-width: 800px;
+  padding: 0 1rem;
+  opacity: 0;
+  transform: translateY(40px) scale(0.9);
+  animation: popUp 0.8s ease-out forwards 1.5s;
+}
+
+.aero-footer-description {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #000000;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.aero-footer-description:last-child {
+  margin-bottom: 0;
+}
+
+.aero-footer-description strong {
+  font-weight: 700;
+  color: var(--accent-color);
+}
+
+
+
+
 @keyframes popUp {
   0% {
     opacity: 0;
@@ -176,6 +207,12 @@
 
   .aero-drone-image-1 { display: none; }
   .aero-drone-image-2 { display: none; }
+  .aero-footer {
+    margin-top: 3rem;
+  }
+  .aero-footer-description {
+    font-size: 0.9rem;
+  }
 }
 
 
