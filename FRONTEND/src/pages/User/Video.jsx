@@ -43,7 +43,6 @@ function VideoPage() {
   }
   return (
     <div className={styles.videoContainer}>
-      {/* Form Section */}
       <div className={styles.card}>
         <div className={styles.formHeader}>
           <div className={styles.headerContent}>
@@ -92,7 +91,6 @@ function VideoPage() {
         </div>
       </div>
 
-      {/* Submissions Section */}
       {reversedLinks.length > 0 && (
         <div className={`${styles.card} ${styles.submissionsSection}`}>
           <div className={styles.submissionsHeader}>
