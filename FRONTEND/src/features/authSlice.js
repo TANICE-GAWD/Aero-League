@@ -19,7 +19,7 @@ const authSlice = createSlice({
             state.token = null
         },
         updateVideoLinkInSlice: (state, action) => {
-            state.user.video_link = action.payload.video_link
+            state.user.video_link.push({url: action.payload.video_link, added_at: new Date().toISOString()})
         },
         setUser: (state, action) => {
             state.user = action.payload.user

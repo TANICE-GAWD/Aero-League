@@ -190,8 +190,9 @@ function VideoPage() {
                 <button
                   onClick={confirmFreeze}
                   className={styles.confirmFreezeButton}
+                  disabled={isFreezing}
                 >
-                  Freeze Submission
+                  {isFreezing ? "Freezing..." : "Freeze Submission"}
                 </button>
               </div>
             </div>
