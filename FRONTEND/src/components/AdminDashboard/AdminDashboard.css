@@ -20,6 +20,7 @@
 .admin-content-wrapper {
   display: flex;
   flex-direction: column;
+  margin-left: 16rem;
 }
 
 .admin-navbar-container {

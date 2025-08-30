@@ -131,7 +131,8 @@ const Challenges = () => {
   }, []);
 
   return (
-    <section className="teamsection1">
+    <>
+      <section className="teamsection1">
       <section className="challengesSection">
         <header className="sectionHeader">
           <h1 className="sectionMainTitle">CHALLENGES</h1>
@@ -154,6 +155,12 @@ const Challenges = () => {
         </div>
       </section>
     </section>
+    <div>
+      <button className="learn-more-btn" onClick={() => window.open('https://tanice-gawd.github.io/tal-doc/', '_blank')}>
+          Learn More
+        </button>
+    </div>
+    </>
   );
 };
 

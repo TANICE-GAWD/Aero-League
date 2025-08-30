@@ -1,6 +1,9 @@
 import './AeroLeague.css';
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 function AeroLeagueLayout() {
+  const navigate = useNavigate();
+
   return (
     <div className="aero-container">
       <img src='/assets/drone/1.png' className='aero-drone-image-1' alt='Drone 1' />
@@ -18,9 +21,9 @@ function AeroLeagueLayout() {
       </h3>
 
       <div className="aero-info">
-        <p>6th & 7th SEPTEMBER 2025 | 10 am Onwards</p>
-        <button className="learn-more-btn" onClick={() => window.open('https://tanice-gawd.github.io/tal-doc/', '_blank')}>
-          Learn More
+        <p>12th & 13th SEPTEMBER 2025 | 10 am Onwards</p>
+        <button className="learn-more-btn" onClick={() => navigate('/register')}>
+          Register Now
         </button>
       </div>
     </div>

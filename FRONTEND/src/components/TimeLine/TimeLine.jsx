@@ -8,14 +8,14 @@ import { LuTrophy } from 'react-icons/lu';
 import './TimeLine.css';
 
 const timelineData = [
-  { Icon: FaCalendarAlt, title: "Registration Opens", description: "Secure your spot. Early registration begins for all teams and pilots.", date: "August 5, 2025" },
-  { Icon: FaRocket, title: "Hackathon Kickoff", description: "Opening ceremony and team formation. The race begins now.", date: "August 30th, 2025" },
-  { Icon: MdFlightTakeoff, title: "Challenge 1", description: "Low-Level Flight", date: "August 30-31, 2025 - 1200 Hours " },
-  { Icon: AiTwotoneReconciliation, title: "Challenge 2", description: "Evening Recon", date: "August 31st, 2025 - 1400 Hours" },
-  { Icon: GiDeliveryDrone, title: "Challenge 3", description: "Turbulent Delivery", date: "August 31st, 2025 - 1600 Hours" },
-  { Icon: LuTrophy, title: "Challenge 4", description: "The Gauntlet", date: "August 31st, 2025 - 1800 Hours" },
-  { Icon: FaFlag, title: "Bonus Race", description: "Strategic Dash", date: "August 31st, 2025 - 2100 Hours" },
-  { Icon: FaTrophy, title: "Awards Ceremony", description: "Winners are announced and prizes awarded. Celebrate your achievements.", date: "August 31st, 2025" }
+  { Icon: FaCalendarAlt, title: "Registration Opens", description: "Secure your spot. Early registration begins for all teams and pilots.", date: "Monday, September 1, 2025"},
+  { Icon: FaRocket, title: "Hackathon Kickoff", description: "Opening ceremony and team formation. The race begins now.", date: "Friday, September 12, 2025" },
+  { Icon: MdFlightTakeoff, title: "Challenge 1", description: "Low-Level Flight", date: "Friday, 12 September, 2025 - 12:00PM " },
+  { Icon: AiTwotoneReconciliation, title: "Challenge 2", description: "Evening Recon", date: "Friday, 12 September, 2025 - 4:00PM" },
+  { Icon: GiDeliveryDrone, title: "Challenge 3", description: "Turbulent Delivery", date: "Saturday, 13 September, 2025 - 9:00AM" },
+  { Icon: LuTrophy, title: "Challenge 4", description: "The Gauntlet", date: "Saturday, 13 September, 2025 - 12:00PM" },
+  { Icon: FaFlag, title: "Bonus Race", description: "Strategic Dash", date: "Saturday, 13 September, 2025 - 3:00PM" },
+  { Icon: FaTrophy, title: "Awards Ceremony", description: "Winners are announced and prizes awarded. Celebrate your achievements.", date: "Saturday, 13 September, 2025 - 6:00PM" }
 ];
 
 const FlightpathTimeline = () => {
