@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { FaUser, FaPhone, FaUniversity, FaEnvelope, FaLock, FaUsers, FaPlusCircle, FaTrash, FaSpinner, FaKey } from 'react-icons/fa';
+import { FaUser, FaPhone, FaUniversity, FaEnvelope, FaLock, FaPlusCircle, FaTrash, FaSpinner, FaKey } from 'react-icons/fa';
 import './Registration.css';
 
 const Registration = () => {
   // State for the multi-step registration process
   const [registrationStep, setRegistrationStep] = useState('form'); // 'form', 'otp', 'success'
   const [otp, setOtp] = useState('');
-  
+  const isActive = true
   const [formData, setFormData] = useState({
     name: '',
     phone_number: '',
@@ -166,7 +166,7 @@ const generateOtp = async () => {
                 <p className="registration-subtitle">Your email has been verified. Redirecting you to the login page...</p>
             </div>
         );
-      default: // 'form' step
+      default:
         return (
             <>
                 <div className="registration-header">
@@ -216,9 +216,16 @@ const generateOtp = async () => {
 
   return (
     <section className="registration-page-section">
-      <div className="registration-card">
-        {renderStep()}
-      </div>
+      {isActive && (
+        <div className="registration-card">
+          {renderStep()}
+        </div>
+      )}
+      {!isActive && (
+        <div className="registration-inactive">
+          <p>The registration is currently inactive.</p>
+        </div>
+      )}
     </section>
   );
 };

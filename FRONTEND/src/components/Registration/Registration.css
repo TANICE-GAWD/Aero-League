@@ -168,8 +168,14 @@
   to { transform: rotate(360deg); }
 }
 
-
-
+.registration-inactive {
+  text-align: center;
+  padding: 2rem;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 8px;
+  color: #721c24;
+}
 
 @media (max-width: 768px) {
   .registration-card {
