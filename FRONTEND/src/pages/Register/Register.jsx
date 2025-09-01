@@ -17,6 +17,8 @@ const Register = () => {
   const [register, { isLoading }] = useRegisterMutation()
   const navigate = useNavigate()
 
+  const isActive = true
+
   const [teamLead, setTeamLead] = useState({
     name: "",
     phone_number: "",
@@ -73,6 +75,7 @@ const Register = () => {
     <div className="register-page">
       <HeroSection />
       <div className="register-container">
+        {isActive ? 
         <div className="register-content">
           <div className="register-wrapper">
             <div className="register-header">
@@ -224,6 +227,11 @@ const Register = () => {
             </form>
           </div>
         </div>
+        :
+        <div className="flex items-center justify-center flex-col min-h-[80vh]">
+          <h2 className="text-2xl font-semibold py-4">Registration Closed</h2>
+          <p className="text-gray-500 text-lg">Registrations are not open at this time.</p>
+        </div>}
 
         {/* OTP Modal */}
         {otpModalOpen && (
