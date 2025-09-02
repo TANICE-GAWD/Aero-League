@@ -126,14 +126,6 @@ const contactsData = [
     contactLink: 'mailto:thaparaeroleague@gmail.com',
     linkedinLink: 'https://www.linkedin.com/in/arshdeep-singh-malhotra-421ba327b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
   },
-  {
-    name: 'Siddhant Srivastava',
-    title: 'Volunteer',
-    description: 'Student, TIET',
-    image: '/assets/sid.webp',
-    contactLink: 'mailto:thaparaeroleague@gmail.com',
-    linkedinLink: 'https://www.linkedin.com/in/siddhant-srivastava-998002323?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
-  },
 ];
 
 
