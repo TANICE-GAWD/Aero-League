@@ -1,2 +1,2 @@
-Frotend for a Hackathon I am conducting.
+Frotend for a Hackathon I conducted.
 
